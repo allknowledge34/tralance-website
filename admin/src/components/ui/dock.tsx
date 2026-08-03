@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { PenSquare, Library, Settings, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
+import { logout } from "@/app/actions/auth";
 
 export function Dock() {
   const pathname = usePathname();
@@ -49,15 +50,15 @@ export function Dock() {
       
       <ThemeToggle />
       
-      <Link href="/login" className="relative group p-3">
+      <button onClick={() => logout()} className="relative group p-3 focus:outline-none">
         <motion.div
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="relative z-10 text-subtle hover:text-foreground transition-colors"
+          className="relative z-10 text-subtle hover:text-foreground transition-colors cursor-pointer"
         >
           <LogOut className="w-5 h-5 stroke-[1.5]" />
         </motion.div>
-      </Link>
+      </button>
     </motion.nav>
   );
 }
