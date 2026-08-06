@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/db/prisma";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Tralance Blog – Freelance Finance Tips & Tools",
   description: "Read the Tralance blog for tips on freelance budgeting, expense tracking, and financial privacy. Learn how to manage your money offline with expert advice.",
