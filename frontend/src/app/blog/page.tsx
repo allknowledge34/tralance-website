@@ -97,6 +97,7 @@ export default async function BlogPage() {
                     src={article.coverImage}
                     alt={article.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
                   />
                 ) : (

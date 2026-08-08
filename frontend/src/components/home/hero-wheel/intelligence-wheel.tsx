@@ -6,23 +6,23 @@ import { IntelligenceCenter } from "./intelligence-center";
 import { FeatureSegment } from "./feature-segment";
 import { 
   TrendingUp, TrendingDown, Users, Briefcase, 
-  PiggyBank, Target, LineChart, BarChart2, 
-  FileText, Cloud, Lock, Shield 
+  PiggyBank, BarChart2, Calculator,
+  FileText, CloudOff, FileSignature, Shield, FileCheck
 } from "lucide-react";
 
 const FEATURES = [
-  { label: "Income", icon: TrendingUp, colorClass: "text-emerald-500 bg-emerald-500" },
-  { label: "Expense", icon: TrendingDown, colorClass: "text-rose-500 bg-rose-500" },
-  { label: "Clients", icon: Users, colorClass: "text-blue-500 bg-blue-500" },
   { label: "Projects", icon: Briefcase, colorClass: "text-purple-500 bg-purple-500" },
-  { label: "Savings", icon: PiggyBank, colorClass: "text-emerald-600 bg-emerald-600" },
-  { label: "Reports", icon: FileText, colorClass: "text-orange-500 bg-orange-500" },
-  { label: "Analytics", icon: BarChart2, colorClass: "text-sky-500 bg-sky-500" },
-  { label: "Forecast", icon: LineChart, colorClass: "text-indigo-500 bg-indigo-500" },
-  { label: "Goals", icon: Target, colorClass: "text-amber-500 bg-amber-500" },
-  { label: "Backup", icon: Cloud, colorClass: "text-purple-500 bg-purple-500" },
-  { label: "Vault", icon: Lock, colorClass: "text-blue-500 bg-blue-500" },
+  { label: "Clients", icon: Users, colorClass: "text-blue-500 bg-blue-500" },
+  { label: "Income", icon: TrendingUp, colorClass: "text-emerald-500 bg-emerald-500" },
+  { label: "Expenses", icon: TrendingDown, colorClass: "text-rose-500 bg-rose-500" },
+  { label: "Invoices", icon: FileText, colorClass: "text-orange-500 bg-orange-500" },
+  { label: "Contracts", icon: FileSignature, colorClass: "text-indigo-500 bg-indigo-500" },
+  { label: "Briefs", icon: FileCheck, colorClass: "text-sky-500 bg-sky-500" },
+  { label: "Profit", icon: BarChart2, colorClass: "text-emerald-600 bg-emerald-600" },
+  { label: "Rates", icon: Calculator, colorClass: "text-amber-500 bg-amber-500" },
+  { label: "Payments", icon: PiggyBank, colorClass: "text-blue-600 bg-blue-600" },
   { label: "Privacy", icon: Shield, colorClass: "text-teal-500 bg-teal-500" },
+  { label: "Offline", icon: CloudOff, colorClass: "text-purple-600 bg-purple-600" },
 ];
 
 export function IntelligenceWheel() {

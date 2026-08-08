@@ -7,8 +7,8 @@ import FAQSection from "@/components/home/FAQSection";
 import FinalCTA from "@/components/home/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "Tralance – Offline Freelance Finance Tracker",
-  description: "Tralance is an offline-first income & expense tracker built for freelancers. 100% private, no cloud needed. Manage budgets, projects, and savings on your device",
+  title: "Tralance – Workspace & Tools for Freelancers",
+  description: "Tralance is a privacy-first workspace providing simple tools to help freelancers manage projects, briefs, contracts, invoices, and finances.",
   alternates: {
     canonical: "/",
   },

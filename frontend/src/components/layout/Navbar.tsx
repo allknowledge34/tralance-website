@@ -16,29 +16,14 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { 
-      name: "Resources", 
-      href: "#",
-      dropdown: [
-        {
-          name: "Freelancer Rate Calculator",
-          href: "/resources/freelancer-rate-calculator",
-          description: "Calculate the ideal hourly rate based on monthly expenses, savings goals, taxes and platform fees."
-        },
-        {
-          name: "CGPA Planner",
-          href: "/resources/cgpa-planner",
-          description: "Calculate CGPA semester-wise, track backlogs, and plan for your target."
-        }
-      ]
-    },
+    { name: "Tools", href: "/tools" },
     { name: "Blog", href: "/blog" },
     { name: "Features", href: "/features" },
     { name: "Contact", href: "/contact" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-slate-200/40 dark:bg-[#0B1020]/80 dark:border-[rgba(255,255,255,0.08)] transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-slate-200/40 dark:bg-[#0B1020]/80 dark:border-[rgba(255,255,255,0.08)] transition-colors duration-300 print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           <div className="flex-shrink-0 flex items-center">

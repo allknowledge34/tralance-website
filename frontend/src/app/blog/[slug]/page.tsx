@@ -149,6 +149,7 @@ export default async function BlogPostPage({ params }: Props) {
                     alt={article.title}
                     fill
                     priority
+                    sizes="(max-width: 1024px) 100vw, 800px"
                     className="object-cover"
                   />
                 </div>
@@ -180,6 +181,7 @@ export default async function BlogPostPage({ params }: Props) {
                           src={recent.coverImage}
                           alt={recent.title}
                           fill
+                          sizes="(max-width: 1024px) 100vw, 300px"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (

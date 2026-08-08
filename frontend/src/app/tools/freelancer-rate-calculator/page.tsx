@@ -1,21 +1,21 @@
 import { Metadata } from "next";
-import CgpaPlannerClient from "./CgpaPlannerClient";
+import CalculatorClient from "./CalculatorClient";
 
 export const metadata: Metadata = {
-  title: "CGPA Planner – Semester Wise SGPA to CGPA Calculator",
-  description: "Free Semester-wise CGPA Planner. Calculate CGPA from SGPA, monitor backlog impact, estimate your target CGPA, and plan future semesters. Works completely offline.",
+  title: "Freelancer Hourly Rate Calculator | Tralance",
+  description: "Calculate the minimum hourly rate you should charge based on your monthly expenses, savings goal, taxes, platform fees, and working schedule.",
   alternates: {
-    canonical: "/resources/cgpa-planner",
+    canonical: "/tools/freelancer-rate-calculator",
   },
 };
 
-export default function CgpaPlannerPage() {
+export default function FreelancerRateCalculatorPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "CGPA Planner",
+    "name": "Freelancer Hourly Rate Calculator",
     "operatingSystem": "Web browser",
-    "applicationCategory": "EducationalApplication",
+    "applicationCategory": "BusinessApplication",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -29,7 +29,7 @@ export default function CgpaPlannerPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <CgpaPlannerClient />
+      <CalculatorClient />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#FAFBFC] dark:bg-[#050505] border-t border-slate-200/60 dark:border-white/5 font-sans pt-16 pb-8 transition-colors duration-300">
+    <footer className="bg-[#FAFBFC] dark:bg-[#050505] border-t border-slate-200/60 dark:border-white/5 font-sans pt-16 pb-8 transition-colors duration-300 print:hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         
         {/* Main Columns Grid */}
@@ -48,12 +48,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Resources */}
+          {/* Column 4: Tools */}
           <div className="flex flex-col">
-            <h4 className="flex items-center h-8 text-sm font-bold text-slate-900 dark:text-white tracking-wide mb-6">Resources</h4>
+            <h4 className="flex items-center h-8 text-sm font-bold text-slate-900 dark:text-white tracking-wide mb-6">Tools</h4>
             <ul className="flex flex-col space-y-3.5">
-              <li><Link href="/resources/cgpa-planner" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">CGPA Planner</Link></li>
-              <li><Link href="/resources/freelancer-rate-calculator" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Freelancer Rate Calculator</Link></li>
+              <li><Link href="/tools/freelancer-invoice-generator" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Invoice Generator</Link></li>
+              <li><Link href="/tools/project-brief-builder" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Project Brief Builder</Link></li>
+              <li><Link href="/tools/project-profit-calculator" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Project Profit Calculator</Link></li>
+              <li><Link href="/tools" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">View All Tools</Link></li>
             </ul>
           </div>
 
