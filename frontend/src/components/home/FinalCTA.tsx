@@ -29,7 +29,6 @@ export default function FinalCTA() {
             <motion.div
               className="mt-8 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto"
             >
-              {/* Google Play */}
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
@@ -56,7 +55,6 @@ export default function FinalCTA() {
                 </div>
               </motion.a>
 
-              {/* Microsoft Store */}
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}

@@ -7,7 +7,7 @@ export const SITE_CONFIG: SiteMetadata = {
   url: "https://www.tralance.pro", // Placeholder, change to production domain
   ogImage: "https://www.tralance.pro/og-image.jpg", // Placeholder
   links: {
-    twitter: "https://www.instagram.com/",
+    twitter: "https://www.instagram.com/dmilx.tech/",
     github: "https://github.com/allknowledge34",
   },
   contactEmail: "allknowledge34@gmail.com",

@@ -416,7 +416,6 @@ export default function CgpaPlannerClient() {
                 )}
               </div>
 
-              {/* Academic Insights */}
               {results && results.insights.length > 0 && (
                 <div className="bg-slate-50 dark:bg-[#0B1020] border border-slate-200/60 dark:border-[rgba(255,255,255,0.08)] rounded-[24px] p-6 shadow-sm">
                   <h3 className="text-slate-900 dark:text-white font-bold mb-4 text-sm">Academic Insights</h3>
@@ -431,7 +430,6 @@ export default function CgpaPlannerClient() {
                 </div>
               )}
 
-              {/* Privacy Info Card */}
               <div className="bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl p-5">
                 <div className="flex items-center mb-2">
                   <Lock className="w-4 h-4 text-slate-400 mr-2" />
@@ -448,7 +446,6 @@ export default function CgpaPlannerClient() {
         </div>
       )}
 
-      {/* FAQ Section */}
       <div className="mt-24 max-w-3xl border-t border-slate-200/60 dark:border-[rgba(255,255,255,0.08)] pt-16 mx-auto">
         <h2 className="text-2xl font-bold mb-8 text-slate-900 dark:text-white tracking-tight">Frequently Asked Questions</h2>
         <div className="space-y-4">

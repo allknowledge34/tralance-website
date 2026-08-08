@@ -18,7 +18,6 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Action Bar (Hidden on print) */}
       <div className="flex items-center justify-between mb-6 print:hidden">
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">Live Preview</h2>
         <button 
@@ -30,10 +29,8 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
         </button>
       </div>
 
-      {/* Invoice Document */}
       <div className="bg-white text-slate-900 p-8 sm:p-12 md:p-16 rounded-2xl shadow-sm border border-slate-200 flex-grow print:border-none print:shadow-none print:m-0 print:p-0 print:text-black">
         
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b border-slate-200 pb-8 mb-8">
           <div>
             <h1 className="text-4xl font-extrabold text-slate-900 uppercase tracking-tight mb-2">Invoice</h1>
@@ -50,7 +47,6 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
           </div>
         </div>
 
-        {/* Client & Dates */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
           <div>
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Billed To</h4>
@@ -72,7 +68,6 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
           </div>
         </div>
 
-        {/* Table */}
         <div className="mb-8 overflow-hidden rounded-xl border border-slate-200 print:border-none">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 print:bg-transparent">
@@ -96,7 +91,6 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
           </table>
         </div>
 
-        {/* Totals */}
         <div className="flex justify-end mb-12">
           <div className="w-full sm:w-80 space-y-3">
             <div className="flex justify-between text-sm">
@@ -122,7 +116,6 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
           </div>
         </div>
 
-        {/* Additional Info */}
         {(data.notes || data.terms) && (
           <div className="border-t border-slate-200 pt-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
             {data.notes && (

@@ -9,10 +9,8 @@ export default function Footer() {
     <footer className="bg-[#FAFBFC] dark:bg-[#050505] border-t border-slate-200/60 dark:border-white/5 font-sans pt-16 pb-8 transition-colors duration-300 print:hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         
-        {/* Main Columns Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
           
-          {/* Column 1: Brand */}
           <div className="lg:col-span-2 flex flex-col items-start">
             <div className="flex items-center gap-3 h-8 mb-6">
               <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
@@ -27,7 +25,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Column 2: Product */}
           <div className="flex flex-col">
             <h4 className="flex items-center h-8 text-sm font-bold text-slate-900 dark:text-white tracking-wide mb-6">Product</h4>
             <ul className="flex flex-col space-y-3.5">
@@ -37,7 +34,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Company */}
           <div className="flex flex-col">
             <h4 className="flex items-center h-8 text-sm font-bold text-slate-900 dark:text-white tracking-wide mb-6">Company</h4>
             <ul className="flex flex-col space-y-3.5">
@@ -48,7 +44,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Tools */}
           <div className="flex flex-col">
             <h4 className="flex items-center h-8 text-sm font-bold text-slate-900 dark:text-white tracking-wide mb-6">Tools</h4>
             <ul className="flex flex-col space-y-3.5">
@@ -59,7 +54,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 5: Connect */}
           <div className="flex flex-col">
             <h4 className="flex items-center h-8 text-sm font-bold text-slate-900 dark:text-white tracking-wide mb-6">Connect</h4>
             <ul className="flex flex-col space-y-3.5">
@@ -71,7 +65,6 @@ export default function Footer() {
 
         </div>
 
-        {/* Copyright & Bottom Links */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 border-t border-slate-200/60 dark:border-white/5 pt-8">
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400 text-center md:text-left">
             © 2026 Tralance. All rights reserved.

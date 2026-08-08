@@ -40,7 +40,6 @@ export function ProfitForm({ data, onChange, onReset }: ProfitFormProps) {
 
       <div className="space-y-10">
         
-        {/* Project Information & Time */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Project & Time</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -86,7 +85,6 @@ export function ProfitForm({ data, onChange, onReset }: ProfitFormProps) {
           </div>
         </section>
 
-        {/* Fees */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Fees</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -119,7 +117,6 @@ export function ProfitForm({ data, onChange, onReset }: ProfitFormProps) {
           </div>
         </section>
 
-        {/* Expenses */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Project Expenses</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -150,7 +147,6 @@ export function ProfitForm({ data, onChange, onReset }: ProfitFormProps) {
           </div>
         </section>
 
-        {/* Optional */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Optional</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

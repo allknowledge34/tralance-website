@@ -14,7 +14,13 @@ export default function Navbar() {
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
   const pathname = usePathname();
 
-  const navItems = [
+  type NavItem = {
+    name: string;
+    href: string;
+    dropdown?: { name: string; href: string; description?: string }[];
+  };
+
+  const navItems: NavItem[] = [
     { name: "Home", href: "/" },
     { name: "Tools", href: "/tools" },
     { name: "Blog", href: "/blog" },
@@ -126,14 +132,12 @@ export default function Navbar() {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.sachin.tralance"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-4.5 py-2.5 rounded-xl text-sm font-bold text-white bg-primary hover:bg-blue-600 transition-all shadow-md shadow-primary/20 hover:shadow-primary/30"
+            <Link
+              href="/tools"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-bold text-white dark:text-[#0A1128] bg-[#0A1128] dark:bg-white hover:bg-black dark:hover:bg-slate-200 transition-all hover:scale-105 active:scale-95 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)]"
             >
-              Get App
-            </a>
+              Explore Tools
+            </Link>
           </div>
           <div className="flex items-center gap-2 md:hidden">
             <button
@@ -206,14 +210,13 @@ export default function Navbar() {
                 );
               })}
               <div className="pt-2 px-3">
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.sachin.tralance"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl text-base font-bold text-white bg-primary hover:bg-blue-600 transition-all shadow-md shadow-primary/20"
+                <Link
+                  href="/tools"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl text-base font-bold text-white dark:text-[#0A1128] bg-[#0A1128] dark:bg-white hover:bg-black dark:hover:bg-slate-200 transition-all active:scale-95 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)]"
                 >
-                  Get App on Google Play
-                </a>
+                  Explore Tools
+                </Link>
               </div>
             </div>
           </motion.div>

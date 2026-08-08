@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+
 import BriefClient from "./BriefClient";
 
 export const metadata: Metadata = {
@@ -99,7 +99,6 @@ export default function ProjectBriefBuilderPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Hero Section */}
       <section className="pt-20 md:pt-28 pb-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center print:hidden">
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
           Freelance Project Brief Builder
@@ -108,11 +107,7 @@ export default function ProjectBriefBuilderPage() {
           Turn your project idea into a clear brief that both clients and freelancers can understand.
         </p>
       </section>
-
-      {/* Brief Builder Client Component */}
       <BriefClient />
-
-      {/* SEO & Explanation Content */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5 print:hidden">
         
         <div className="mb-16">
@@ -137,7 +132,7 @@ export default function ProjectBriefBuilderPage() {
               <li><strong>Fewer misunderstandings:</strong> Requirements are documented instead of assumed.</li>
               <li><strong>Easier project planning:</strong> Breaking the work into milestones becomes much easier.</li>
               <li><strong>Clearer deliverables:</strong> You know exactly what files or assets change hands at the end.</li>
-              <li><strong>Fewer scope-related disagreements:</strong> If it isn't in the brief, it's a new request that requires a new budget.</li>
+              <li><strong>Fewer scope-related disagreements:</strong> If it isn&apos;t in the brief, it&apos;s a new request that requires a new budget.</li>
             </ul>
           </div>
         </div>
@@ -148,7 +143,7 @@ export default function ProjectBriefBuilderPage() {
           </h2>
           <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <ol className="space-y-4">
-              <li><strong>Explain the goal:</strong> Start with the "why". Why is this project happening, and what business problem does it solve?</li>
+              <li><strong>Explain the goal:</strong> Start with the &quot;why&quot;. Why is this project happening, and what business problem does it solve?</li>
               <li><strong>List the requirements:</strong> What specific features or functional necessities must the final product have?</li>
               <li><strong>Define deliverables:</strong> What tangible assets (e.g. source code, a PDF, a live website) will be handed over?</li>
               <li><strong>Add references:</strong> Include links to competitors, inspiration, or previous work so everyone understands the desired aesthetic.</li>

@@ -19,7 +19,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
   return (
     <div id="project-brief-preview" className="bg-white text-black border border-slate-200 p-8 md:p-12 shadow-sm rounded-xl print:w-full print:border-none print:shadow-none print:m-0 print:p-0">
       
-      {/* Header */}
       <div className="border-b-4 border-slate-900 pb-6 mb-8">
         <div className="flex justify-between items-start">
           <div>
@@ -40,7 +39,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
 
       <div className="space-y-10 text-[15px] leading-relaxed">
         
-        {/* Goal & Audience */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">1. Project Overview</h2>
           <div className="space-y-4 mt-4">
@@ -57,7 +55,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </div>
         </section>
 
-        {/* Requirements */}
         {hasRequirements && (
           <section>
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">2. Requirements</h2>
@@ -69,7 +66,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </section>
         )}
 
-        {/* Deliverables */}
         {hasDeliverables && (
           <section>
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">3. Deliverables</h2>
@@ -81,7 +77,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </section>
         )}
 
-        {/* Design & Style */}
         {hasDesign && (
           <section className="print:break-inside-avoid">
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">4. Design & Style</h2>
@@ -122,7 +117,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </section>
         )}
 
-        {/* Timeline */}
         {(data.startDate || data.deliveryDate || hasMilestones) && (
           <section className="print:break-inside-avoid">
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">5. Timeline</h2>
@@ -168,7 +162,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </section>
         )}
 
-        {/* Revisions & Communication */}
         {(data.includedRevisions || hasCommunication) && (
           <section className="print:break-inside-avoid">
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">6. Revisions & Communication</h2>
@@ -198,7 +191,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </section>
         )}
 
-        {/* Budget */}
         {data.estimatedBudget && (
           <section className="print:break-inside-avoid">
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">7. Budget</h2>
@@ -208,7 +200,6 @@ export function BriefPreview({ data }: BriefPreviewProps) {
           </section>
         )}
 
-        {/* Notes */}
         {data.additionalNotes && (
           <section className="print:break-inside-avoid">
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide border-b border-slate-200 pb-1">8. Additional Notes</h2>

@@ -1,5 +1,7 @@
 import { FileText, Calculator, GraduationCap, PieChart, FileSignature, ClipboardList } from "lucide-react";
 
+import { LucideIcon } from "lucide-react";
+
 export type ToolCategory = "Finance" | "Productivity" | "Education";
 
 export interface ToolConfig {
@@ -7,7 +9,7 @@ export interface ToolConfig {
   name: string;
   description: string;
   href: string;
-  icon: any; // Lucide icon
+  icon: LucideIcon; // Lucide icon
   category: ToolCategory;
   color: string;
 }

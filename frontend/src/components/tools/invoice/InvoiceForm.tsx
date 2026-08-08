@@ -71,7 +71,6 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
 
       <div className="space-y-10">
         
-        {/* Invoice Info */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Invoice Info</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -101,7 +100,6 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
           </div>
         </section>
 
-        {/* Freelancer Info */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Your Information</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -128,7 +126,6 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
           </div>
         </section>
 
-        {/* Client Info */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Client Information</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -147,12 +144,11 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
           </div>
         </section>
 
-        {/* Items */}
         <section>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Items / Services</h3>
           
           <div className="space-y-4">
-            {data.items.map((item, index) => (
+            {data.items.map((item) => (
               <div key={item.id} className="relative bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-4 pr-12 group transition-all">
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
                   <div className="sm:col-span-6">
@@ -208,7 +204,6 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
           </button>
         </section>
 
-        {/* Taxes & Discounts */}
         <section>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -222,7 +217,6 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
           </div>
         </section>
 
-        {/* Additional Info */}
         <section>
           <div className="space-y-4">
             <div>

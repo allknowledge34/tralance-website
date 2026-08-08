@@ -5,8 +5,8 @@ import ShowcaseFeatures from "@/components/features/ShowcaseFeatures";
 import { SupportingContentFeatures } from "@/components/shared/SupportingContent";
 
 export const metadata: Metadata = {
-  title: "Features | Offline Income and Expense Tracker",
-  description: "Explore Tralance features. The ultimate privacy focused finance app and freelancer budget planner featuring local SQLite storage and no cloud sync.",
+  title: "Features | Tralance Workspace",
+  description: "Explore Tralance features. The privacy-first workspace and freelancer tool ecosystem featuring offline support, local data storage, and no cloud sync.",
 };
 
 export default function FeaturesPage() {

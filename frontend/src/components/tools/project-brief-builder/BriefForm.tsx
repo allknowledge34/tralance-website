@@ -10,6 +10,17 @@ interface BriefFormProps {
   onReset: () => void;
 }
 
+const SectionHeader = ({ title, index, openSection, toggleSection }: { title: string, index: number, openSection: number, toggleSection: (index: number) => void }) => (
+  <button 
+    type="button"
+    onClick={() => toggleSection(index)}
+    className="w-full flex items-center justify-between py-4 text-left border-b border-slate-200 dark:border-white/10"
+  >
+    <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{index}. {title}</h3>
+    {openSection === index ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+  </button>
+);
+
 export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
   const [openSection, setOpenSection] = useState<number>(1);
 
@@ -21,17 +32,6 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
   const toggleSection = (sectionIndex: number) => {
     setOpenSection(openSection === sectionIndex ? 0 : sectionIndex);
   };
-
-  const SectionHeader = ({ title, index }: { title: string, index: number }) => (
-    <button 
-      type="button"
-      onClick={() => toggleSection(index)}
-      className="w-full flex items-center justify-between py-4 text-left border-b border-slate-200 dark:border-white/10"
-    >
-      <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{index}. {title}</h3>
-      {openSection === index ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-    </button>
-  );
 
   // Dynamic Array Handlers
   const handleArrayChange = (field: "requirements" | "deliverables" | "references", index: number, value: string) => {
@@ -82,9 +82,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
       </div>
 
       <div className="space-y-2">
-        {/* STEP 1: BASICS */}
         <div>
-          <SectionHeader title="Project Basics" index={1} />
+          <SectionHeader title="Project Basics" index={1} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 1 && (
             <div className="py-6 space-y-4">
               <div>
@@ -129,9 +128,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 2: REQUIREMENTS */}
         <div>
-          <SectionHeader title="Project Requirements" index={2} />
+          <SectionHeader title="Project Requirements" index={2} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 2 && (
             <div className="py-6 space-y-4">
               <div>
@@ -171,9 +169,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 3: DELIVERABLES */}
         <div>
-          <SectionHeader title="Deliverables" index={3} />
+          <SectionHeader title="Deliverables" index={3} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 3 && (
             <div className="py-6 space-y-4">
               <div>
@@ -213,9 +210,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 4: DESIGN & REFS */}
         <div>
-          <SectionHeader title="Design & References" index={4} />
+          <SectionHeader title="Design & References" index={4} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 4 && (
             <div className="py-6 space-y-4">
               <div>
@@ -260,7 +256,7 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
                   <textarea name="likes" value={data.likes} onChange={handleChange} rows={2} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none"></textarea>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Things you don't want</label>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Things you don&apos;t want</label>
                   <textarea name="dislikes" value={data.dislikes} onChange={handleChange} rows={2} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none"></textarea>
                 </div>
               </div>
@@ -268,9 +264,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 5: TIMELINE */}
         <div>
-          <SectionHeader title="Timeline" index={5} />
+          <SectionHeader title="Timeline" index={5} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 5 && (
             <div className="py-6 space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -325,9 +320,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 6: REVISIONS & COMMUNICATION */}
         <div>
-          <SectionHeader title="Revisions & Communication" index={6} />
+          <SectionHeader title="Revisions & Communication" index={6} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 6 && (
             <div className="py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -357,9 +351,8 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 7: BUDGET */}
         <div>
-          <SectionHeader title="Budget (Optional)" index={7} />
+          <SectionHeader title="Budget (Optional)" index={7} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 7 && (
             <div className="py-6">
               <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Estimated Budget</label>
@@ -378,13 +371,12 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
           )}
         </div>
 
-        {/* STEP 8: FINAL QUESTIONS */}
         <div>
-          <SectionHeader title="Anything Else?" index={8} />
+          <SectionHeader title="Anything Else?" index={8} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 8 && (
             <div className="py-6">
               <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Additional Notes</label>
-              <p className="text-xs text-slate-500 mb-2">Add anything important that hasn't been mentioned above.</p>
+              <p className="text-xs text-slate-500 mb-2">Add anything important that hasn&apos;t been mentioned above.</p>
               <textarea name="additionalNotes" value={data.additionalNotes} onChange={handleChange} rows={4} placeholder="e.g. Technical limitations, client preferences, existing systems..." className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none"></textarea>
             </div>
           )}

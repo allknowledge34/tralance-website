@@ -11,7 +11,6 @@ export default function Hero() {
     <section className="relative pt-8 md:pt-14 pb-8 md:pb-12 overflow-hidden bg-white dark:bg-[#0B1020] min-h-[60vh] flex flex-col justify-center transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8">
 
-        {/* Left Column: Content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -27,13 +26,10 @@ export default function Hero() {
               More under control.
             </h2>
           </div>
-
-          {/* Subtitle */}
           <p className="text-lg sm:text-xl text-slate-500 dark:text-[#AEB7C6] mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-colors duration-300">
             Practical tools for freelancers to manage projects, money, clients, and the work behind them - with privacy at the core.
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12 w-full lg:w-auto">
             <Link
               href="/tools"
@@ -50,7 +46,6 @@ export default function Hero() {
             </Link>
           </div>
 
-          {/* Social icons */}
           <div className="flex items-center gap-2.5">
             <a
               href="https://x.com/tralanceapp"
@@ -83,15 +78,13 @@ export default function Hero() {
 
         </motion.div>
 
-        {/* Right Column: Intelligence Wheel */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
           className="w-full lg:w-[45%] flex justify-center lg:justify-end relative z-0 mt-4 lg:mt-0 -mb-12 lg:mb-0"
         >
-          {/* We use a negative margin on large screens if needed to pull the wheel slightly left, 
-              or just let it sit naturally. For a premium SaaS look, the wheel slightly bleeding off or sitting perfectly in the grid is ideal. */}
+
           <div className="relative">
             <IntelligenceWheel />
           </div>

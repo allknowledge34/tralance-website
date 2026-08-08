@@ -26,7 +26,6 @@ export default function ToolsHubPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
           Freelancer Tools
@@ -35,8 +34,6 @@ export default function ToolsHubPage() {
           Simple, privacy-first tools built to help freelancers manage the practical side of independent work. No unnecessary logins. Your data stays on your device.
         </p>
       </section>
-
-      {/* Tools Grid */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {toolsConfig.map((tool) => (

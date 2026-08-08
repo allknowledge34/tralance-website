@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ContractData } from "@/types/contract-generator";
 import { ContractForm } from "@/components/tools/contract-generator/ContractForm";
 import { ContractPreview } from "@/components/tools/contract-generator/ContractPreview";
-import { Lock, Printer } from "lucide-react";
+import { Printer } from "lucide-react";
 
 const defaultContractData: ContractData = {
   contractTitle: "Freelance Service Agreement",
@@ -54,14 +54,13 @@ export default function ContractClient() {
     <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* Left Side: Form */}
+
         <div className="lg:col-span-5 xl:col-span-4 print:hidden">
           <div className="sticky top-28 h-auto max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 pb-12">
             <ContractForm data={data} onChange={setData} onReset={handleReset} />
           </div>
         </div>
-        
-        {/* Right Side: Preview */}
+      
         <div className="lg:col-span-7 xl:col-span-8 print:col-span-12">
           <div className="flex justify-end mb-4 print:hidden">
             <button

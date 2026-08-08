@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+
 import ContractClient from "./ContractClient";
 
 export const metadata: Metadata = {
@@ -83,7 +83,6 @@ export default function FreelanceContractGeneratorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Hero Section */}
       <section className="pt-20 md:pt-28 pb-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center print:hidden">
         
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
@@ -94,10 +93,8 @@ export default function FreelanceContractGeneratorPage() {
         </p>
       </section>
 
-      {/* Calculator Client Component */}
       <ContractClient />
 
-      {/* SEO & Explanation Content */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5 print:hidden">
         
         <div className="mb-16">
@@ -130,7 +127,7 @@ export default function FreelanceContractGeneratorPage() {
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Can I save the contract as a PDF?</h3>
-              <p className="text-slate-600 dark:text-slate-400">Yes, once you have filled out your details, simply click the 'Print / Save as PDF' button. Your browser will open the print dialog where you can choose 'Save as PDF'.</p>
+              <p className="text-slate-600 dark:text-slate-400">Yes, once you have filled out your details, simply click the &apos;Print / Save as PDF&apos; button. Your browser will open the print dialog where you can choose &apos;Save as PDF&apos;.</p>
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Is my contract data stored?</h3>

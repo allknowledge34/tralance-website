@@ -12,7 +12,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
   return (
     <div className="bg-white text-black border border-slate-200 p-8 md:p-12 shadow-sm rounded-xl print:w-full print:border-none print:shadow-none print:m-0 print:p-0">
       
-      {/* Header */}
       <div className="text-center mb-10 border-b-2 border-black pb-6">
         <h1 className="text-2xl font-bold uppercase tracking-widest">{data.contractTitle || "Freelance Service Agreement"}</h1>
         <div className="mt-4 text-sm flex justify-between px-4 text-slate-600">
@@ -23,7 +22,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
 
       <div className="space-y-8 text-[15px] leading-relaxed">
         
-        {/* 1. Parties */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">1. The Parties</h2>
           <p>
@@ -47,18 +45,16 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </div>
         </section>
 
-        {/* 2. Services */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">2. Services & Scope</h2>
           <p>
-            The Freelancer agrees to provide the following services for the project titled <strong>"{data.projectName || "[Project Name]"}"</strong>:
+            The Freelancer agrees to provide the following services for the project titled <strong>&quot;{data.projectName || "[Project Name]"}&quot;</strong>:
           </p>
           <div className="mt-2 pl-4 border-l-2 border-slate-200 whitespace-pre-wrap text-slate-800 italic">
             {data.projectDescription || "[Enter project description/scope here]"}
           </div>
         </section>
 
-        {/* 3. Schedule */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">3. Timeline & Delivery</h2>
           <p>
@@ -66,7 +62,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </p>
         </section>
 
-        {/* 4. Compensation */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">4. Compensation & Payment</h2>
           <p>
@@ -95,7 +90,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </p>
         </section>
 
-        {/* 5. Revisions */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">5. Revisions</h2>
           <p>
@@ -103,7 +97,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </p>
         </section>
 
-        {/* 6. Ownership */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">6. Intellectual Property & Ownership</h2>
           <p>
@@ -111,7 +104,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </p>
         </section>
 
-        {/* 7. Confidentiality */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">7. Confidentiality</h2>
           <p>
@@ -119,7 +111,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </p>
         </section>
 
-        {/* 8. Cancellation */}
         <section>
           <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">8. Cancellation</h2>
           <p>
@@ -127,7 +118,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
           </p>
         </section>
 
-        {/* 9. Additional Notes */}
         {data.additionalNotes && (
           <section>
             <h2 className="font-bold text-lg mb-3 uppercase tracking-wide">9. Additional Provisions</h2>
@@ -139,7 +129,6 @@ export function ContractPreview({ data }: ContractPreviewProps) {
 
       </div>
 
-      {/* Signatures */}
       <div className="mt-16 grid grid-cols-2 gap-12">
         <div className="border-t border-black pt-2">
           <p className="font-bold text-sm uppercase">Freelancer Signature</p>

@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import { ProjectBriefData } from "@/types/project-brief";
 import { BriefForm } from "@/components/tools/project-brief-builder/BriefForm";
 import { BriefPreview } from "@/components/tools/project-brief-builder/BriefPreview";
-import { Lock, Printer, Copy, CheckCircle2, Share2, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Printer, Copy, CheckCircle2, Share2 } from "lucide-react";
 
 const defaultBriefData: ProjectBriefData = {
   projectName: "",
@@ -60,7 +59,7 @@ export default function BriefClient() {
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
+    if (typeof navigator.share === "function") {
       const previewEl = document.getElementById("project-brief-preview");
       try {
         await navigator.share({
@@ -68,7 +67,7 @@ export default function BriefClient() {
           text: previewEl ? previewEl.innerText.substring(0, 500) + "...\n\n[Full brief saved locally]" : "Project Brief",
         });
       } catch (err) {
-        console.log("Error sharing:", err);
+        console.error("Error sharing:", err);
       }
     }
   };
@@ -78,18 +77,17 @@ export default function BriefClient() {
     
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* Left Side: Form */}
+       
         <div className="lg:col-span-5 xl:col-span-4 print:hidden">
           <div className="sticky top-28 h-auto max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 pb-12">
             <BriefForm data={data} onChange={setData} onReset={handleReset} />
           </div>
         </div>
         
-        {/* Right Side: Preview */}
         <div className="lg:col-span-7 xl:col-span-8 print:col-span-12">
           <div className="flex flex-wrap justify-end gap-3 mb-4 print:hidden">
             
-            {typeof navigator !== "undefined" && navigator.share && (
+            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
                <button
                  onClick={handleShare}
                  className="flex items-center gap-2 bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 px-4 py-2 rounded-xl font-semibold transition-colors"

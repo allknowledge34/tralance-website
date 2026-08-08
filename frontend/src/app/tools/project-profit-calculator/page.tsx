@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+
 import ProfitClient from "./ProfitClient";
 
 export const metadata: Metadata = {
@@ -93,10 +93,8 @@ export default function ProjectProfitCalculatorPage() {
         </p>
       </section>
 
-      {/* Calculator Client Component */}
       <ProfitClient />
 
-      {/* SEO & Explanation Content */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5">
         
         <div className="mb-16">
@@ -105,7 +103,7 @@ export default function ProjectProfitCalculatorPage() {
           </h2>
           <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>
-              When quoting a project, the top-line number often looks great. But as a freelancer, you aren't an employee - you are a business. This means you absorb costs that quickly eat into your profit. Our calculator breaks it down in six simple steps:
+              When quoting a project, the top-line number often looks great. But as a freelancer, you aren&apos;t an employee - you are a business. This means you absorb costs that quickly eat into your profit. Our calculator breaks it down in six simple steps:
             </p>
             <ol className="mt-4 space-y-2">
               <li><strong>Enter what the client is paying:</strong> The total gross revenue of the project.</li>

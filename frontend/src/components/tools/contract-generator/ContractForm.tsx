@@ -10,6 +10,17 @@ interface ContractFormProps {
   onReset: () => void;
 }
 
+const SectionHeader = ({ title, index, openSection, toggleSection }: { title: string, index: number, openSection: number, toggleSection: (index: number) => void }) => (
+  <button 
+    type="button"
+    onClick={() => toggleSection(index)}
+    className="w-full flex items-center justify-between py-4 text-left border-b border-slate-200 dark:border-white/10"
+  >
+    <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{index}. {title}</h3>
+    {openSection === index ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+  </button>
+);
+
 export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
   const [openSection, setOpenSection] = useState<number>(1);
 
@@ -28,17 +39,6 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
     setOpenSection(openSection === sectionIndex ? 0 : sectionIndex);
   };
 
-  const SectionHeader = ({ title, index }: { title: string, index: number }) => (
-    <button 
-      type="button"
-      onClick={() => toggleSection(index)}
-      className="w-full flex items-center justify-between py-4 text-left border-b border-slate-200 dark:border-white/10"
-    >
-      <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{index}. {title}</h3>
-      {openSection === index ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-    </button>
-  );
-
   return (
     <div className="bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm print:hidden">
       <div className="flex items-center justify-between mb-8">
@@ -56,9 +56,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
       </div>
 
       <div className="space-y-2">
-        {/* SECTION 1 - DETAILS */}
         <div>
-          <SectionHeader title="Contract Details" index={1} />
+          <SectionHeader title="Contract Details" index={1} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 1 && (
             <div className="py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -76,10 +75,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
             </div>
           )}
         </div>
-
-        {/* SECTION 2 - FREELANCER */}
         <div>
-          <SectionHeader title="Freelancer Information" index={2} />
+          <SectionHeader title="Freelancer Information" index={2} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 2 && (
             <div className="py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -102,9 +99,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
           )}
         </div>
 
-        {/* SECTION 3 - CLIENT */}
         <div>
-          <SectionHeader title="Client Information" index={3} />
+          <SectionHeader title="Client Information" index={3} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 3 && (
             <div className="py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -127,9 +123,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
           )}
         </div>
 
-        {/* SECTION 4 - PROJECT */}
         <div>
-          <SectionHeader title="Project Details" index={4} />
+          <SectionHeader title="Project Details" index={4} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 4 && (
             <div className="py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -152,9 +147,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
           )}
         </div>
 
-        {/* SECTION 5 - PAYMENT */}
         <div>
-          <SectionHeader title="Payment Terms" index={5} />
+          <SectionHeader title="Payment Terms" index={5} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 5 && (
             <div className="py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
@@ -194,9 +188,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
           )}
         </div>
 
-        {/* SECTION 6 - TERMS */}
         <div>
-          <SectionHeader title="Project Terms" index={6} />
+          <SectionHeader title="Project Terms" index={6} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 6 && (
             <div className="py-6 grid grid-cols-1 gap-4">
               <div>
@@ -223,9 +216,8 @@ export function ContractForm({ data, onChange, onReset }: ContractFormProps) {
           )}
         </div>
 
-        {/* SECTION 7 - ADDITIONAL */}
         <div>
-          <SectionHeader title="Additional Notes" index={7} />
+          <SectionHeader title="Additional Notes" index={7} openSection={openSection} toggleSection={toggleSection} />
           {openSection === 7 && (
             <div className="py-6">
               <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Notes (Optional)</label>

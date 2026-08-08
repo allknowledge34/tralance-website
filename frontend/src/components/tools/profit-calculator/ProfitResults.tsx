@@ -21,7 +21,6 @@ export function ProfitResults({ data }: ProfitResultsProps) {
 
       <div className="bg-white dark:bg-[#0B1020] border border-slate-200 dark:border-white/10 p-6 md:p-8 rounded-2xl shadow-sm flex-grow">
         
-        {/* Main Highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <div className="bg-blue-50 dark:bg-blue-900/10 p-5 rounded-xl border border-blue-100 dark:border-blue-800/30">
             <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2">Estimated Take-Home</h3>
@@ -37,7 +36,6 @@ export function ProfitResults({ data }: ProfitResultsProps) {
           </div>
         </div>
 
-        {/* Breakdown */}
         <div className="mb-8">
           <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-4">Breakdown</h4>
           <div className="space-y-3 text-sm">
@@ -83,7 +81,6 @@ export function ProfitResults({ data }: ProfitResultsProps) {
           </div>
         </div>
 
-        {/* Project Worth Indicator */}
         {status && (
           <div className="mb-8">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-4">Project Worth Indicator</h4>
@@ -110,7 +107,6 @@ export function ProfitResults({ data }: ProfitResultsProps) {
           </div>
         )}
 
-        {/* Disclaimers */}
         <div className="mt-auto bg-slate-50 dark:bg-white/5 p-4 rounded-xl flex items-start gap-3">
           <Info className="w-5 h-5 text-slate-400 shrink-0 mt-0.5" />
           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">

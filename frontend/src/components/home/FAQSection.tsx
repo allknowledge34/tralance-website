@@ -109,7 +109,6 @@ export default function FAQSection() {
       />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E293B] dark:text-white mb-4">
             Frequently Asked Questions
@@ -121,7 +120,6 @@ export default function FAQSection() {
           </p>
         </div>
 
-        {/* FAQ List */}
         <div className="space-y-4">
           {FAQS.map((faq, index) => {
             const isOpen = openIndex === index;

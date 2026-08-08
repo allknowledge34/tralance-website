@@ -106,7 +106,7 @@ export default function ComparisonSection() {
 
         <div className="overflow-x-auto pb-8">
           <div className="min-w-[800px] bg-slate-50 dark:bg-[#1A2238] rounded-3xl border border-slate-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm transition-colors duration-300 overflow-hidden">
-            {/* Header */}
+            
             <div className="grid grid-cols-4 bg-white dark:bg-[#111827] border-b border-slate-200 dark:border-[rgba(255,255,255,0.08)] transition-colors duration-300">
               <div className="p-4 sm:p-6 flex items-center font-bold text-slate-900 dark:text-white transition-colors duration-300">Features</div>
               <div className="p-4 sm:p-6 text-center border-l border-slate-200 dark:border-[rgba(255,255,255,0.08)]">
@@ -116,7 +116,6 @@ export default function ComparisonSection() {
               <div className="p-4 sm:p-6 flex items-center justify-center text-center font-bold text-sm sm:text-base text-slate-600 dark:text-slate-400 border-l border-slate-200 dark:border-[rgba(255,255,255,0.08)] transition-colors duration-300">Generic SaaS Platforms</div>
             </div>
 
-            {/* Rows */}
             <div className="divide-y divide-slate-200 dark:divide-[rgba(255,255,255,0.08)] transition-colors duration-300">
               {COMPARISONS.map((item, idx) => (
                 <motion.div 

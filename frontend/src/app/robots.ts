@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/api/', // Assuming no public API routes need crawling
+      disallow: ['/api/', '/admin/', '/login/', '/dashboard/'],
     },
     sitemap: `${SITE_CONFIG.url}/sitemap.xml`,
   };
