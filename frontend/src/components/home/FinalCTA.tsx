@@ -2,8 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Play } from "lucide-react";
-import { FaWindows } from "react-icons/fa6";
 
 export default function FinalCTA() {
   return (
@@ -22,14 +20,14 @@ export default function FinalCTA() {
 
           <div className="relative z-10 flex flex-col items-center">
 
-            <h2 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight max-w-2xl leading-[1.1] mb-6">
-              Take Control of Your Freelance Finances
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight max-w-4xl leading-[1.1] mb-6 xl:whitespace-nowrap">
+              Take Tralance With You.
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 max-w-2xl leading-relaxed mb-4">
-              Track income, expenses, projects, and savings with complete privacy.
+              Use Tralance on your phone or desktop to keep your freelance work organized, with privacy at the core.
             </p>
             <motion.div
-              className="mt-10 flex flex-wrap justify-center gap-4"
+              className="mt-8 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto"
             >
               {/* Google Play */}
               <motion.a
@@ -39,17 +37,20 @@ export default function FinalCTA() {
                 href="https://play.google.com/store/apps/details?id=com.sachin.tralance"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4.5 rounded-2xl bg-white text-slate-950 hover:bg-slate-50 font-bold text-base transition-all shadow-xl shadow-white/5 border border-white/10"
+                className="w-full sm:w-[220px] inline-flex items-center justify-center sm:justify-start gap-4 px-6 py-3 rounded-2xl bg-[#0A0D14] text-white hover:bg-black font-bold transition-all shadow-xl shadow-black/20"
               >
-                <div className="bg-primary text-white p-1.5 rounded-lg">
-                  <Play className="w-5 h-5 fill-current" />
-                </div>
+                <svg className="w-[30px] h-[30px] flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.6 2.4c-.2.2-.3.6-.3 1.1v17c0 .5.1.9.3 1.1l.1.1 9-9v-.3l-9-9-.1.1z" fill="#3BCCFF"/>
+                  <path d="M12.7 12.4l3-3-1.6-.9-9.5-5.5c-.3-.2-.7-.2-.9 0L12.7 12.4z" fill="#FF3366"/>
+                  <path d="M12.7 12.4L3.7 21.4c.2.2.6.2.9 0l9.5-5.5 1.6-.9-3-3z" fill="#FFD13B"/>
+                  <path d="M15.7 9.4l-3 3 3 3 1-.6 4.6-2.6c.5-.3.5-.8 0-1.1l-4.6-2.6-1-.7z" fill="#00E676"/>
+                </svg>
 
-                <div className="text-left">
-                  <p className="text-[10px] uppercase font-bold text-slate-500 leading-none">
+                <div className="text-left flex flex-col justify-center">
+                  <p className="text-[10px] uppercase font-semibold text-slate-300 leading-none tracking-wide">
                     Get it on
                   </p>
-                  <p className="text-base font-black leading-tight mt-0.5">
+                  <p className="text-[19px] font-bold leading-tight mt-1 text-white">
                     Google Play
                   </p>
                 </div>
@@ -63,24 +64,27 @@ export default function FinalCTA() {
                 href="https://apps.microsoft.com/detail/xpddtkcglcbwj0?cid=PCCongratsBnr&hl=en-US&gl=IN"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4.5 rounded-2xl bg-white text-slate-950 hover:bg-slate-50 font-bold text-base transition-all shadow-xl shadow-white/5 border border-white/10"
+                className="w-full sm:w-[220px] inline-flex items-center justify-center sm:justify-start gap-4 px-6 py-3 rounded-2xl bg-[#0A0D14] text-white hover:bg-black font-bold transition-all shadow-xl shadow-black/20"
               >
-                <div className="bg-[#0078D4] text-white p-1.5 rounded-lg">
-                  <FaWindows className="w-5 h-5" />
-                </div>
+                <svg className="w-[26px] h-[26px] flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1" width="10" height="10" fill="#F25022"/>
+                  <rect x="13" y="1" width="10" height="10" fill="#7FBA00"/>
+                  <rect x="1" y="13" width="10" height="10" fill="#00A4EF"/>
+                  <rect x="13" y="13" width="10" height="10" fill="#FFB900"/>
+                </svg>
 
-                <div className="text-left">
-                  <p className="text-[10px] uppercase font-bold text-slate-500 leading-none">
+                <div className="text-left flex flex-col justify-center">
+                  <p className="text-[10px] uppercase font-semibold text-slate-300 leading-none tracking-wide">
                     Get it from
                   </p>
-                  <p className="text-base font-black leading-tight mt-0.5">
-                    Microsoft Store
+                  <p className="text-[19px] font-bold leading-tight mt-1 text-white">
+                    Microsoft
                   </p>
                 </div>
               </motion.a>
             </motion.div>
-            <p className="mt-6 text-xs text-slate-500">
-              No signups required. Standard core functionality is 100% free.
+            <p className="mt-8 text-sm text-slate-500 font-medium">
+              Available for mobile and desktop. Web tools are available directly in your browser.
             </p>
 
           </div>

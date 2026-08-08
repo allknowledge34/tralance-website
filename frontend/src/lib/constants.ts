@@ -2,8 +2,8 @@ import { SiteMetadata, NavLink } from "@/types";
 
 export const SITE_CONFIG: SiteMetadata = {
   name: "Tralance",
-  title: "Tralance (The Best Freelance Income & Expense Tracker)",
-  description: "Take full control of your variable project income and daily spending with total privacy. No servers, no data leaks—just pure money management right in your pocket.",
+  title: "Tralance | Private Freelance Workspace & Tools",
+  description: "Practical tools for freelancers to manage projects, money, clients, and the work behind them — with privacy at the core. Available for web, mobile, and desktop.",
   url: "https://www.tralance.pro", // Placeholder, change to production domain
   ogImage: "https://www.tralance.pro/og-image.jpg", // Placeholder
   links: {
@@ -21,29 +21,25 @@ export const NAV_LINKS: NavLink[] = [
 
 export const SEO_KEYWORDS = [
   // Primary
-  "freelance income tracker",
-  "freelance expense tracker",
-  "freelancer finance app",
-  "income and expense tracker",
-  "freelancer budget app",
-  "freelance accounting app",
-  "expense manager app",
-  "income manager app",
+  "freelance workspace",
+  "freelance tools",
+  "freelance productivity",
+  "freelance invoice generator",
+  "project profit calculator",
+  "freelance project management",
+  "freelance contract generator",
+  "project brief builder",
   // Secondary
-  "offline expense tracker",
-  "offline income tracker",
-  "privacy focused finance app",
-  "local database finance app",
-  "SQLite finance tracker",
-  "project income tracker",
-  "client payment tracker",
-  "freelancer project manager",
+  "offline freelance app",
+  "privacy focused freelance tools",
+  "freelance business tools",
+  "freelance finance tracker",
+  "client management for freelancers",
+  "freelancer ecosystem",
   // Long-tail
-  "best freelance income and expense tracker",
-  "offline income and expense tracker app",
-  "freelancer income management app",
-  "client payment tracking app",
-  "expense tracker for freelancers",
-  "privacy focused expense manager",
-  "local storage finance tracker",
+  "best tools for freelancers",
+  "private workspace for freelance work",
+  "offline first tools for freelancers",
+  "freelance project and money management",
+  "tools to calculate freelance rates",
 ];

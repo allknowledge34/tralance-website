@@ -9,7 +9,7 @@ import { IntelligenceWheel } from "./hero-wheel/intelligence-wheel";
 export default function Hero() {
   return (
     <section className="relative pt-8 md:pt-14 pb-8 md:pb-12 overflow-hidden bg-white dark:bg-[#0B1020] min-h-[60vh] flex flex-col justify-center transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8">
 
         {/* Left Column: Content */}
         <motion.div
@@ -20,10 +20,10 @@ export default function Hero() {
         >
 
           <div className="mb-6 w-full">
-            <h1 className="text-[3rem] sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-black tracking-tight text-slate-900 dark:text-white leading-[0.95]">
+            <h1 className="text-[2.25rem] min-[400px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-black tracking-tight text-slate-900 dark:text-white leading-[0.95] whitespace-nowrap">
               Freelance work.
             </h1>
-            <h2 className="text-[3rem] sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-black tracking-tight text-[#0066FF] leading-[0.95] mt-1 sm:mt-2 lg:whitespace-nowrap">
+            <h2 className="text-[2.25rem] min-[400px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-black tracking-tight text-[#0066FF] leading-[0.95] mt-1 sm:mt-2 whitespace-nowrap">
               More under control.
             </h2>
           </div>
@@ -84,11 +84,11 @@ export default function Hero() {
         </motion.div>
 
         {/* Right Column: Intelligence Wheel */}
-        <motion.div
+        <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="w-full lg:w-[45%] flex justify-center lg:justify-end relative z-0 mt-12 lg:mt-0"
+          className="w-full lg:w-[45%] flex justify-center lg:justify-end relative z-0 mt-4 lg:mt-0 -mb-12 lg:mb-0"
         >
           {/* We use a negative margin on large screens if needed to pull the wheel slightly left, 
               or just let it sit naturally. For a premium SaaS look, the wheel slightly bleeding off or sitting perfectly in the grid is ideal. */}

@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Hero from "@/components/home/Hero";
-import AppScreenshots from "@/components/home/AppScreenshots";
 import FreeToolsSection from "@/components/home/FreeToolsSection";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import FAQSection from "@/components/home/FAQSection";
@@ -19,7 +18,6 @@ export default function Home() {
     <main className="flex-grow">
       <Hero />
       <FreeToolsSection />
-      <AppScreenshots />
       <ComparisonSection />
       <FAQSection />
       <FinalCTA />

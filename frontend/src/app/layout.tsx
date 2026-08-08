@@ -82,8 +82,8 @@ export default function RootLayout({
       {
         "@type": "SoftwareApplication",
         name: SITE_CONFIG.name,
-        operatingSystem: "Android",
-        applicationCategory: "FinanceApplication",
+        operatingSystem: "Web, Android, Windows",
+        applicationCategory: "BusinessApplication",
         offers: {
           "@type": "Offer",
           price: "0",
