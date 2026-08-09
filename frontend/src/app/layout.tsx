@@ -26,15 +26,25 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
   manifest: "/manifest.json",
+
   title: {
     default: SITE_CONFIG.title,
     template: `%s | ${SITE_CONFIG.name}`,
   },
+
   description: SITE_CONFIG.description,
   keywords: SEO_KEYWORDS,
-  authors: [{ name: "Sachin Kumar", url: SITE_CONFIG.links.twitter }],
+
+  authors: [
+    {
+      name: "Sachin Kumar",
+      url: SITE_CONFIG.links.twitter,
+    },
+  ],
+
   creator: "Sachin Kumar",
   publisher: "Tralance",
+
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -42,6 +52,7 @@ export const metadata: Metadata = {
     title: SITE_CONFIG.title,
     description: SITE_CONFIG.description,
     siteName: SITE_CONFIG.name,
+
     images: [
       {
         url: SITE_CONFIG.ogImage,
@@ -51,6 +62,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
     title: SITE_CONFIG.title,
@@ -58,9 +70,11 @@ export const metadata: Metadata = {
     images: [SITE_CONFIG.ogImage],
     creator: "@tralanceapp",
   },
+
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -84,66 +98,96 @@ export default function RootLayout({
         name: SITE_CONFIG.name,
         operatingSystem: "Web, Android, Windows",
         applicationCategory: "BusinessApplication",
+
         offers: {
           "@type": "Offer",
           price: "0",
           priceCurrency: "USD",
         },
+
         description: SITE_CONFIG.description,
         url: SITE_CONFIG.url,
+
         author: {
           "@type": "Person",
           name: "Sachin Kumar",
         },
+
         aggregateRating: {
           "@type": "AggregateRating",
           ratingValue: "4.5",
-          ratingCount: "2"
+          ratingCount: "2",
         },
-        installUrl: "https://play.google.com/store/apps/details?id=com.sachin.tralance",
+
+        installUrl:
+          "https://play.google.com/store/apps/details?id=com.sachin.tralance",
+
         softwareVersion: "1.0",
       },
+
       {
         "@type": "Organization",
         name: SITE_CONFIG.name,
         url: SITE_CONFIG.url,
+
         logo: `${SITE_CONFIG.url}/icon.png`,
+
         contactPoint: {
           "@type": "ContactPoint",
           email: SITE_CONFIG.contactEmail,
           contactType: "customer support",
         },
+
         sameAs: [
           SITE_CONFIG.links.twitter,
           SITE_CONFIG.links.github,
         ],
       },
+
       {
         "@type": "WebSite",
         name: SITE_CONFIG.name,
         url: SITE_CONFIG.url,
+
         potentialAction: {
           "@type": "SearchAction",
           target: `${SITE_CONFIG.url}/?s={search_term_string}`,
-          "query-input": "required name=search_term_string"
-        }
-      }
+          "query-input": "required name=search_term_string",
+        },
+      },
     ],
   };
 
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
         <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5744857349829100"
+          crossOrigin="anonymous"
         />
+      </head>
+
+      <body className="min-h-full">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
+
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
                   var theme = localStorage.getItem('theme');
+
                   if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                   } else {
@@ -154,13 +198,12 @@ export default function RootLayout({
             `,
           }}
         />
-      </head>
-      <body className="min-h-full flex flex-col font-sans bg-white dark:bg-rich-black text-slate-900 dark:text-slate-100 transition-colors duration-300">
+
         <ThemeProvider>
           <Navbar />
-          <main className="flex-grow flex flex-col">
-            {children}
-          </main>
+
+          {children}
+
           <Footer />
         </ThemeProvider>
 

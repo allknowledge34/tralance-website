@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
               <section id="tralance-applications" className="scroll-mt-24">
                 <h2>2. Tralance Mobile and Desktop Applications</h2>
                 <p>
-                  Our mobile and desktop applications are designed to help freelancers manage their work, income, and expenses locally. 
+                  Our mobile and desktop applications are designed to help freelancers manage their work, income, and expenses locally.
                 </p>
                 <ul>
                   <li><strong>Local Data Storage:</strong> Financial data, projects, clients, and transaction history entered into the Tralance Mobile and Desktop applications are designed to be stored locally on your device. Tralance does not provide cloud synchronization for this financial data.</li>
@@ -66,12 +66,15 @@ export default function PrivacyPolicyPage() {
               <section id="cookies-and-analytics" className="scroll-mt-24">
                 <h2>4. Cookies, Analytics, and Advertising</h2>
                 <p>
-                  While our core applications are offline-first, our public website relies on standard web technologies:
+                  While our core applications are offline-first, our public website relies on standard web technologies.
                 </p>
                 <ul>
                   <li><strong>Cookies:</strong> Cookies and similar technologies may be used on parts of our public website where they are required for functionality, analytics, security, or advertising.</li>
                   <li><strong>Analytics:</strong> We may use third-party analytics services, such as Google Analytics, where enabled, to understand website traffic and usage.</li>
-                  <li><strong>Advertising:</strong> If advertising is enabled on the website, third-party advertising providers such as Google AdSense may use cookies or similar technologies to serve and measure advertisements. Where required, appropriate consent and privacy controls will be provided.</li>
+                  <li><strong>Advertising:</strong> If advertising is enabled on the website, third-party advertising providers, including Google, may use cookies or similar technologies to serve and measure advertisements. Third-party vendors, including Google, may use cookies to serve ads based on a user's prior visits to this website or other websites.
+                    Google's use of advertising cookies enables Google and its partners to serve advertisements to users based on their visits to this website and/or other websites.
+                    Users may opt out of personalized advertising by visiting Google's Ads Settings.
+                    Where required by applicable law, appropriate consent and privacy controls will be provided for the use of cookies, local storage, and personal data for advertising purposes.</li>
                 </ul>
               </section>
 
