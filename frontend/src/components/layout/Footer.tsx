@@ -59,7 +59,7 @@ export default function Footer() {
             <ul className="flex flex-col space-y-3.5">
               <li><a href="https://www.youtube.com/@AiCodingHub" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">YouTube</a></li>
               <li><a href="https://www.instagram.com/dmilx.tech/" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Instagram</a></li>
-              <li><a href="#" className="text-[15px] font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Twitter(x)</a></li>
+
             </ul>
           </div>
 

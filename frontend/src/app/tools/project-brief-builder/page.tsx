@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 import BriefClient from "./BriefClient";
+import { ToolFAQ } from "@/components/tools/ToolFAQ";
 
 export const metadata: Metadata = {
   title: "Freelance Project Brief Builder | Tralance",
@@ -158,14 +159,7 @@ export default function ProjectBriefBuilderPage() {
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
-          <div className="space-y-6">
-            {faqSchema.mainEntity.map((faq, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{faq.name}</h3>
-                <p className="text-slate-600 dark:text-slate-400">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
+          <ToolFAQ faqs={faqSchema.mainEntity.map((faq: any) => ({ q: faq.name, a: faq.acceptedAnswer.text }))} />
         </div>
 
       </section>

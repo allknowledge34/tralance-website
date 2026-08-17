@@ -47,15 +47,7 @@ export default function Hero() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <a
-              href="https://x.com/tralanceapp"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Tralance on X"
-              className="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-[#AEB7C6] hover:text-[#0066FF] hover:border-[#0066FF]/40 transition-colors duration-200"
-            >
-              <Twitter className="w-[15px] h-[15px]" strokeWidth={2} />
-            </a>
+            
 
             <a href="https://www.instagram.com/dmilx.tech/"
               target="_blank"

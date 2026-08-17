@@ -34,10 +34,12 @@ export default function ToolsHubPage() {
           Simple, privacy-first tools built to help freelancers manage the practical side of independent work. No unnecessary logins. Your data stays on your device.
         </p>
       </section>
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-6">
           {toolsConfig.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
+            <div key={tool.id} className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333333%-16px)]">
+              <ToolCard tool={tool} />
+            </div>
           ))}
         </div>
       </section>

@@ -32,7 +32,7 @@ export default function AboutPage() {
       />
 
       <main className="min-h-screen bg-white dark:bg-[#030303] transition-colors duration-300">
-        <div className="max-w-4xl mx-auto px-6 py-16 md:py-20">
+        <div className="max-w-4xl mx-auto px-6 pt-16 pb-32 md:pt-20 md:pb-40">
 
           <header className="mb-14 border-b border-slate-200/60 dark:border-white/5 pb-10">
             <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">

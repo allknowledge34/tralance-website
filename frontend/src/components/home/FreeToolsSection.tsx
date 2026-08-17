@@ -19,28 +19,30 @@ export default function FreeToolsSection() {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
 
           {toolsConfig.map((tool) => {
             const Icon = tool.icon;
             return (
-              <Link key={tool.id} href={tool.href} className="block">
-                <div className="h-full bg-white dark:bg-[#0B1020] rounded-[20px] p-8 md:p-10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-transparent dark:border-[rgba(255,255,255,0.05)]">
+              <div key={tool.id} className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333333%-16px)]">
+                <Link href={tool.href} className="block h-full">
+                  <div className="h-full bg-white dark:bg-[#0B1020] rounded-[20px] p-8 md:p-10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-transparent dark:border-[rgba(255,255,255,0.05)]">
 
-                  <div className={`w-14 h-14 rounded-2xl ${tool.color} text-white flex items-center justify-center mb-6 shadow-sm`}>
-                    <Icon className="w-7 h-7" />
+                    <div className={`w-14 h-14 rounded-2xl ${tool.color} text-white flex items-center justify-center mb-6 shadow-sm`}>
+                      <Icon className="w-7 h-7" />
+                    </div>
+
+                    <h3 className="text-xl font-bold text-[#1E293B] dark:text-white mb-3">
+                      {tool.name}
+                    </h3>
+
+                    <p className="text-[15px] text-[#64748B] dark:text-slate-400 font-medium leading-relaxed">
+                      {tool.description}
+                    </p>
+
                   </div>
-
-                  <h3 className="text-xl font-bold text-[#1E293B] dark:text-white mb-3">
-                    {tool.name}
-                  </h3>
-
-                  <p className="text-[15px] text-[#64748B] dark:text-slate-400 font-medium leading-relaxed">
-                    {tool.description}
-                  </p>
-
-                </div>
-              </Link>
+                </Link>
+              </div>
             );
           })}
 

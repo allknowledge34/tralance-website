@@ -1,4 +1,4 @@
-import { FileText, Calculator, GraduationCap, PieChart, FileSignature, ClipboardList } from "lucide-react";
+import { FileText, Calculator, PieChart, FileSignature, ClipboardList } from "lucide-react";
 
 import { LucideIcon } from "lucide-react";
 
@@ -59,14 +59,5 @@ export const toolsConfig: ToolConfig[] = [
     icon: FileSignature,
     category: "Productivity",
     color: "bg-[#f59e0b]", // amber-500
-  },
-  {
-    id: "cgpa-planner",
-    name: "CGPA Planner",
-    description: "Calculate CGPA semester-wise, track backlogs, and plan for your target seamlessly.",
-    href: "/tools/cgpa-planner",
-    icon: GraduationCap,
-    category: "Education",
-    color: "bg-[#10b981]", // emerald-500
   },
 ];

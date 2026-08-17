@@ -12,7 +12,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/terms',
     '/contact',
     '/blog',
-    '/tools/cgpa-planner',
     '/tools/freelancer-rate-calculator',
     '/tools/project-profit-calculator',
     '/tools/freelancer-invoice-generator',

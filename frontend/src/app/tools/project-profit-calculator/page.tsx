@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 import ProfitClient from "./ProfitClient";
+import { ToolFAQ } from "@/components/tools/ToolFAQ";
 
 export const metadata: Metadata = {
   title: "Freelancer Project Profit Calculator | Tralance",
@@ -116,32 +117,62 @@ export default function ProjectProfitCalculatorPage() {
           </div>
         </div>
 
+        <div className="mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
+            A Realistic Freelance Project Example
+          </h2>
+          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+            <p>
+              To understand the difference between gross revenue and actual profit, let&apos;s look at a realistic scenario. Imagine a freelancer lands a <strong>$1,500 website design project</strong> on a popular freelance platform. They estimate the project will take them 25 hours to complete.
+            </p>
+            
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-4">The Deductions</h3>
+            <ul className="mt-4 space-y-2">
+              <li><strong>Platform Fees:</strong> The freelance platform takes a 10% cut (<strong>-$150</strong>).</li>
+              <li><strong>Payment Processing:</strong> The withdrawal method takes a 2% conversion/transfer fee (<strong>-$27</strong>).</li>
+              <li><strong>Project Expenses:</strong> The freelancer needs to purchase a premium stock photo license and a premium font for this specific client (<strong>-$80</strong>).</li>
+              <li><strong>Estimated Taxes:</strong> The freelancer sets aside 25% of their net profit (Gross minus expenses and fees) for income and self-employment taxes (<strong>-$310.75</strong>).</li>
+            </ul>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-4">The Reality Check</h3>
+            <p>
+              After subtracting the $150 platform fee, the $27 payment fee, the $80 in expenses, and the $310.75 in taxes, the actual take-home profit is <strong>$932.25</strong>. 
+            </p>
+            <p>
+              While the project was sold for $1,500 at an assumed rate of $60/hour ($1,500 / 25 hours), the <strong>effective hourly rate</strong>—the amount the freelancer actually gets to keep—is only <strong>$37.29 per hour</strong> ($932.25 / 25 hours).
+            </p>
+            <p>
+              This is why calculating project profit is critical. If your minimum living expenses require you to earn $50 an hour, a $1,500 project might look sufficient at first glance, but you would actually be operating at a loss once the hidden costs are factored in.
+            </p>
+          </div>
+        </div>
+
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">What is an effective hourly rate?</h3>
-              <p className="text-slate-600 dark:text-slate-400">An effective hourly rate is how much you actually earn per hour worked, after deducting all fees, expenses, and taxes from the project price.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Does this calculator include platform fees?</h3>
-              <p className="text-slate-600 dark:text-slate-400">Yes. You can enter the specific percentage fee charged by your freelance platform (like Upwork or Fiverr) and payment processor (like Stripe or PayPal) to see exactly how much they take from your total revenue.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Can I use different currencies?</h3>
-              <p className="text-slate-600 dark:text-slate-400">Yes, the calculator supports multiple major currencies including USD, EUR, GBP, INR, CAD, and AUD.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Does Tralance store my project information?</h3>
-              <p className="text-slate-600 dark:text-slate-400">No. The Freelancer Project Profit Calculator runs entirely in your web browser. No project data, pricing, or financial information is ever sent to or stored on our servers.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Is the tax calculation accurate?</h3>
-              <p className="text-slate-600 dark:text-slate-400">The tax calculation provides a simple percentage-based estimate of your taxable income (gross revenue minus deductible expenses). It does not account for complex local tax laws, deductions, or progressive tax brackets, and should not be used as official tax advice.</p>
-            </div>
-          </div>
+          <ToolFAQ faqs={[
+            {
+              q: "What is an effective hourly rate?",
+              a: "An effective hourly rate is how much you actually earn per hour worked, after deducting all fees, expenses, and taxes from the project price."
+            },
+            {
+              q: "Does this calculator include platform fees?",
+              a: "Yes. You can enter the specific percentage fee charged by your freelance platform (like Upwork or Fiverr) and payment processor (like Stripe or PayPal) to see exactly how much they take from your total revenue."
+            },
+            {
+              q: "Can I use different currencies?",
+              a: "Yes, the calculator supports multiple major currencies including USD, EUR, GBP, INR, CAD, and AUD."
+            },
+            {
+              q: "Does Tralance store my project information?",
+              a: "No. The Freelancer Project Profit Calculator runs entirely in your web browser. No project data, pricing, or financial information is ever sent to or stored on our servers."
+            },
+            {
+              q: "Is the tax calculation accurate?",
+              a: "The tax calculation provides a simple percentage-based estimate of your taxable income (gross revenue minus deductible expenses). It does not account for complex local tax laws, deductions, or progressive tax brackets, and should not be used as official tax advice."
+            }
+          ]} />
         </div>
 
       </section>
