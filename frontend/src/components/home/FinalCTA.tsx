@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function FinalCTA() {
   return (
-    <section className="py-16 sm:py-24 relative overflow-hidden">
+    <section className="pt-16 pb-32 sm:pt-24 sm:pb-40 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-primary/20 via-accent-purple/15 to-accent-cyan/15 blur-[100px] rounded-full -z-10" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
