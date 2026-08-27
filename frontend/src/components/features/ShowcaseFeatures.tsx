@@ -234,7 +234,7 @@ export default function ShowcaseFeatures() {
                               alt={`Tralance mobile ${feature.title.toLowerCase()}`}
                               fill
                               sizes="(max-width: 640px) 300px, 330px"
-                              className="object-cover transition-transform duration-700 group-hover:scale-105"
+                              className="object-cover"
                               priority={index === 0}
                             />
                           </div>
@@ -252,7 +252,7 @@ export default function ShowcaseFeatures() {
                                 quality={100}
                                 unoptimized={true}
                                 sizes="(max-width: 1200px) 100vw, 1100px"
-                                className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+                                className="object-cover object-top"
                                 priority={index === 0}
                               />
                             </div>
