@@ -118,6 +118,30 @@ export default function FreelancerInvoiceGeneratorPage() {
             <p>
               Another major mistake is <strong>forgetting payment instructions</strong>. Never assume the client knows how to pay you. Always include your bank routing details, SWIFT code, or a direct link to your payment gateway in the Notes or Terms section of the invoice.
             </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Invoicing International Clients</h3>
+            <p>
+              When working with international clients, choosing the right invoice currency is critical. While billing in your local currency avoids conversion math on your end, billing in the client&apos;s currency is often more professional. Be aware that international payment providers or banks may charge transfer or currency conversion fees. If you accept international wire transfers, make sure to include your SWIFT code and IBAN in the payment instructions. Always confirm the preferred payment method and any specific invoicing requirements with the client beforehand to avoid cross-border payment delays.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Navigating Taxes and VAT</h3>
+            <p>
+              Depending on where you and your client are located, you may be required to collect sales tax, VAT (Value Added Tax), or GST. Our invoice generator includes an optional tax field you can use to add these percentages automatically. However, tax laws vary significantly by jurisdiction. Always verify your local tax requirements and confirm whether you meet the threshold for collecting taxes before adding them to an invoice.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">A Realistic Invoicing Scenario</h3>
+            <p>
+              Imagine you are hired to write a series of blog posts. You send an invoice with a single line item: &quot;Writing Services - $800.&quot; The client&apos;s accounting department rejects it because they need to know exactly what was delivered to categorize the expense. Payment is delayed by two weeks.
+            </p>
+            <p>
+              Contrast this with a detailed invoice: &quot;4x 1,000-word Blog Posts (SEO Optimized) - Delivered Aug 15 - 4 qty @ $200.&quot; This invoice explicitly states the quantity, rate, delivery date, and clear payment terms. The accounting department processes it immediately without asking questions.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Organizing Invoices for Tax Season</h3>
+            <p>
+              A consistent filing system saves hours of headache during tax season. When saving your PDFs, use a standard naming convention like <code>INV-2026-001-ClientName.pdf</code>. Keep your downloaded invoices organized in folders by year and by client. Consistent records make it dramatically easier to track unpaid invoices, report your income accurately, and handle any potential financial administration.
+            </p>
+
             
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Handling Late Payments</h3>
             <p>

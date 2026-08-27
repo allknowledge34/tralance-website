@@ -119,6 +119,15 @@ export default function ProjectBriefBuilderPage() {
             <p>
               A project brief is a structured document that gives clients and freelancers one shared understanding of what needs to be done. It acts as the blueprint for the project, translating vague ideas into specific requirements, deliverables, and timelines.
             </p>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Brief vs. Proposal vs. Contract</h3>
+            <p>
+              It is easy to confuse these three documents, but they each serve a distinct purpose in the freelance workflow:
+            </p>
+            <ul>
+              <li><strong>The Brief</strong> defines the <em>problem</em>. It outlines exactly what needs to be built, the goals, the target audience, and the overall scope. It is often written by the client, or collaboratively during a discovery call.</li>
+              <li><strong>The Proposal</strong> presents the <em>solution</em>. The freelancer writes this to explain how they plan to execute the brief, how long it will take, and how much it will cost.</li>
+              <li><strong>The Contract</strong> is the <em>legal agreement</em>. Once the proposal is accepted, the contract formally binds both parties to the agreed terms, covering payment schedules, intellectual property, and liabilities.</li>
+            </ul>
           </div>
         </div>
 
@@ -135,6 +144,17 @@ export default function ProjectBriefBuilderPage() {
               <li><strong>Clearer deliverables:</strong> You know exactly what files or assets change hands at the end.</li>
               <li><strong>Fewer scope-related disagreements:</strong> If it isn&apos;t in the brief, it&apos;s a new request that requires a new budget.</li>
             </ul>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">A Realistic Scenario: Bad Brief vs. Good Brief</h3>
+            <p>
+              Imagine receiving a project inquiry with a vague brief like: <em>&quot;Build me a website like Apple.&quot;</em> This brief is useless. It provides no constraints, no context, and no clear deliverables. A freelancer cannot accurately estimate how many hours this will take or what the client considers a success.
+            </p>
+            <p>
+              Contrast this with a useful, structured brief: <em>&quot;Design and build a 5-page e-commerce website on Shopify. Pages include: Home, About, Shop, Single Product, and Contact. The target audience is affluent millennials. The design should use a minimalist black-and-white aesthetic. We need the final site launched by October 15th, with a maximum budget of $4,000.&quot;</em>
+            </p>
+            <p>
+              The second brief makes estimation, communication, and scope control dramatically easier. The freelancer knows exactly what is expected and can confidently write a proposal to match.
+            </p>
           </div>
         </div>
 
@@ -152,6 +172,20 @@ export default function ProjectBriefBuilderPage() {
               <li><strong>Clarify revisions and communication:</strong> Agree on how feedback will be given and through which channels (e.g. Slack vs Email).</li>
               <li><strong>Add the budget:</strong> If appropriate, set the financial constraints so expectations align immediately.</li>
             </ol>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Using the Brief to Prevent Scope Creep</h3>
+            <p>
+              During a project, a client will often ask for significant additional work that wasn&apos;t initially discussed. This is called scope creep. If you don&apos;t have a brief, it&apos;s very difficult to push back because the boundaries of the project were never formally defined.
+            </p>
+            <p>
+              For example, imagine you agreed to build the 5-page e-commerce site mentioned earlier. Halfway through the project, the client says, <em>&quot;Can we also add a custom forum where users can talk to each other?&quot;</em>
+            </p>
+            <p>
+              Instead of doing the work for free or getting into an argument, you can simply refer back to the brief and reply professionally: <em>&quot;I would love to build out a custom forum for you! However, since a community forum wasn&apos;t included in our original project brief, it falls outside the current scope. I can put together a separate estimate for that feature, or we can tackle it in Phase 2 once the main site is launched.&quot;</em>
+            </p>
+            <p>
+              Remember, while the brief cleanly documents the agreed project scope to prevent these issues, it is not a substitute for a legal contract. Always sign a contract before beginning work.
+            </p>
           </div>
         </div>
 

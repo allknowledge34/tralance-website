@@ -95,6 +95,14 @@ export default function FreelancerRateCalculatorPage() {
               <strong>Billable hours</strong> are the hours you actually spend working on client projects that generate revenue. <strong>Non-billable hours</strong> include pitching clients, sending proposals, updating your portfolio, accounting, and continuing education. Most successful freelancers find that only about 50% to 60% of their working hours are actually billable. Your rate must be high enough that those billable hours cover the cost of your non-billable time.
             </p>
 
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Accounting for Vacation and Sick Days</h3>
+            <p>
+              Employees typically receive paid vacations, holidays, and sick leave. Freelancers do not. If you calculate your rate assuming you will work 40 hours a week for all 52 weeks of the year, you will fall short of your income target the moment you take a break or catch a cold.
+            </p>
+            <p>
+              To prevent this, you must reduce your total available working weeks. For example, you might plan to take 3 weeks of vacation, 1 week of national holidays, and 1 week for sick days. That leaves you with 47 actual working weeks per year, or roughly 3.9 weeks per month. By calculating your rate based on 47 weeks instead of 52, you ensure your hourly rate is high enough to cover your expenses while you take necessary time off. <em>(Note: There is no universal standard here; use a realistic schedule that fits your life.)</em>
+            </p>
+
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">A Realistic Worked Example</h3>
             <p>
               Let&apos;s look at a practical example of how to calculate a minimum sustainable rate. Imagine a freelance designer with the following financial reality:
@@ -132,6 +140,17 @@ export default function FreelancerRateCalculatorPage() {
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">How Experience Affects Pricing</h3>
             <p>
               The calculator provides your <em>minimum</em> baseline rate. However, as you gain experience, you become faster and more efficient. A task that used to take you 5 hours might now take 2 hours. If you continue charging the same hourly rate, your income will actually drop as you get better! As your expertise grows, you should transition from minimum hourly pricing to value-based pricing, project-based flat rates, or simply raise your hourly rate to reflect the premium quality and speed you provide.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">Using Your Rate for Fixed-Price Projects</h3>
+            <p>
+              Even if you transition to selling projects using fixed prices, your internal hourly rate remains a crucial tool. It acts as the financial baseline to ensure your flat-fee quotes are profitable. 
+            </p>
+            <p>
+              To create a starting project quote, estimate the total hours required (including admin, communication, and revisions) and multiply it by your internal baseline rate. For example, if your baseline rate is $61/hr and you estimate a project will take 15 hours, your absolute minimum quote is $915. 
+            </p>
+            <p>
+              However, this is only your baseline. Your final quote shown to the client should be marked up to account for project complexity, unexpected risks, software expenses, platform fees, and the overall value of the outcome you are delivering. The internal hourly rate is simply your safety net to ensure you never underprice your services.
             </p>
           </div>
         </div>

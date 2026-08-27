@@ -84,7 +84,6 @@ export default function ProjectProfitCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Hero Section */}
       <section className="pt-20 md:pt-28 pb-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
           Freelancer Project Profit Calculator
@@ -139,10 +138,34 @@ export default function ProjectProfitCalculatorPage() {
               After subtracting the $150 platform fee, the $27 payment fee, the $80 in expenses, and the $310.75 in taxes, the actual take-home profit is <strong>$932.25</strong>. 
             </p>
             <p>
-              While the project was sold for $1,500 at an assumed rate of $60/hour ($1,500 / 25 hours), the <strong>effective hourly rate</strong>—the amount the freelancer actually gets to keep—is only <strong>$37.29 per hour</strong> ($932.25 / 25 hours).
+              While the project was sold for $1,500 at an assumed rate of $60/hour ($1,500 / 25 hours), the <strong>effective hourly rate</strong>-the amount the freelancer actually gets to keep-is only <strong>$37.29 per hour</strong> ($932.25 / 25 hours).
             </p>
             <p>
               This is why calculating project profit is critical. If your minimum living expenses require you to earn $50 an hour, a $1,500 project might look sufficient at first glance, but you would actually be operating at a loss once the hidden costs are factored in.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">The Trap of Non-Billable Hours</h3>
+            <p>
+              Freelancers notoriously underestimate how much time a project actually takes. While you might only spend 15 hours designing, writing, or coding, you must also account for emails, client calls, writing proposals, onboarding, project management, and final handoffs. These administrative tasks are non-billable hours that still consume your time.
+            </p>
+            <p>
+              For example, if you add just 5 hours of admin and communication time to a 20-hour project, your total time investment becomes 25 hours. This mathematically reduces your effective hourly rate by 20%, even though the core deliverables haven&apos;t changed. Always estimate and include administrative time in your project quotes.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">How to Quote for Profit (The Buffer Method)</h3>
+            <p>
+              To ensure you hit your target income, you must quote with a &quot;buffer&quot; that absorbs platform fees, payment processing, taxes, and unexpected minor expenses. You can use this calculator to reverse-engineer your quotes.
+            </p>
+            <p>
+              For instance, if your goal is to take home $1,000 for a project, quoting exactly $1,000 means you will likely only keep around $650 after a 20% platform fee and a 15% estimated tax deduction. Instead, you need to quote closer to $1,475. This allows the platform and taxes to take their cut, leaving you with your desired $1,000. <em>(Note: Your exact buffer will depend on your specific overhead, local tax laws, and business structure.)</em>
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-10 mb-4">The Financial Impact of Scope Creep</h3>
+            <p>
+              Scope creep happens when a client asks for &quot;just one more small change&quot; outside the original agreement. Doing unpaid extra work is mathematically disastrous for your profit margins.
+            </p>
+            <p>
+              If your take-home profit is $900 on a 20-hour project, your effective rate is $45/hr. If you spend 5 unpaid hours doing extra revisions, your project time jumps to 25 hours. Your profit is still $900, but your effective rate instantly drops to $36/hr. To protect your profitability, use the Project Profit Calculator to determine your true rate, track your hours carefully, and always charge appropriately for work that falls outside the agreed scope.
             </p>
           </div>
         </div>
