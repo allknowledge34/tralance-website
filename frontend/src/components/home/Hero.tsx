@@ -1,13 +1,15 @@
+"use client";
+
 import React from "react";
-import { Instagram, Youtube } from "lucide-react";
+import { motion } from "framer-motion";
+import { Twitter, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
-import HeroWheelLoader from "./hero-wheel/HeroWheelLoader";
+import { IntelligenceWheel } from "./hero-wheel/intelligence-wheel";
 
 export default function Hero() {
   return (
     <section className="relative pt-8 md:pt-14 pb-8 md:pb-12 overflow-hidden bg-white dark:bg-[#0B1020] lg:min-h-[60vh] flex flex-col justify-center transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8">
-
       
         <div className="w-full lg:w-[55%] z-10 flex flex-col items-center lg:items-start text-center lg:text-left flex-shrink-0">
 
@@ -62,11 +64,17 @@ export default function Hero() {
 
         </div>
 
-        <div className="hidden lg:flex w-full lg:w-[45%] justify-center lg:justify-end relative z-0">
+        {/* Hidden on mobile – only renders and animates on lg+ screens */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="hidden lg:flex w-full lg:w-[45%] justify-center lg:justify-end relative z-0 lg:mt-0 lg:mb-0"
+        >
           <div className="relative">
-            <HeroWheelLoader />
+            <IntelligenceWheel />
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
