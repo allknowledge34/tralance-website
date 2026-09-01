@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const COMPARISONS = [
   {
@@ -115,8 +118,12 @@ export default function ComparisonSection() {
 
             <div className="divide-y divide-slate-200 dark:divide-[rgba(255,255,255,0.08)] transition-colors duration-300">
               {COMPARISONS.map((item, idx) => (
-                <div
-                  key={idx}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  key={idx} 
                   className="grid grid-cols-4 hover:bg-white dark:hover:bg-[#111827]/50 transition-colors duration-300"
                 >
                   <div className="p-4 sm:p-6 flex items-center text-xs sm:text-sm font-medium text-slate-700 dark:text-[#AEB7C6] transition-colors duration-300">{item.feature}</div>
@@ -132,7 +139,7 @@ export default function ComparisonSection() {
                   <div className="p-4 sm:p-6 flex items-center justify-center border-l border-slate-200 dark:border-[rgba(255,255,255,0.08)] transition-colors duration-300">
                     {renderCell(item.saas)}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
