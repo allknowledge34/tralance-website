@@ -5,6 +5,7 @@ import { SITE_CONFIG, SEO_KEYWORDS } from "@/lib/constants";
 import { ThemeProvider } from "@/components/layout/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
@@ -205,6 +206,7 @@ export default function RootLayout({
           {children}
 
           <Footer />
+          <MobileBottomNav />
         </ThemeProvider>
 
         <GoogleAnalytics gaId="G-QZ3VZDMVPR" />
