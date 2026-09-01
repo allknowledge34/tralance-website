@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 const FAQS = [
@@ -154,23 +153,18 @@ export default function FAQSection() {
                   </div>
                 </button>
 
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{
-                        duration: 0.3,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <div className="px-5 md:px-6 pb-6 pt-0 text-[15px] md:text-base text-slate-500 dark:text-[#AEB7C6] leading-relaxed">
-                        {faq.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* CSS-only accordion — no Framer Motion needed */}
+                <div
+                  style={{
+                    maxHeight: isOpen ? "600px" : "0",
+                    overflow: "hidden",
+                    transition: "max-height 0.3s ease-in-out",
+                  }}
+                >
+                  <div className="px-5 md:px-6 pb-6 pt-0 text-[15px] md:text-base text-slate-500 dark:text-[#AEB7C6] leading-relaxed">
+                    {faq.a}
+                  </div>
+                </div>
               </div>
             );
           })}

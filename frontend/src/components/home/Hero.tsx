@@ -1,22 +1,15 @@
-"use client";
-
 import React from "react";
-import { motion } from "framer-motion";
-import { Twitter, Instagram, Youtube } from "lucide-react";
+import { Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
-import { IntelligenceWheel } from "./hero-wheel/intelligence-wheel";
+import HeroWheelLoader from "./hero-wheel/HeroWheelLoader";
 
 export default function Hero() {
   return (
     <section className="relative pt-8 md:pt-14 pb-8 md:pb-12 overflow-hidden bg-white dark:bg-[#0B1020] lg:min-h-[60vh] flex flex-col justify-center transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8">
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full lg:w-[55%] z-10 flex flex-col items-center lg:items-start text-center lg:text-left flex-shrink-0"
-        >
+      
+        <div className="w-full lg:w-[55%] z-10 flex flex-col items-center lg:items-start text-center lg:text-left flex-shrink-0">
 
           <div className="mb-6 w-full">
             <h1 className="text-[2.25rem] min-[400px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-black tracking-tight text-slate-900 dark:text-white leading-[0.95] whitespace-nowrap">
@@ -26,6 +19,7 @@ export default function Hero() {
               More under control.
             </h2>
           </div>
+
           <p className="text-lg sm:text-xl text-slate-500 dark:text-[#AEB7C6] mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-colors duration-300">
             Practical tools for freelancers to manage projects, money, clients, and the work behind them - with privacy at the core.
           </p>
@@ -47,8 +41,6 @@ export default function Hero() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            
-
             <a href="https://www.instagram.com/dmilx.tech/"
               target="_blank"
               rel="noopener noreferrer"
@@ -68,19 +60,13 @@ export default function Hero() {
             </a>
           </div>
 
-        </motion.div>
+        </div>
 
-        {/* Hidden on mobile – only renders and animates on lg+ screens */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="hidden lg:flex w-full lg:w-[45%] justify-center lg:justify-end relative z-0 lg:mt-0 lg:mb-0"
-        >
+        <div className="hidden lg:flex w-full lg:w-[45%] justify-center lg:justify-end relative z-0">
           <div className="relative">
-            <IntelligenceWheel />
+            <HeroWheelLoader />
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>
