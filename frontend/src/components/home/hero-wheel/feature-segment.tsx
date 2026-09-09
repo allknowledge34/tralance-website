@@ -32,7 +32,7 @@ export function FeatureSegment({ label, icon: Icon, colorClass, angle, radius, i
       className="absolute top-1/2 left-1/2 -ml-12 -mt-12 w-24 h-24 z-10"
     >
       <motion.div
-        whileHover={{ scale: 1.1, y: -5 }}
+        whileHover={{ scale: 1.015, y: -5 }}
         transition={{ type: "spring", stiffness: 400, damping: 20 }}
         className={`w-full h-full relative cursor-pointer group`}
       >

@@ -8,7 +8,7 @@ import { IntelligenceWheel } from "./hero-wheel/intelligence-wheel";
 
 export default function Hero() {
   return (
-    <section className="relative pt-8 md:pt-14 pb-8 md:pb-12 overflow-hidden bg-white dark:bg-[#0B1020] lg:min-h-[60vh] flex flex-col justify-center transition-colors duration-300">
+    <section className="relative pt-8 md:pt-14 pb-8 md:pb-12 overflow-hidden bg-white dark:bg-[#0B1020] lg:min-h-[60vh] flex flex-col justify-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8">
       
         <div className="w-full lg:w-[55%] z-10 flex flex-col items-center lg:items-start text-center lg:text-left flex-shrink-0">
@@ -22,21 +22,21 @@ export default function Hero() {
             </h2>
           </div>
 
-          <p className="text-lg sm:text-xl text-slate-500 dark:text-[#AEB7C6] mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-colors duration-300">
+          <p className="text-lg sm:text-xl text-slate-500 dark:text-[#AEB7C6] mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
             Practical tools for freelancers to manage projects, money, clients, and the work behind them - with privacy at the core.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12 w-full lg:w-auto">
             <Link
               href="/tools"
-              className="w-full sm:w-[210px] h-[64px] flex items-center justify-center gap-3 bg-[#0A1128] dark:bg-white hover:bg-black dark:hover:bg-slate-200 text-white dark:text-[#0A1128] rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] text-[17px]"
+              className="w-full sm:w-[210px] h-[64px] flex items-center justify-center gap-3 bg-[#0A1128] dark:bg-white hover:bg-black dark:hover:bg-slate-200 text-white dark:text-[#0A1128] rounded-2xl font-bold transition-all hover:scale-101 active:scale-95 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] text-[17px]"
             >
               Explore Tools
             </Link>
 
             <Link
               href="/features"
-              className="w-full sm:w-[210px] h-[64px] flex items-center justify-center gap-3 bg-white dark:bg-[#0B1020] hover:bg-slate-50 dark:hover:bg-white/5 text-slate-900 dark:text-white rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-sm text-[17px] border border-slate-200 dark:border-white/20"
+              className="w-full sm:w-[210px] h-[64px] flex items-center justify-center gap-3 bg-white dark:bg-[#0B1020] hover:bg-slate-50 dark:hover:bg-white/5 text-slate-900 dark:text-white rounded-2xl font-bold transition-all hover:scale-101 active:scale-95 shadow-sm text-[17px] border border-slate-200 dark:border-white/20"
             >
               Explore Tralance
             </Link>
@@ -64,7 +64,6 @@ export default function Hero() {
 
         </div>
 
-        {/* Hidden on mobile – only renders and animates on lg+ screens */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}

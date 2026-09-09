@@ -7,76 +7,28 @@ import { ChevronDown } from "lucide-react";
 const FAQS = [
   {
     q: "What is Tralance?",
-    a: "Tralance is a privacy-first freelance workspace built to help freelancers manage the practical side of their work. It combines useful freelance tools on the web with offline-first apps for managing money, projects, and everyday freelance workflows."
+    a: "Tralance is a privacy-first freelance workspace built to help freelancers manage the practical side of their work. It combines useful freelance tools on the web with offline-first apps for managing money, projects, and everyday freelance workflows.",
   },
   {
     q: "What can I do with Tralance?",
-    a: "Tralance provides practical tools for freelancers, including invoice generation, project profit calculation, rate calculation, project brief creation, contract generation, and other tools designed around common freelance workflows."
-  },
-  {
-    q: "Is Tralance only a finance tracking app?",
-    a: "No. Tralance started with freelance finance management, but it is now designed as a broader freelance workspace. The ecosystem covers money, projects, clients, invoices, rates, briefs, contracts, and other practical parts of freelance work."
+    a: "Tralance provides practical tools for freelancers, including invoice generation, project profit calculation, rate calculation, project brief creation, contract generation, and other tools designed around common freelance workflows.",
   },
   {
     q: "Does Tralance work offline?",
-    a: "Tralance follows an offline-first approach wherever the product supports it. The native app is designed to keep core financial information available locally on the device, while the website provides browser-based freelance tools that can be used directly without creating an account for the tools that support anonymous use."
+    a: "Tralance follows an offline-first approach wherever the product supports it. The native app is designed to keep core financial information available locally on the device, while the website provides browser-based freelance tools that can be used directly without creating an account for the tools that support anonymous use.",
   },
   {
     q: "Is Tralance private?",
-    a: "Privacy is a core part of Tralance's design philosophy. The native finance experience is built around local data storage and an offline-first approach rather than requiring your financial information to live on a central cloud account."
+    a: "Privacy is a core part of Tralance's design philosophy. The native finance experience is built around local data storage and an offline-first approach rather than requiring your financial information to live on a central cloud account.",
   },
   {
     q: "Do I need an account to use Tralance's website tools?",
-    a: "No account is required for the Tralance website tools that are designed for direct browser use. You can use tools such as the Invoice Generator, Project Profit Calculator, Rate Calculator, Project Brief Builder, and Contract Generator without creating a Tralance account."
-  },
-  {
-    q: "Can I create professional invoices with Tralance?",
-    a: "Yes. The Tralance Invoice Generator lets freelancers create professional invoices by entering their business details, client information, services, pricing, taxes, discounts, payment terms, and notes, then preview and print or save the invoice."
-  },
-  {
-    q: "Can Tralance help me calculate whether a freelance project is profitable?",
-    a: "Yes. The Project Profit Calculator helps you estimate your take-home amount and effective hourly rate after considering platform fees, processing fees, project expenses, and estimated taxes."
-  },
-  {
-    q: "Can Tralance help me decide what to charge clients?",
-    a: "Yes. Tralance includes a Rate Calculator designed to help freelancers estimate and evaluate their freelance rates based on factors such as income goals, working hours, expenses, and other business considerations."
-  },
-  {
-    q: "Can Tralance help freelancers and clients agree on project requirements?",
-    a: "Yes. The Project Brief Builder is designed to turn project requirements into a clearer brief that both the freelancer and client can refer to. This can help reduce misunderstandings around deliverables, requirements, timelines, and project expectations."
-  },
-  {
-    q: "Can I create a freelance contract with Tralance?",
-    a: "Yes. Tralance includes a Contract Generator designed to help freelancers create a structured starting point for freelance agreements. Generated contracts should be reviewed and adapted to the specific project and applicable legal requirements."
-  },
-  {
-    q: "What platforms does Tralance support?",
-    a: "Tralance is being built as a multi-platform freelance workspace, with browser-based tools on the website and native experiences for supported devices. The goal is to make useful freelance workflows available across web, mobile, and desktop rather than limiting Tralance to a single platform."
-  },
-  {
-    q: "Does Tralance store the information I enter into its website tools?",
-    a: "The website tools are designed with privacy in mind and do not require an account for supported tools. Where a tool operates locally in the browser, the information is processed within that browser session rather than requiring a personal Tralance account."
+    a: "No account is required for the Tralance website tools that are designed for direct browser use. You can use tools such as the Invoice Generator, Project Profit Calculator, Rate Calculator, Project Brief Builder, and Contract Generator without creating a Tralance account.",
   },
   {
     q: "Who is Tralance built for?",
-    a: "Tralance is built primarily for freelancers and independent professionals who want simpler ways to manage the practical side of freelance work, especially money, projects, clients, invoices, rates, and project documentation."
+    a: "Tralance is built primarily for freelancers and independent professionals who want simpler ways to manage the practical side of freelance work, especially money, projects, clients, invoices, rates, and project documentation.",
   },
-  {
-    q: "Is Tralance trying to solve every freelancer problem?",
-    a: "No. Tralance does not claim to solve every problem a freelancer can have. Its focus is on practical parts of freelance work where better tools can reduce unnecessary manual work and make managing a freelance business easier."
-  },
-  {
-    q: "Why is Tralance focused on privacy and offline-first tools?",
-    a: "Freelancers often deal with sensitive information such as income, expenses, client details, project information, and financial records. Tralance is designed around a privacy-first and offline-first philosophy so freelancers can have more control over information that does not always need to live in the cloud."
-  },
-  {
-    q: "Is Tralance free to use?",
-    a: "Many Tralance website tools are available to use directly in the browser without an account. Availability and pricing can vary between individual Tralance products and experiences, so check the specific tool or product page for its current terms."
-  },
-  {
-    q: "Can Tralance replace all of my freelance software?",
-    a: "Tralance is not intended to claim that it replaces every piece of software a freelancer may need. Instead, it brings together practical freelance workflows and tools in one ecosystem while keeping privacy and simplicity at the center."
-  }
 ];
 
 export default function FAQSection() {

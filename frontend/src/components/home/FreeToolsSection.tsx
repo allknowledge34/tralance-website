@@ -26,7 +26,7 @@ export default function FreeToolsSection() {
             return (
               <div key={tool.id} className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333333%-16px)]">
                 <Link href={tool.href} className="block h-full">
-                  <div className="h-full bg-white dark:bg-[#0B1020] rounded-[20px] p-8 md:p-10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-transparent dark:border-[rgba(255,255,255,0.05)]">
+                  <div className="h-full bg-white dark:bg-[#0B1020] rounded-[20px] p-8 md:p-10 transition-all duration-200 hover:-translate-y-[1px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0..05)] shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-transparent dark:border-[rgba(255,255,255,0.05)]">
 
                     <div className={`w-14 h-14 rounded-2xl ${tool.color} text-white flex items-center justify-center mb-6 shadow-sm`}>
                       <Icon className="w-7 h-7" />
