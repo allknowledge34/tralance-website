@@ -4,6 +4,7 @@ import "./globals.css";
 import { SITE_CONFIG, SEO_KEYWORDS } from "@/lib/constants";
 import { ThemeProvider } from "@/components/layout/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
+import PromoBar from "@/components/layout/PromoBar";
 import Footer from "@/components/layout/Footer";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -201,6 +202,7 @@ export default function RootLayout({
         />
 
         <ThemeProvider>
+          <PromoBar />
           <Navbar />
 
           {children}

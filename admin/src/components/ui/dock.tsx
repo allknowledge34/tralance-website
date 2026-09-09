@@ -13,6 +13,7 @@ export function Dock() {
   const navItems = [
     { href: "/", icon: PenSquare, label: "Workspace" },
     { href: "/blogs", icon: Library, label: "Articles" },
+    { href: "/promo", icon: Settings, label: "Promo Bar" },
   ];
 
   return (

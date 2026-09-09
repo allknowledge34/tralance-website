@@ -30,3 +30,13 @@ model Blog {
   @@index([publishedAt])
   @@index([status, publishedAt])
 }
+
+model PromoBarSettings {
+  id           String   @id @default("global")
+  isActive     Boolean  @default(false)
+  text         String   @default("Try YTVoidMode — a cleaner YouTube experience for Chrome")
+  btnText      String   @default("Try YTVoidMode")
+  btnUrl       String   @default("https://chromewebstore.google.com/")
+  icon         String   @default("sparkles")
+  updatedAt    DateTime @updatedAt
+}
