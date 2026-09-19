@@ -178,6 +178,18 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5744857349829100"
           crossOrigin="anonymous"
         />
+        
+        {/* Monetag Vignette Banner */}
+        <Script
+          id="monetag-vignette"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(s){
+  s.dataset.zone='11839022',
+  s.src='https://n6wxm.com/vignette.min.js'
+})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`
+          }}
+        />
       </head>
 
       <body className="min-h-full">
@@ -217,18 +229,6 @@ export default function RootLayout({
         </ThemeProvider>
 
         <GoogleAnalytics gaId="G-QZ3VZDMVPR" />
-        
-        {/* Monetag Vignette Banner */}
-        <Script
-          id="monetag-vignette"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(s){
-  s.dataset.zone='11839022',
-  s.src='https://n6wxm.com/vignette.min.js'
-})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`
-          }}
-        />
       </body>
     </html>
   );
