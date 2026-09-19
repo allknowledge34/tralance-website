@@ -37,6 +37,10 @@ export const metadata: Metadata = {
   description: SITE_CONFIG.description,
   keywords: SEO_KEYWORDS,
 
+  other: {
+    monetag: "d0ad2fa61261f1b9cb2afe0e7ab8df5a",
+  },
+
   authors: [
     {
       name: "Sachin Kumar",
