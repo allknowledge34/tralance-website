@@ -8,6 +8,7 @@ import PromoBar from "@/components/layout/PromoBar";
 import Footer from "@/components/layout/Footer";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -216,6 +217,18 @@ export default function RootLayout({
         </ThemeProvider>
 
         <GoogleAnalytics gaId="G-QZ3VZDMVPR" />
+        
+        {/* Monetag Vignette Banner */}
+        <Script
+          id="monetag-vignette"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(s){
+  s.dataset.zone='11839022',
+  s.src='https://n6wxm.com/vignette.min.js'
+})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`
+          }}
+        />
       </body>
     </html>
   );
