@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { Save } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ProSaveFeature({ toolId, data }: { toolId: string, data: Record<string, unknown> }) {
+export default function ProSaveFeature({ toolId, data }: { toolId: string, data: unknown }) {
   const { data: session, status } = useSession();
   const [hasAccess, setHasAccess] = useState(false);
   const [saving, setSaving] = useState(false);
