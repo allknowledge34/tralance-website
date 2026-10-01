@@ -17,7 +17,7 @@ export function ProfitForm({ data, onChange, onReset }: ProfitFormProps) {
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // Prevent negative values, allow empty strings for clearing inputs safely
+
     const val = value === "" ? "" : Math.max(0, Number(value));
     onChange({ ...data, [name]: val });
   };

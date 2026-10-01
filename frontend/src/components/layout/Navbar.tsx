@@ -67,14 +67,12 @@ export default function Navbar() {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-            <a
-              href="https://www.buymeacoffee.com/sachinkumau"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-[#F54D00] border border-[#C93E00] shadow-sm hover:bg-[#E54800] hover:shadow-sm transition-all duration-200 cursor-pointer"
+            <Link
+              href="/pricing"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-bold text-slate-900 bg-yellow-300 cursor-pointer"
             >
-              ☕ Support Tralance
-            </a>
+              Pricing
+            </Link>
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
@@ -85,15 +83,13 @@ export default function Navbar() {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-            <a
-              href="https://www.buymeacoffee.com/sachinkumau"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl border border-slate-200/50 dark:border-[rgba(255,255,255,0.08)] cursor-pointer flex items-center justify-center text-[18px] leading-none w-[42px] h-[42px] pb-[1px]"
-              aria-label="Support Tralance"
+            <Link
+              href="/pricing"
+              className="rounded-xl cursor-pointer flex items-center justify-center text-sm font-bold bg-yellow-300 text-slate-900 px-3 h-[42px]"
+              aria-label="Pricing"
             >
-              ☕
-            </a>
+              Pricing
+            </Link>
           </div>
 
         </div>

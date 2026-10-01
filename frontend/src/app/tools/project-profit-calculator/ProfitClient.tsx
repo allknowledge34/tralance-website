@@ -1,4 +1,6 @@
 "use client";
+import ProSaveFeature from "@/components/tools/ProSaveFeature";
+
 
 import React, { useState } from "react";
 import { ProfitData } from "@/types/profit-calculator";
@@ -32,6 +34,7 @@ export default function ProfitClient() {
       
         <div className="lg:col-span-7 xl:col-span-7">
           <ProfitForm data={data} onChange={setData} onReset={handleReset} />
+            <ProSaveFeature toolId="project-profit-calculator" data={data} />
         </div>
         
         <div className="lg:col-span-5 xl:col-span-5">

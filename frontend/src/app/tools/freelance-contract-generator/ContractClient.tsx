@@ -1,10 +1,13 @@
 "use client";
+import ProSaveFeature from "@/components/tools/ProSaveFeature";
+
 
 import React, { useState } from "react";
 import { ContractData } from "@/types/contract-generator";
 import { ContractForm } from "@/components/tools/contract-generator/ContractForm";
 import { ContractPreview } from "@/components/tools/contract-generator/ContractPreview";
 import { Printer } from "lucide-react";
+import { PDFDownloadButton } from "@/components/tools/PDFDownloadButton";
 
 const defaultContractData: ContractData = {
   contractTitle: "Freelance Service Agreement",
@@ -58,18 +61,13 @@ export default function ContractClient() {
         <div className="lg:col-span-5 xl:col-span-4 print:hidden">
           <div className="sticky top-28 h-auto max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 pb-12">
             <ContractForm data={data} onChange={setData} onReset={handleReset} />
+            <ProSaveFeature toolId="freelance-contract-generator" data={data} />
           </div>
         </div>
       
         <div className="lg:col-span-7 xl:col-span-8 print:col-span-12">
           <div className="flex justify-end mb-4 print:hidden">
-            <button
-              onClick={handlePrint}
-              className="flex items-center gap-2 bg-primary hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-colors shadow-sm"
-            >
-              <Printer className="w-4 h-4 stroke-[2.5]" />
-              Print / Save as PDF
-            </button>
+            <PDFDownloadButton toolId="freelance-contract-generator" onDownload={handlePrint} className="flex items-center gap-2 bg-primary hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-colors shadow-sm" label="Print / Save as PDF" />
           </div>
           <div className="bg-slate-50 dark:bg-[#0B1020] rounded-2xl p-4 sm:p-8 border border-slate-200 dark:border-white/10 print:p-0 print:border-none print:bg-white">
             <ContractPreview data={data} />

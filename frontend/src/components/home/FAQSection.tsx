@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: "Does Tralance work offline?",
-    a: "Tralance follows an offline-first approach wherever the product supports it. The native app is designed to keep core financial information available locally on the device, while the website provides browser-based freelance tools that can be used directly without creating an account for the tools that support anonymous use.",
+    a: "Tralance follows an offline-first approach wherever the product supports it. The native app is designed to keep core financial information available locally on the device, while the website provides browser-based freelance tools that can be used directly while respecting your privacy preferences.",
   },
   {
     q: "Is Tralance private?",
@@ -23,7 +23,7 @@ const FAQS = [
   },
   {
     q: "Do I need an account to use Tralance's website tools?",
-    a: "No account is required for the Tralance website tools that are designed for direct browser use. You can use tools such as the Invoice Generator, Project Profit Calculator, Rate Calculator, Project Brief Builder, and Contract Generator without creating a Tralance account.",
+    a: "No account is required for the Tralance website tools that are designed for direct browser use. You can use tools such as the Invoice Generator, Project Profit Calculator, Rate Calculator, Project Brief Builder, and Contract Generator without initially creating a Tralance account.",
   },
   {
     q: "Who is Tralance built for?",

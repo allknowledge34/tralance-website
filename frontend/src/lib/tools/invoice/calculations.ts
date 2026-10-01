@@ -17,21 +17,21 @@ export function calculateInvoiceTotals(
   discountPercent: number | "",
   taxPercent: number | ""
 ): InvoiceTotals {
-  // Calculate Subtotal
+
   const subtotal = items.reduce((acc, item) => acc + safeNumber(item.amount), 0);
 
-  // Calculate Discount (as a percentage of subtotal)
+
   const dPercent = safeNumber(discountPercent);
   const discountAmount = subtotal * (dPercent / 100);
 
-  // Taxable Amount (Subtotal minus discount)
+
   const taxableAmount = Math.max(0, subtotal - discountAmount);
 
-  // Calculate Tax (as a percentage of taxable amount)
+
   const tPercent = safeNumber(taxPercent);
   const taxAmount = taxableAmount * (tPercent / 100);
 
-  // Final Total
+
   const total = taxableAmount + taxAmount;
 
   return {
@@ -50,7 +50,7 @@ export function formatCurrency(amount: number, currency: string = "USD"): string
       currency: currency,
     }).format(amount);
   } catch {
-    // Fallback if currency code is invalid
+
     return `${currency} ${amount.toFixed(2)}`;
   }
 }

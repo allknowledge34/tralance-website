@@ -6,8 +6,8 @@ import { prisma } from "@/lib/db/prisma";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Tralance Blog – Freelance Workspace Tips & Tools",
-  description: "Read the Tralance blog for tips on freelance project management, tools, and productivity. Learn how to manage your business offline with expert advice.",
+  title: "Tralance Blog – Freelance Tips & Tools",
+  description: "Read the Tralance blog for tips on freelance project management, tools, and productivity. Learn how to run your freelance business effectively.",
   alternates: {
     canonical: "/blog",
   },

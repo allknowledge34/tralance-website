@@ -4,6 +4,7 @@ import React from "react";
 import { InvoiceData } from "@/types/invoice";
 import { calculateInvoiceTotals, formatCurrency } from "@/lib/tools/invoice/calculations";
 import { Printer } from "lucide-react";
+import { PDFDownloadButton } from "@/components/tools/PDFDownloadButton";
 
 interface InvoicePreviewProps {
   data: InvoiceData;
@@ -20,13 +21,7 @@ export function InvoicePreview({ data }: InvoicePreviewProps) {
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between mb-6 print:hidden">
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">Live Preview</h2>
-        <button 
-          onClick={handlePrint}
-          className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-sm shadow-primary/20 transition-all"
-        >
-          <Printer className="w-4 h-4 stroke-[2]" />
-          Download / Print
-        </button>
+        <PDFDownloadButton toolId="freelancer-invoice-generator" onDownload={handlePrint} className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-sm shadow-primary/20 transition-all" />
       </div>
 
       <div className="bg-white text-slate-900 p-8 sm:p-12 md:p-16 rounded-2xl shadow-sm border border-slate-200 flex-grow print:border-none print:shadow-none print:m-0 print:p-0 print:text-black">

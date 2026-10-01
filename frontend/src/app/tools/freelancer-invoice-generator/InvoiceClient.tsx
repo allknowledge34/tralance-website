@@ -1,4 +1,6 @@
 "use client";
+import ProSaveFeature from "@/components/tools/ProSaveFeature";
+
 
 import React, { useState } from "react";
 import { InvoiceData } from "@/types/invoice";
@@ -64,6 +66,7 @@ export default function InvoiceClient() {
               </p>
             </div>
             <InvoiceForm data={data} onChange={setData} onReset={handleReset} />
+            <ProSaveFeature toolId="freelancer-invoice-generator" data={data} />
           </div>
         </div>
         

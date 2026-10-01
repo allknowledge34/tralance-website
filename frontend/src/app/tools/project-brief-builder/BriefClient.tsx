@@ -1,10 +1,13 @@
 "use client";
+import ProSaveFeature from "@/components/tools/ProSaveFeature";
+
 
 import React, { useState } from "react";
 import { ProjectBriefData } from "@/types/project-brief";
 import { BriefForm } from "@/components/tools/project-brief-builder/BriefForm";
 import { BriefPreview } from "@/components/tools/project-brief-builder/BriefPreview";
 import { Printer, Copy, CheckCircle2, Share2 } from "lucide-react";
+import { PDFDownloadButton } from "@/components/tools/PDFDownloadButton";
 
 const defaultBriefData: ProjectBriefData = {
   projectName: "",
@@ -81,6 +84,7 @@ export default function BriefClient() {
         <div className="lg:col-span-5 xl:col-span-4 print:hidden">
           <div className="sticky top-28 h-auto max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 pb-12">
             <BriefForm data={data} onChange={setData} onReset={handleReset} />
+            <ProSaveFeature toolId="project-brief-builder" data={data} />
           </div>
         </div>
         
@@ -104,13 +108,7 @@ export default function BriefClient() {
               {copied ? <><CheckCircle2 className="w-4 h-4 text-green-500" /> Copied!</> : <><Copy className="w-4 h-4 stroke-[2.5]" /> Copy</>}
             </button>
 
-            <button
-              onClick={handlePrint}
-              className="flex items-center gap-2 bg-primary hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-colors shadow-sm"
-            >
-              <Printer className="w-4 h-4 stroke-[2.5]" />
-              Print / Save as PDF
-            </button>
+            <PDFDownloadButton toolId="project-brief-builder" onDownload={handlePrint} className="flex items-center gap-2 bg-primary hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-colors shadow-sm" label="Print / Save as PDF" />
           </div>
           <div className="bg-slate-50 dark:bg-[#0B1020] rounded-2xl p-4 sm:p-8 border border-slate-200 dark:border-white/10 print:p-0 print:border-none print:bg-white">
             <BriefPreview data={data} />

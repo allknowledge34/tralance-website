@@ -33,7 +33,7 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
     setOpenSection(openSection === sectionIndex ? 0 : sectionIndex);
   };
 
-  // Dynamic Array Handlers
+
   const handleArrayChange = (field: "requirements" | "deliverables" | "references", index: number, value: string) => {
     const newArray = [...data[field]];
     newArray[index] = value;
@@ -49,7 +49,7 @@ export function BriefForm({ data, onChange, onReset }: BriefFormProps) {
     onChange({ ...data, [field]: newArray });
   };
 
-  // Milestone Handlers
+
   const handleMilestoneChange = (index: number, field: keyof Milestone, value: string) => {
     const newMilestones = [...data.milestones];
     newMilestones[index] = { ...newMilestones[index], [field]: value };

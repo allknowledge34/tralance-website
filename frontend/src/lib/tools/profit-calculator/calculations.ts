@@ -12,29 +12,29 @@ export function calculateProfit(data: ProfitData): ProfitResults {
   const softwareCosts = Math.max(0, safeNumber(data.softwareCosts));
   const otherExpenses = Math.max(0, safeNumber(data.otherExpenses));
 
-  // Revenue
+
   const grossRevenue = projectPrice;
 
-  // Percentage Fees
+
   const platformFeeAmount = grossRevenue * (platformFeePercent / 100);
   const processingFeeAmount = grossRevenue * (processingFeePercent / 100);
 
-  // Total Non-Tax Expenses
+
   const totalExpenses = platformFeeAmount + processingFeeAmount + softwareCosts + otherExpenses;
 
-  // Taxable Amount (Gross Revenue minus deductible expenses)
+
   const taxableAmount = Math.max(0, grossRevenue - totalExpenses);
 
-  // Tax
+
   const taxAmount = taxableAmount * (taxPercent / 100);
 
-  // Total Costs
+
   const totalCosts = totalExpenses + taxAmount;
 
-  // Take Home
+
   const takeHome = grossRevenue - totalCosts;
 
-  // Effective Hourly Rate
+
   let effectiveHourlyRate = 0;
   if (estimatedHours > 0) {
     effectiveHourlyRate = takeHome / estimatedHours;
@@ -57,7 +57,7 @@ export function getProjectWorthStatus(effectiveRate: number, targetRate: number 
   const target = safeNumber(targetRate);
   if (target <= 0 || effectiveRate <= 0) return null;
 
-  // Define "Near Target" as within 10% of the target rate
+
   const lowerBound = target * 0.9;
   const upperBound = target * 1.1;
 
@@ -70,5 +70,5 @@ export function getProjectWorthStatus(effectiveRate: number, targetRate: number 
   }
 }
 
-// Re-export formatCurrency for convenience
+
 export { formatCurrency };

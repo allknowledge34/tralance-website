@@ -8,6 +8,131 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+// ==========================================
+// User Authentication (NextAuth)
+// ==========================================
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]
+  entitlements  Entitlement[]
+  toolData      ToolData[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ==========================================
+// E-commerce & Entitlements
+// ==========================================
+
+model Order {
+  id                String   @id @default(cuid())
+  userId            String
+  planId            String   // 'single_tool' | 'pro'
+  toolId            String?  // The ID of the tool if single_tool (e.g., 'freelancer-invoice-generator')
+  amount            Int
+  currency          String   @default("INR")
+  razorpayOrderId   String?  @unique
+  razorpayPaymentId String?  @unique
+  razorpaySignature String?
+  status            String   @default("PENDING") // PENDING, SUCCESS, FAILED
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([razorpayOrderId])
+  @@index([status])
+}
+
+model Entitlement {
+  id        String   @id @default(cuid())
+  userId    String
+  planId    String   // 'single_tool' | 'pro'
+  toolId    String?  // null if planId is 'pro'
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    expiresAt DateTime?
+
+  // Note: Keeping unique constraint for backwards compatibility but we won't use toolId for new plans
+  @@unique([userId, planId, toolId]) // Prevent duplicate entitlements
+}
+
+// ==========================================
+// Tool Data Storage (Pro Feature)
+// ==========================================
+
+model ToolData {
+  id        String   @id @default(cuid())
+  userId    String
+  toolId    String
+  name      String
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// PDF Usage Limits
+// ==========================================
+
+model PdfUsage {
+  id           String   @id @default(cuid())
+  identifier   String   @unique
+  invoiceUses  Int      @default(0)
+  briefUses    Int      @default(0)
+  contractUses Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ==========================================
+// Content Models
+// ==========================================
+
 enum BlogStatus {
   DRAFT
   PUBLISHED
@@ -25,7 +150,6 @@ model Blog {
   updatedAt   DateTime   @updatedAt
   publishedAt DateTime?
 
-  // Indexes for optimizing searches and sorting
   @@index([status])
   @@index([publishedAt])
   @@index([status, publishedAt])

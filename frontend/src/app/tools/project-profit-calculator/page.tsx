@@ -1,3 +1,7 @@
+
+import PageTracker from "@/components/analytics/PageTracker";
+
+
 import { Metadata } from "next";
 
 import ProfitClient from "./ProfitClient";
@@ -74,7 +78,9 @@ export default function ProjectProfitCalculatorPage() {
   };
 
   return (
-    <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
+    <>
+      <PageTracker eventName="tool_open" props={{ tool: "project-profit-calculator" }} />
+      <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -97,11 +103,13 @@ export default function ProjectProfitCalculatorPage() {
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5">
         
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "project-profit-calculator" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             How the Project Profit Calculator Works
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "project-profit-calculator" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>
               When quoting a project, the top-line number often looks great. But as a freelancer, you aren&apos;t an employee - you are a business. This means you absorb costs that quickly eat into your profit. Our calculator breaks it down in six simple steps:
             </p>
@@ -116,11 +124,13 @@ export default function ProjectProfitCalculatorPage() {
           </div>
         </div>
 
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "project-profit-calculator" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             A Realistic Freelance Project Example
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "project-profit-calculator" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>
               To understand the difference between gross revenue and actual profit, let&apos;s look at a realistic scenario. Imagine a freelancer lands a <strong>$1,500 website design project</strong> on a popular freelance platform. They estimate the project will take them 25 hours to complete.
             </p>
@@ -170,7 +180,11 @@ export default function ProjectProfitCalculatorPage() {
           </div>
         </div>
 
-        <div>
+        <PageTracker eventName="tool_open" props={{ tool: "project-profit-calculator" }} />
+    <div>
+          <br />
+          <br />
+
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
@@ -200,5 +214,6 @@ export default function ProjectProfitCalculatorPage() {
 
       </section>
     </div>
+    </>
   );
 }

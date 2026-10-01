@@ -14,8 +14,9 @@ export async function GET() {
         'Cache-Control': 'no-store, max-age=0',
       },
     });
-  } catch (error: any) {
-    console.error("Promo API Error:", error.message || error);
-    return NextResponse.json({ isActive: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("Promo API Error:", err.message || err);
+    return NextResponse.json({ isActive: false, error: err.message }, { status: 500 });
   }
 }

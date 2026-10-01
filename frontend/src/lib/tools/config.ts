@@ -18,7 +18,7 @@ export const toolsConfig: ToolConfig[] = [
   {
     id: "invoice-generator",
     name: "Freelancer Invoice Generator",
-    description: "Create professional invoices instantly in your browser. No login required, and your data never leaves your device.",
+    description: "Create professional invoices instantly in your browser. No login required for basic usage.",
     href: "/tools/freelancer-invoice-generator",
     icon: FileText,
     category: "Finance",

@@ -3,11 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG, SEO_KEYWORDS } from "@/lib/constants";
 import { ThemeProvider } from "@/components/layout/ThemeContext";
+import AuthProvider from "@/components/layout/AuthProvider"; 
 import Navbar from "@/components/layout/Navbar";
 import PromoBar from "@/components/layout/PromoBar";
 import Footer from "@/components/layout/Footer";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import CookieConsent from "@/components/analytics/CookieConsent";
+
 import Script from "next/script";
 
 const inter = Inter({
@@ -39,7 +41,6 @@ export const metadata: Metadata = {
   keywords: SEO_KEYWORDS,
 
   other: {
-    monetag: "d0ad2fa61261f1b9cb2afe0e7ab8df5a",
   },
 
   authors: [
@@ -120,12 +121,6 @@ export default function RootLayout({
           name: "Sachin Kumar",
         },
 
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "4.5",
-          ratingCount: "2",
-        },
-
         installUrl:
           "https://play.google.com/store/apps/details?id=com.sachin.tralance",
 
@@ -173,23 +168,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5744857349829100"
-          crossOrigin="anonymous"
-        />
-        
-        {/* Monetag Vignette Banner */}
-        <Script
-          id="monetag-vignette"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(s){
-  s.dataset.zone='11839022',
-  s.src='https://n6wxm.com/vignette.min.js'
-})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`
-          }}
-        />
       </head>
 
       <body className="min-h-full">
@@ -218,6 +196,7 @@ export default function RootLayout({
           }}
         />
 
+        <AuthProvider>
         <ThemeProvider>
           <PromoBar />
           <Navbar />
@@ -227,8 +206,10 @@ export default function RootLayout({
           <Footer />
           <MobileBottomNav />
         </ThemeProvider>
+        </AuthProvider>
 
-        <GoogleAnalytics gaId="G-QZ3VZDMVPR" />
+        
+        <CookieConsent />
       </body>
     </html>
   );

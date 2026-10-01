@@ -7,30 +7,30 @@ export interface InvoiceItem {
 }
 
 export interface InvoiceData {
-  // Freelancer Info
+
   freelancerName: string;
   freelancerEmail: string;
   freelancerPhone: string;
   freelancerAddress: string;
   freelancerTaxId: string;
   
-  // Client Info
+
   clientName: string;
   clientEmail: string;
   clientAddress: string;
   
-  // Invoice Info
+
   invoiceNumber: string;
   invoiceDate: string;
   dueDate: string;
   currency: string;
   
-  // Items & Calculations
+
   items: InvoiceItem[];
   discount: number | "";
   tax: number | "";
   
-  // Additional Info
+
   notes: string;
   terms: string;
 }

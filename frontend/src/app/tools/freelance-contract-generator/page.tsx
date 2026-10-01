@@ -1,3 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
+
+import PageTracker from "@/components/analytics/PageTracker";
+
+
 import { Metadata } from "next";
 
 import ContractClient from "./ContractClient";
@@ -82,7 +87,9 @@ export default function FreelanceContractGeneratorPage() {
   };
 
   return (
-    <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
+    <>
+      <PageTracker eventName="tool_open" props={{ tool: "freelance-contract-generator" }} />
+      <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -106,8 +113,10 @@ export default function FreelanceContractGeneratorPage() {
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5 print:hidden">
         
-        <div className="mb-16">
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+        <PageTracker eventName="tool_open" props={{ tool: "freelance-contract-generator" }} />
+    <div className="mb-16">
+          <PageTracker eventName="tool_open" props={{ tool: "freelance-contract-generator" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6 mt-0">
               How to Create a Freelance Contract
             </h2>
@@ -207,7 +216,8 @@ export default function FreelanceContractGeneratorPage() {
               <li><strong>Starting Without a Signature:</strong> A verbal agreement is notoriously difficult to enforce. Get it signed before you open your laptop.</li>
             </ul>
 
-            <div className="bg-slate-100 dark:bg-white/5 p-6 rounded-xl mt-12 border border-slate-200 dark:border-white/10">
+            <PageTracker eventName="tool_open" props={{ tool: "freelance-contract-generator" }} />
+    <div className="bg-slate-100 dark:bg-white/5 p-6 rounded-xl mt-12 border border-slate-200 dark:border-white/10">
               <p className="text-sm m-0 text-slate-500 dark:text-slate-400">
                 <strong>Disclaimer:</strong> The Tralance Freelance Contract Generator provides a general template designed for common freelance situations. We are not a law firm, and this tool does not constitute official legal advice. Depending on your jurisdiction and the complexity of your project, you may want to consult with a licensed attorney to ensure your contract is fully enforceable.
               </p>
@@ -215,14 +225,19 @@ export default function FreelanceContractGeneratorPage() {
           </div>
         </div>
 
-        <div>
+        <PageTracker eventName="tool_open" props={{ tool: "freelance-contract-generator" }} />
+    <div>
+          <br />
+          <br />
+
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
-          <ToolFAQ faqs={faqSchema.mainEntity.map((faq: any) => ({ q: faq.name, a: faq.acceptedAnswer.text }))} />
+          <ToolFAQ faqs={faqSchema.mainEntity.map((faq: { name: string; acceptedAnswer: { text: string } }) => ({ q: faq.name, a: faq.acceptedAnswer.text }))} />
         </div>
 
       </section>
     </div>
+    </>
   );
 }

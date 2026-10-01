@@ -5,11 +5,14 @@ import { prisma } from "@/lib/db/prisma";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     '',
+    '/pricing',
     '/features',
     '/tools',
     '/about',
     '/privacy',
     '/terms',
+    '/cookies',
+    '/refund',
     '/contact',
     '/blog',
     '/tools/freelancer-rate-calculator',

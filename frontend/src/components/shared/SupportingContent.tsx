@@ -30,7 +30,7 @@ export function SupportingContentPrivacy() {
           When choosing an <strong>expense manager app</strong>, privacy should be the primary feature, not an afterthought. The vast majority of financial applications operate by analyzing, aggregating, and frequently monetizing your spending habits. Tralance was built from the ground up to be a completely <strong>privacy-focused application</strong>.
         </p>
         <p className="text-slate-600 dark:text-[#AEB7C6]">
-          Because it is a <strong>local storage finance tracker</strong>, we physically cannot access your data. There are no tracking pixels, no behavioral analytics, and no remote databases harvesting your client list. Your financial sovereignty is guaranteed by the architecture itself.
+          Because we prioritize a <strong>local-first</strong> architecture for our finance tracker, your core financial data stays on your device unless you explicitly use our Pro sync features.
         </p>
       </div>
     </section>

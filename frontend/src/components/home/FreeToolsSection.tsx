@@ -14,7 +14,7 @@ export default function FreeToolsSection() {
 
           <p className="text-[15px] md:text-base text-[#64748B] dark:text-slate-400 font-medium leading-relaxed">
             Everything you need to manage your freelance business-from calculating rates
-            and generating invoices to building project briefs and contracts. No account
+            and generating invoices to building project briefs and contracts. Free
             required.
           </p>
         </header>

@@ -1,3 +1,7 @@
+
+import PageTracker from "@/components/analytics/PageTracker";
+
+
 import { Metadata } from "next";
 
 import BriefClient from "./BriefClient";
@@ -90,7 +94,9 @@ export default function ProjectBriefBuilderPage() {
   };
 
   return (
-    <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
+    <>
+      <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+      <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -111,11 +117,13 @@ export default function ProjectBriefBuilderPage() {
       <BriefClient />
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5 print:hidden">
         
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             What Is a Project Brief?
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>
               A project brief is a structured document that gives clients and freelancers one shared understanding of what needs to be done. It acts as the blueprint for the project, translating vague ideas into specific requirements, deliverables, and timelines.
             </p>
@@ -131,11 +139,13 @@ export default function ProjectBriefBuilderPage() {
           </div>
         </div>
 
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             Why Project Briefs Matter
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>Whether you are hiring a professional or doing the work yourself, diving into a project without a brief often leads to problems. Taking ten minutes to write a brief ensures:</p>
             <ul className="mt-4 space-y-2">
               <li><strong>Clearer expectations:</strong> Everyone knows exactly what success looks like.</li>
@@ -158,11 +168,13 @@ export default function ProjectBriefBuilderPage() {
           </div>
         </div>
 
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             How to Create a Good Project Brief
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <ol className="space-y-4">
               <li><strong>Explain the goal:</strong> Start with the &quot;why&quot;. Why is this project happening, and what business problem does it solve?</li>
               <li><strong>List the requirements:</strong> What specific features or functional necessities must the final product have?</li>
@@ -189,14 +201,19 @@ export default function ProjectBriefBuilderPage() {
           </div>
         </div>
 
-        <div>
+        <PageTracker eventName="tool_open" props={{ tool: "project-brief-builder" }} />
+    <div>
+          <br />
+          <br />
+
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
-          <ToolFAQ faqs={faqSchema.mainEntity.map((faq: any) => ({ q: faq.name, a: faq.acceptedAnswer.text }))} />
+          <ToolFAQ faqs={faqSchema.mainEntity.map((faq: { name: string; acceptedAnswer: { text: string } }) => ({ q: faq.name, a: faq.acceptedAnswer.text }))} />
         </div>
 
       </section>
     </div>
+    </>
   );
 }

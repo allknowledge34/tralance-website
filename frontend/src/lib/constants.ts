@@ -20,7 +20,7 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 export const SEO_KEYWORDS = [
-  // Primary
+
   "freelance workspace",
   "freelance tools",
   "freelance productivity",
@@ -29,14 +29,14 @@ export const SEO_KEYWORDS = [
   "freelance project management",
   "freelance contract generator",
   "project brief builder",
-  // Secondary
+
   "offline freelance app",
   "privacy focused freelance tools",
   "freelance business tools",
   "freelance finance tracker",
   "client management for freelancers",
   "freelancer ecosystem",
-  // Long-tail
+
   "best tools for freelancers",
   "private workspace for freelance work",
   "offline first tools for freelancers",

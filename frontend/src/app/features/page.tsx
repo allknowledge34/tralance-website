@@ -5,8 +5,8 @@ import ShowcaseFeatures from "@/components/features/ShowcaseFeatures";
 import { SupportingContentFeatures } from "@/components/shared/SupportingContent";
 
 export const metadata: Metadata = {
-  title: "Features | Tralance Workspace",
-  description: "Explore Tralance features. The privacy-first workspace and freelancer tool ecosystem featuring offline support, local data storage, and no cloud sync.",
+  title: "Features | Tralance",
+  description: "Explore Tralance features. Discover simple, effective tools to help freelancers calculate rates, manage projects, and generate professional documents.",
 };
 
 export default function FeaturesPage() {
@@ -26,7 +26,7 @@ export default function FeaturesPage() {
           </span>
         </h1>
         <p className="mt-6 text-[#8892B0] dark:text-[#AEB7C6] text-lg max-w-2xl mx-auto leading-relaxed transition-colors duration-300">
-          Manage variables, audits, and spend categories offline. No logins, no analytics tracking, no cloud accounts.
+          Manage variables, audits, and spend categories offline. No mandatory cloud sync for core app features.
         </p>
       </section>
 

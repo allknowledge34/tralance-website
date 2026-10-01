@@ -42,7 +42,7 @@ export function InvoiceForm({ data, onChange, onReset }: InvoiceFormProps) {
     const newItems = data.items.map(item => {
       if (item.id === id) {
         const updated = { ...item, [field]: value };
-        // Recalculate amount if quantity or rate changes
+
         if (field === "quantity" || field === "rate") {
           updated.amount = calculateItemAmount(updated.quantity, updated.rate);
         }

@@ -1,165 +1,155 @@
-import React from "react";
-import { Metadata } from "next";
-import Link from "next/link";
+/* eslint-disable react/no-unescaped-entities */
+import React from 'react';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import PageTracker from "@/components/analytics/PageTracker";
 
 export const metadata: Metadata = {
-  title: "Terms of Service – Tralance Ecosystem",
-  description: "These Terms of Service apply to the Tralance ecosystem by DmilX (Sachin Kumar). Learn about licensing, usage rights, and disclaimers for our tools and offline applications.",
+  title: 'Terms of Service | Tralance',
+  description: 'Read the terms and conditions for using Tralance, our freelance tools, and paid plans.',
   alternates: {
-    canonical: "/terms",
+    canonical: 'https://www.tralance.pro/terms',
   },
 };
 
-export default function TermsOfServicePage() {
+export default function TermsPage() {
   return (
-    <main className="bg-white dark:bg-[#030303] min-h-screen py-16 md:py-24 font-sans text-slate-800 dark:text-slate-300 selection:bg-blue-100 dark:selection:bg-blue-900">
-      <div className="max-w-[850px] mx-auto px-5 sm:px-6 lg:px-8">
+    <main className="flex-grow pt-10 pb-24 bg-white dark:bg-[#050505]">
+      <PageTracker eventName="terms_view" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <header className="mb-12 border-b border-slate-200/60 dark:border-white/5 pb-10">
+        <div className="mb-12">
+         
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
             Terms of Service
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 font-medium text-[15px]">
-            Last Updated: August 8, 2026
+          <p className="text-slate-500 dark:text-slate-400 text-lg">
+            Last Updated: October 1, 2026
           </p>
-        </header>
+        </div>
 
-        <div className="flex flex-col md:flex-row gap-12 md:gap-16">
-          <div className="w-full">
-            <article className="prose prose-slate dark:prose-invert prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-p:text-[15px] prose-p:leading-relaxed prose-p:mb-5 prose-li:text-[15px] max-w-none">
-              
-              <section id="acceptance-of-terms" className="scroll-mt-24">
-                <h2>1. Acceptance of Terms</h2>
-                <p>
-                  These Terms of Service govern your use of the Tralance ecosystem, which includes our website (tralance.pro), free web tools, educational content, and the Tralance Mobile and Desktop applications (collectively, the &quot;Services&quot;). Tralance is operated by DmilX, a sole proprietorship of Sachin Kumar.
-                </p>
-                <p>
-                  By accessing, browsing, downloading, or utilizing any of our Services, you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Service (subject to any separate app-store or platform terms where applicable). If you do not agree to any of these terms, you are expressly prohibited from using our Services and must discontinue use immediately.
-                </p>
-              </section>
+        <div className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-500 prose-p:leading-relaxed prose-li:leading-relaxed">
+          <p>
+            Welcome to Tralance. These Terms of Service ("Terms") govern your access to and use of the Tralance website located at <strong>https://www.tralance.pro</strong> (the "Website") and all associated tools, templates, and services (collectively, the "Services") operated by DmilX, a sole proprietorship of Sachin Kumar.
+          </p>
+          <p>
+            Please read these Terms carefully before using our Services. By accessing or using the Services, you agree to be bound by these Terms.
+          </p>
 
-              <section id="about-tralance" className="scroll-mt-24">
-                <h2>2. About Tralance</h2>
-                <p>
-                  Tralance is a freelancer-focused ecosystem providing practical tools to help manage freelance work and finances. This includes informational content, free browser-based productivity tools, and offline-first mobile and desktop applications designed to give freelancers more control over their financial information.
-                </p>
-              </section>
+          <h2>1. Acceptance and Eligibility</h2>
+          <p>
+            By accessing Tralance, you represent that you are at least 18 years old or the legal age of majority in your jurisdiction, and have the legal capacity to enter into a binding contract. If you are using the Services on behalf of a business entity, you represent that you have the authority to bind that entity to these Terms.
+          </p>
 
-              <section id="eligibility" className="scroll-mt-24">
-                <h2>3. Eligibility</h2>
-                <p>
-                  You must be at least 13 years of age to use our Services. By using Tralance, you represent and warrant that you meet this age requirement and have the legal capacity to enter into these Terms of Service.
-                </p>
-              </section>
+          <h2>2. Description of Tralance</h2>
+          <p>
+            Tralance provides a suite of digital productivity tools designed for freelancers, including but not limited to the Freelancer Invoice Generator, Freelancer Rate Calculator, Project Profit Calculator, Project Brief Builder, and Freelance Contract Generator.
+          </p>
 
-              <section id="acceptable-use" className="scroll-mt-24">
-                <h2>4. Acceptable Use and User Responsibilities</h2>
-                <p>
-                  You agree to use our Services solely for lawful purposes. You shall not engage in any activity that interrupts, damages, or impairs the functionality of the Services, including but not limited to transmitting viruses, utilizing automated scripts, attempting unauthorized access, or violating any local, national, or international laws.
-                </p>
-              </section>
+          <h2>3. Accounts and Security</h2>
+          <p>
+            While certain tools may be used without an account, creating an account is required to access paid plans and features (such as saving your activity and work). When you create an account, you agree to provide accurate and complete information. You are solely responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.
+          </p>
 
-              <section id="app-disclaimer" className="scroll-mt-24">
-                <h2>5. Tralance Applications and Local Data Responsibility</h2>
-                <p>
-                  The Tralance Mobile and Desktop applications are designed to operate locally on your device. We do not provide cloud synchronization or server-side backups for your financial data.
-                </p>
-                <p>
-                  <strong>You acknowledge and agree that:</strong>
-                </p>
-                <ul>
-                  <li>Core financial data entered into the applications is designed to remain stored locally on your device. Tralance does not provide cloud synchronization for this financial data.</li>
-                  <li>You bear full and sole responsibility for regularly backing up your own data.</li>
-                  <li>Tralance may not be able to recover local data after device loss, damage, or application removal.</li>
-                  <li>You are responsible for securing your own device to prevent unauthorized access to your local financial information.</li>
-                </ul>
-              </section>
+          <h2>4. Free Tools and PDF Limits</h2>
+          <p>
+            We offer access to our core tools for free, subject to the following limitations:
+          </p>
+          <ul>
+            <li><strong>Calculators:</strong> Our interactive calculators (such as the Rate Calculator and Profit Calculator) are completely free and offer unlimited usage.</li>
+            <li><strong>PDF Generators:</strong> Tools that generate downloadable PDF documents (such as the Invoice Generator, Brief Builder, and Contract Generator) are subject to a strict free limit of <strong>two (2) free PDF generations/downloads per tool</strong>.</li>
+          </ul>
+          <p>
+            Attempting to bypass these technical limitations through automated means, script manipulation, or excessive account creation is a violation of these Terms and may result in a ban from the Services.
+          </p>
 
-              <section id="free-tools-disclaimer" className="scroll-mt-24">
-                <h2>6. Free Tools and Financial/Tax Disclaimer</h2>
-                <p>
-                  The free productivity tools provided on our website (such as the Rate Calculator, Project Profit Calculator, and Invoice Generator) and the financial tracking features in our applications are provided strictly for educational, informational, and organizational purposes.
-                </p>
-                <p>
-                  While we strive to ensure the accuracy of the algorithms, the mathematical results generated by these tools should not be construed as definitive financial, tax, legal, or official accounting advice. You are solely responsible for verifying the accuracy of any calculations, invoices, or financial reports prior to making business, financial, or tax-related decisions.
-                </p>
-              </section>
+          <h2>5. Paid Plans and Pricing</h2>
+          <p>
+            To unlock unlimited PDF generation, the ability to save your work to your account, and access future Pro improvements, you may purchase a paid plan.
+          </p>
+          <ul>
+            <li><strong>Monthly Plan (₹49/month):</strong> Provides access to Pro features for an entitlement period of approximately 30 days.</li>
+            <li><strong>Yearly Plan (₹149/year):</strong> Provides access to Pro features for an entitlement period of approximately 365 days.</li>
+          </ul>
+          <p>
+            <strong>These are not lifetime plans.</strong> Your access will expire at the end of the entitlement period unless you renew your access. The exact expiration date is calculated securely at the time of purchase and tied to your account.
+          </p>
 
-              <section id="blog-content-disclaimer" className="scroll-mt-24">
-                <h2>7. Blog and Content Disclaimer</h2>
-                <p>
-                  The articles, templates, and publications featured on the Tralance blog represent the personal opinions and experiences of their respective authors. This content is provided for informational purposes only. We do not guarantee the completeness, reliability, or accuracy of any information presented, and any action you take based upon this information is strictly at your own risk.
-                </p>
-              </section>
+          <h2>6. Payments and Processing</h2>
+          <p>
+            All payments are processed securely through our authorized third-party payment provider, <strong>Razorpay</strong>. By submitting payment information, you authorize Razorpay to charge the specified amount. Tralance does not store your full credit card number or financial credentials. We reserve the right to change our pricing at any time, but price changes will not affect active, previously purchased entitlement periods.
+          </p>
 
-              <section id="intellectual-property" className="scroll-mt-24">
-                <h2>8. Intellectual Property</h2>
-                <p>
-                  All content, design, code, graphics, logos, and original text across our Services are the exclusive intellectual property of Tralance and are protected by applicable copyright, trademark, and intellectual property laws. You may not reproduce, distribute, modify, or create derivative works of any of our intellectual property without our prior express written permission.
-                </p>
-              </section>
+          <h2>7. Cancellation and Refunds</h2>
+          <p>
+            Please review our <Link href="/refund">Refund & Cancellation Policy</Link> for detailed information regarding cancellations and refund eligibility. Because digital access is granted immediately upon successful payment, refunds are generally evaluated on a case-by-case basis.
+          </p>
 
-              <section id="third-party-services" className="scroll-mt-24">
-                <h2>9. External Links and Third-Party Services</h2>
-                <p>
-                  Our Services may contain links to third-party websites or services that are not owned or controlled by Tralance. We assume no responsibility for the content, privacy policies, or practices of any third-party websites. You acknowledge and agree that Tralance shall not be held liable for any damage or loss caused by your reliance on any such external content or services.
-                </p>
-                <p>
-                  Where enabled, the website may use third-party services for analytics, hosting, security, performance, and advertising. These services may process technical or usage information according to their respective privacy policies and applicable settings.
-                </p>
-              </section>
+          <h2>8. Saved Work and Activity</h2>
+          <p>
+            If you subscribe to a paid plan, you may utilize the feature to save your work/activity to your account. We strive to maintain the availability and security of your saved data; however, we do not guarantee that data loss will never occur. We strongly recommend keeping independent backups of any critical business documents or invoices generated using our tools.
+          </p>
 
-              <section id="limitation-of-liability" className="scroll-mt-24">
-                <h2>10. Limitation of Liability</h2>
-                <p>
-                  To the maximum extent permitted by applicable law, in no event shall Tralance, its developers, authors, or affiliates be liable for any direct, indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or inability to access the Services, from any loss of local data, or from any reliance placed on the information or tools provided by the Services.
-                </p>
-              </section>
+          <h2>9. User Responsibilities and Acceptable Use</h2>
+          <p>
+            You agree to use the Services only for lawful purposes. You shall not:
+          </p>
+          <ul>
+            <li>Use the Services to generate illegal, fraudulent, or deceptive documents.</li>
+            <li>Interfere with or disrupt the integrity or performance of the Website or its servers.</li>
+            <li>Attempt to gain unauthorized access to the Services, other user accounts, or our infrastructure.</li>
+            <li>Use the Services for any competitive intelligence or to scrape/copy our proprietary algorithms.</li>
+          </ul>
 
-              <section id="disclaimer-of-warranties" className="scroll-mt-24">
-                <h2>11. Disclaimer of Warranties</h2>
-                <p>
-                  Our Services and all materials contained therein are provided on an &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; basis, without warranties of any kind, either express or implied. We expressly disclaim any warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not guarantee that the Services will be uninterrupted, error-free, or entirely secure.
-                </p>
-              </section>
+          <h2>10. Intellectual Property</h2>
+          <p>
+            All content, design, algorithms, code, graphics, and logos provided by Tralance are the exclusive intellectual property of Tralance and are protected by applicable copyright and trademark laws. You may not reproduce, distribute, modify, or create derivative works of our software or website design without prior written permission. The documents (e.g., PDFs) you generate using our tools containing your own data remain your property.
+          </p>
 
-              <section id="indemnification" className="scroll-mt-24">
-                <h2>12. Indemnification</h2>
-                <p>
-                  You agree to defend, indemnify, and hold harmless Tralance and its personnel from and against any and all claims, damages, obligations, losses, liabilities, costs, or debts, and expenses (including attorney&apos;s fees) arising from your use of and access to our Services, or your violation of any term of these Terms of Service.
-                </p>
-              </section>
+          <h2>11. Financial, Tax, and Legal Disclaimer</h2>
+          <p>
+            <strong>Not Professional Advice:</strong> The tools provided by Tralance (including contract templates, invoices, and calculators) are provided strictly for informational and organizational purposes. They do not constitute definitive financial, tax, legal, or accounting advice. You are solely responsible for verifying the accuracy of any calculations, legal clauses, or financial reports prior to using them in your business. We strongly recommend consulting with a qualified attorney or accountant for professional advice.
+          </p>
 
-              <section id="termination" className="scroll-mt-24">
-                <h2>13. Termination</h2>
-                <p>
-                  We reserve the right to terminate or suspend your access to our Services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach these Terms of Service. Upon termination, your right to use the Services will immediately cease.
-                </p>
-              </section>
+          <h2>12. Disclaimer of Warranties</h2>
+          <p>
+            Our Services are provided on an "AS IS" and "AS AVAILABLE" basis, without warranties of any kind, either express or implied. We expressly disclaim warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee that the Services will be uninterrupted, entirely secure, or error-free.
+          </p>
 
-              <section id="changes-to-terms" className="scroll-mt-24">
-                <h2>14. Changes to These Terms</h2>
-                <p>
-                  We reserve the exclusive right to modify or replace these Terms of Service at any time. We will indicate that updates have been made by altering the &quot;Last Updated&quot; date at the top of this document. It is your responsibility to review these Terms periodically. Your continued use of our Services following the posting of any changes constitutes acceptance of those changes.
-                </p>
-              </section>
+          <h2>13. Limitation of Liability</h2>
+          <p>
+            To the maximum extent permitted by applicable law, in no event shall Tralance, its developers, or affiliates be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill, arising from your access to or use of the Services, from any loss of saved data, or from any reliance placed on the templates and calculations provided.
+          </p>
 
-              <section id="governing-law" className="scroll-mt-24">
-                <h2>15. Governing Law</h2>
-                <p>
-                  These Terms shall be governed and construed in accordance with applicable laws, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.
-                </p>
-              </section>
+          <h2>14. Indemnification</h2>
+          <p>
+            You agree to defend, indemnify, and hold harmless Tralance and its personnel from and against any claims, liabilities, damages, losses, and expenses arising out of or in any way connected with your access to or use of the Services, or your violation of these Terms.
+          </p>
 
-              <section id="contact-information" className="scroll-mt-24 mb-16">
-                <h2>16. Contact Information</h2>
-                <p>
-                  If you have any questions or concerns regarding these Terms of Service, please contact us by visiting the <Link href="/contact" className="text-blue-600 dark:text-blue-400 hover:underline">Contact page</Link> on our Website.
-                </p>
-              </section>
+          <h2>15. Third-Party Services</h2>
+          <p>
+            Our Services may contain links to or integrate with third-party websites or services (e.g., Google Analytics, AdSense, Razorpay). We assume no responsibility for the content, privacy policies, or practices of any third-party services.
+          </p>
 
-            </article>
-          </div>
+          <h2>16. Termination</h2>
+          <p>
+            We reserve the right to suspend or terminate your access to the Services at our sole discretion, without prior notice or liability, for any reason, including a breach of these Terms.
+          </p>
+
+          <h2>17. Changes to These Terms</h2>
+          <p>
+            We reserve the right to modify these Terms at any time. We will indicate that updates have been made by altering the "Last Updated" date. Your continued use of the Services following the posting of changes constitutes your acceptance of those changes.
+          </p>
+
+          <h2>18. Governing Law</h2>
+          <p>
+            These Terms shall be governed and construed in accordance with applicable laws, without regard to its conflict of law provisions.
+          </p>
+
+          <h2>19. Contact Information</h2>
+          <p>
+            If you have any questions regarding these Terms, please contact us via the <Link href="/contact">Contact page</Link>.
+          </p>
         </div>
       </div>
     </main>

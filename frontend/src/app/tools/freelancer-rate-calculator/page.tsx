@@ -1,3 +1,7 @@
+
+import PageTracker from "@/components/analytics/PageTracker";
+
+
 import { Metadata } from "next";
 import CalculatorClient from "./CalculatorClient";
 import { ToolFAQ } from "@/components/tools/ToolFAQ";
@@ -64,7 +68,9 @@ export default function FreelancerRateCalculatorPage() {
   };
 
   return (
-    <div className="bg-white dark:bg-[#030303] min-h-screen pb-24">
+    <>
+      <PageTracker eventName="tool_open" props={{ tool: "freelancer-rate-calculator" }} />
+      <div className="bg-white dark:bg-[#030303] min-h-screen pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -78,11 +84,13 @@ export default function FreelancerRateCalculatorPage() {
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5">
         
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "freelancer-rate-calculator" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             The Complete Guide to Calculating Your Freelance Hourly Rate
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "freelancer-rate-calculator" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>
               One of the most common mistakes new freelancers make is setting their hourly rate by simply taking their desired annual salary and dividing it by 2,000 working hours. This approach completely ignores the realities of running an independent business. 
             </p>
@@ -155,7 +163,11 @@ export default function FreelancerRateCalculatorPage() {
           </div>
         </div>
 
-        <div>
+        <PageTracker eventName="tool_open" props={{ tool: "freelancer-rate-calculator" }} />
+    <div>
+          <br />
+          <br />
+
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
@@ -181,5 +193,6 @@ export default function FreelancerRateCalculatorPage() {
 
       </section>
     </div>
+    </>
   );
 }

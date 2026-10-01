@@ -1,10 +1,14 @@
+
+import PageTracker from "@/components/analytics/PageTracker";
+
+
 import { Metadata } from "next";
 import InvoiceClient from "./InvoiceClient";
 import { ToolFAQ } from "@/components/tools/ToolFAQ";
 
 export const metadata: Metadata = {
   title: "Free Freelancer Invoice Generator | Tralance",
-  description: "Create professional invoices instantly in your browser. No login required, no data collection. Clean, privacy-first invoice generator for freelancers.",
+  description: "Create professional invoices instantly in your browser. No login required for basic usage. Clean, privacy-first invoice generator for freelancers.",
   alternates: {
     canonical: "/tools/freelancer-invoice-generator",
   },
@@ -65,7 +69,9 @@ export default function FreelancerInvoiceGeneratorPage() {
   };
 
   return (
-    <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
+    <>
+      <PageTracker eventName="tool_open" props={{ tool: "freelancer-invoice-generator" }} />
+      <div className="bg-[#FAFBFC] dark:bg-[#050505] min-h-screen transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -79,11 +85,13 @@ export default function FreelancerInvoiceGeneratorPage() {
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 border-t border-slate-200/60 dark:border-white/5">
         
-        <div className="mb-16">
+        <PageTracker eventName="tool_open" props={{ tool: "freelancer-invoice-generator" }} />
+    <div className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
             The Freelancer&apos;s Guide to Professional Invoicing
           </h2>
-          <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
+          <PageTracker eventName="tool_open" props={{ tool: "freelancer-invoice-generator" }} />
+    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none text-slate-600 dark:text-slate-400">
             <p>
               An invoice is more than just a request for payment-it&apos;s a legally binding document and often the final professional interaction you have with a client during a project cycle. A clear, well-structured invoice reduces friction, prevents payment delays, and reinforces your reputation as a serious business owner.
             </p>
@@ -155,7 +163,11 @@ export default function FreelancerInvoiceGeneratorPage() {
           </div>
         </div>
 
-        <div>
+        <PageTracker eventName="tool_open" props={{ tool: "freelancer-invoice-generator" }} />
+    <div>
+          <br />
+          <br />
+
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             Frequently Asked Questions
           </h2>
@@ -181,5 +193,6 @@ export default function FreelancerInvoiceGeneratorPage() {
 
       </section>
     </div>
+    </>
   );
 }

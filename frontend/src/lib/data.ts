@@ -16,7 +16,7 @@ export const DESIGN_PHILOSOPHIES = [
   },
   {
     title: "Zero Account Bloat",
-    description: "No logins, no password requirements, no confirmation emails. Open the app and start logging transactions instantly.",
+    description: "Start using the tools immediately. Open the app and start logging transactions instantly.",
   },
   {
     title: "Jetpack Compose Natives",
