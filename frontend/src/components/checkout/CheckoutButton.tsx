@@ -9,6 +9,19 @@ interface RazorpaySuccessResponse {
   razorpay_payment_id: string;
   razorpay_signature: string;
 }
+interface RazorpayErrorResponse {
+  error: {
+    code: string;
+    description: string;
+    source: string;
+    step: string;
+    reason: string;
+    metadata: {
+      order_id: string;
+      payment_id: string;
+    };
+  };
+}
 
 interface CheckoutButtonProps {
   planId: string;
@@ -119,9 +132,9 @@ export default function CheckoutButton({ planId, toolId, amount, title, classNam
       };
 
 
-      const paymentObject = new (window as unknown as { Razorpay: new (options: Record<string, unknown>) => { open: () => void, on: (event: string, handler: (response: unknown) => void) => void } }).Razorpay(options);
+      const paymentObject = new (window as unknown as { Razorpay: new (options: Record<string, unknown>) => { open: () => void, on: (event: string, handler: (response: RazorpayErrorResponse) => void) => void } }).Razorpay(options);
 
-      paymentObject.on('payment.failed', function (response: unknown) {
+      paymentObject.on('payment.failed', function (response: RazorpayErrorResponse) {
         if (typeof window !== 'undefined' && (window as unknown as { gtag: (...args: unknown[]) => void }).gtag) {
           (window as unknown as { gtag: (...args: unknown[]) => void }).gtag('event', 'purchase_failed', { event_category: 'ecommerce', error: response.error.description });
         }
