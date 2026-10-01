@@ -4,6 +4,12 @@ import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 
+interface RazorpaySuccessResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
 interface CheckoutButtonProps {
   planId: string;
   toolId?: string;
@@ -73,7 +79,7 @@ export default function CheckoutButton({ planId, toolId, amount, title, classNam
         description: `Purchase: ${title}`,
         order_id: orderData.id,
 
-        handler: async function (response: unknown) {
+        handler: async function (response: RazorpaySuccessResponse) {
           try {
             const verifyRes = await fetch('/api/checkout/verify', {
               method: 'POST',
