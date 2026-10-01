@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Flame } from "lucide-react";
 
 export default function PromoBar() {
-  const [promo, setPromo] = useState<{ isActive: boolean; text?: string; linkUrl?: string; linkText?: string } | null>(null);
+  const [promo, setPromo] = useState<{ isActive: boolean; text: string; btnText: string; btnUrl: string; icon: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/promo")
