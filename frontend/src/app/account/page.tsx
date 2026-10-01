@@ -3,9 +3,16 @@ import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+interface Entitlement {
+  id?: string;
+  planId: string;
+  expiresAt?: string | null;
+  [key: string]: unknown;
+}
+
 export default function AccountPage() {
   const { data: session, status } = useSession({ required: true });
-  const [entitlements, setEntitlements] = useState<Record<string, unknown>[]>([]);
+  const [entitlements, setEntitlements] = useState<Entitlement[]>([]);
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -22,7 +29,7 @@ export default function AccountPage() {
   const activePro = entitlements.find(e => {
     if (e.planId === 'pro') return true;
     if (e.planId === 'monthly' || e.planId === 'yearly') {
-      return !e.expiresAt || new Date(e.expiresAt as string) > now;
+      return !e.expiresAt || new Date(e.expiresAt) > now;
     }
     return false;
   });
@@ -50,11 +57,11 @@ export default function AccountPage() {
           <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/20 rounded-xl mb-4">
             <p className="font-bold text-green-700 dark:text-green-400">Tralance Pro Active</p>
             <p className="text-sm text-green-600 dark:text-green-500">
-              Plan: {activePro.planId === 'pro' ? 'Lifetime' : activePro.planId as string}
+              Plan: {activePro.planId === 'pro' ? 'Lifetime' : activePro.planId}
             </p>
             {activePro.expiresAt && (
               <p className="text-sm text-green-600 dark:text-green-500">
-                Expires on: {new Date(activePro.expiresAt as string).toLocaleDateString()}
+                Expires on: {new Date(activePro.expiresAt).toLocaleDateString()}
               </p>
             )}
             <p className="text-sm text-green-600 dark:text-green-500 mt-2">You have unlimited access to all Pro features across all tools.</p>

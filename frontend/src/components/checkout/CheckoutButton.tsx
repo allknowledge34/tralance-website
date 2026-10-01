@@ -73,7 +73,6 @@ export default function CheckoutButton({ planId, toolId, amount, title, classNam
         description: `Purchase: ${title}`,
         order_id: orderData.id,
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handler: async function (response: unknown) {
           try {
             const verifyRes = await fetch('/api/checkout/verify', {
