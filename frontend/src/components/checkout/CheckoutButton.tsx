@@ -85,7 +85,7 @@ export default function CheckoutButton({ planId, toolId, amount, title, classNam
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        key: orderData.key_id,
         amount: orderData.amount,
         currency: orderData.currency,
         name: 'Tralance',

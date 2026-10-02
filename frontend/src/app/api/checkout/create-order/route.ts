@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       }
     });
 
-    return NextResponse.json({ ...order, dbOrderId: dbOrder.id });
+    return NextResponse.json({ ...order, dbOrderId: dbOrder.id, key_id: process.env.RAZORPAY_KEY_ID });
 
   } catch (error) {
     console.error('Checkout error:', error);
