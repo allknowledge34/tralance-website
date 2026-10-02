@@ -4,12 +4,56 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "./ThemeContext";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, User } from "lucide-react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+
+import type { Session } from "next-auth";
+
+type ProfileButtonProps = {
+  isMobile?: boolean;
+  status: 'loading' | 'authenticated' | 'unauthenticated';
+  session: Session | null;
+  imageError: boolean;
+  setImageError: (v: boolean) => void;
+};
+
+const ProfileButton = ({ isMobile = false, status, session, imageError, setImageError }: ProfileButtonProps) => {
+  const targetHref = status === 'authenticated' ? '/account' : '/login';
+  const hasImage = status === 'authenticated' && session?.user?.image && !imageError;
+  const baseClasses = `rounded-xl border border-slate-200/50 dark:border-[rgba(255,255,255,0.08)] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-[#AEB7C6] dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center overflow-hidden shrink-0`;
+  
+  // Desktop padding/sizing vs Mobile sizing
+  const sizeClasses = isMobile 
+    ? 'w-[42px] h-[42px]' 
+    : (hasImage ? 'w-[42px] h-[42px]' : 'p-2.5'); // match p-2.5 + w-5 = roughly 42px for desktop if it's an image, else keep padding for icon
+
+  return (
+    <Link
+      href={targetHref}
+      className={`${baseClasses} ${sizeClasses}`}
+      aria-label="User profile"
+    >
+      {hasImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img 
+          src={session?.user?.image || ''} 
+          alt="Profile" 
+          className="w-full h-full object-cover"
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <User className="w-5 h-5" />
+      )}
+    </Link>
+  );
+};
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const [imageError, setImageError] = React.useState(false);
 
   type NavItem = {
     name: string;
@@ -60,6 +104,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
+            <ProfileButton status={status} session={session} imageError={imageError} setImageError={setImageError} />
             <button
               onClick={toggleTheme}
               className="p-2.5 rounded-xl border border-slate-200/50 dark:border-[rgba(255,255,255,0.08)] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-[#AEB7C6] dark:hover:text-white transition-colors cursor-pointer"
@@ -76,16 +121,17 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
+            <ProfileButton isMobile={true} status={status} session={session} imageError={imageError} setImageError={setImageError} />
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl border border-slate-200/50 dark:border-[rgba(255,255,255,0.08)] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-[#AEB7C6] dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center w-[42px] h-[42px]"
+              className="p-2.5 rounded-xl border border-slate-200/50 dark:border-[rgba(255,255,255,0.08)] hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-[#AEB7C6] dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center w-[42px] h-[42px] shrink-0"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <Link
               href="/pricing"
-              className="rounded-xl cursor-pointer flex items-center justify-center text-sm font-bold bg-yellow-300 text-slate-900 px-3 h-[42px]"
+              className="rounded-xl cursor-pointer flex items-center justify-center text-sm font-bold bg-yellow-300 text-slate-900 px-3 h-[42px] shrink-0"
               aria-label="Pricing"
             >
               Pricing
