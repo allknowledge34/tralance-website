@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
     return new NextResponse('OK', { status: 200 });
 
-  } catch (error) {
+  } catch {
     return new NextResponse('Internal Error', { status: 500 });
   }
 }

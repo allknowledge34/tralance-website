@@ -11,8 +11,10 @@ function StatusContent() {
   const [status, setStatus] = useState<'verifying' | 'success' | 'failed' | 'pending' | 'error'>('verifying');
 
   useEffect(() => {
+    let mounted = true;
+
     if (!orderId) {
-      setStatus('error');
+      if (mounted) setStatus('error');
       return;
     }
 
@@ -25,19 +27,25 @@ function StatusContent() {
         });
         const data = await res.json();
         
+        if (!mounted) return;
+
         if (data.status === 'SUCCESS') {
           setStatus('success');
-          setTimeout(() => router.push('/account'), 2000);
+          setTimeout(() => {
+            if (mounted) router.push('/account');
+          }, 2000);
         } else if (data.status === 'PENDING') {
           setStatus('pending');
         } else {
           setStatus('failed');
         }
       } catch {
-        setStatus('error');
+        if (mounted) setStatus('error');
       }
     };
     verify();
+
+    return () => { mounted = false; };
   }, [orderId, router]);
 
   return (

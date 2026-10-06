@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Twitter, Instagram, Youtube } from "lucide-react";
+import { Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 import { IntelligenceWheel } from "./hero-wheel/intelligence-wheel";
 

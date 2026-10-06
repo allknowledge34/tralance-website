@@ -14,6 +14,23 @@ interface CashfreeCheckoutResult {
   };
 }
 
+interface CashfreeOptions {
+  mode: string;
+}
+
+interface CashfreeCheckoutOptions {
+  paymentSessionId: string;
+  redirectTarget: string;
+}
+
+interface CashfreeInstance {
+  checkout: (options: CashfreeCheckoutOptions) => Promise<void>;
+}
+
+interface WindowWithCashfree extends Window {
+  Cashfree?: (options: CashfreeOptions) => CashfreeInstance;
+}
+
 interface CheckoutButtonProps {
   planId: string;
   toolId?: string;
@@ -22,9 +39,9 @@ interface CheckoutButtonProps {
   className?: string;
 }
 
-export default function CheckoutButton({ planId, toolId, amount, title, className }: CheckoutButtonProps) {
+export default function CheckoutButton({ planId, toolId, title, className }: CheckoutButtonProps) {
   const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -66,7 +83,13 @@ export default function CheckoutButton({ planId, toolId, amount, title, classNam
         return;
       }
 
-      const cashfree = (window as any).Cashfree({
+      const cashfreeConstructor = (window as unknown as WindowWithCashfree).Cashfree;
+      if (!cashfreeConstructor) {
+        setLoading(false);
+        return;
+      }
+
+      const cashfree = cashfreeConstructor({
         mode: orderData.environment === 'SANDBOX' ? 'sandbox' : 'production',
       });
 
@@ -77,7 +100,7 @@ export default function CheckoutButton({ planId, toolId, amount, title, classNam
 
       await cashfree.checkout(checkoutOptions);
 
-    } catch (error) {
+    } catch {
       setLoading(false);
     }
   };

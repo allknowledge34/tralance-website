@@ -111,7 +111,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ status: 'FAILED' });
 
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to verify payment' }, { status: 500 });
   }
 }

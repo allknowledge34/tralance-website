@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { ContractData } from "@/types/contract-generator";
 import { ContractForm } from "@/components/tools/contract-generator/ContractForm";
 import { ContractPreview } from "@/components/tools/contract-generator/ContractPreview";
-import { Printer } from "lucide-react";
 import { PDFDownloadButton } from "@/components/tools/PDFDownloadButton";
 
 const defaultContractData: ContractData = {
