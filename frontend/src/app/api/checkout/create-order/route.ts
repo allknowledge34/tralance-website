@@ -70,6 +70,7 @@ export async function POST(req: Request) {
     const cfData = await cashfreeResponse.json();
 
     if (!cashfreeResponse.ok) {
+      console.error("Cashfree order creation failed. Status:", cashfreeResponse.status, "Response:", cfData);
       await prisma.order.delete({ where: { id: dbOrder.id } });
       return NextResponse.json({ error: 'Failed to initialize payment.' }, { status: 500 });
     }
@@ -79,7 +80,8 @@ export async function POST(req: Request) {
       environment: env
     });
 
-  } catch {
+  } catch (error) {
+    console.error("Create order error:", error);
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 });
   }
 }
