@@ -71,16 +71,14 @@ model Order {
   toolId            String?  // The ID of the tool if single_tool (e.g., 'freelancer-invoice-generator')
   amount            Int
   currency          String   @default("INR")
-  razorpayOrderId   String?  @unique
-  razorpayPaymentId String?  @unique
-  razorpaySignature String?
+  cashfreePaymentId String?  @unique
+  cashfreeSignature String?
   status            String   @default("PENDING") // PENDING, SUCCESS, FAILED
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([razorpayOrderId])
   @@index([status])
 }
 

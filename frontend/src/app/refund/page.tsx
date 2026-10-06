@@ -35,7 +35,7 @@ export default function RefundPage() {
 
           <h2>1. Paid Plans & Delivery of Service</h2>
           <p>
-            Tralance offers digital productivity tools. When you purchase a paid plan (such as our Monthly ₹49 plan or Yearly ₹149 plan) via our payment processor, <strong>Razorpay</strong>, digital access to Pro features is granted immediately to your account upon successful payment verification.
+            Tralance offers digital productivity tools. When you purchase a paid plan (such as our Monthly ₹49 plan or Yearly ₹149 plan) via our payment processor, <strong>Cashfree</strong>, digital access to Pro features is granted immediately to your account upon successful payment verification.
           </p>
           <p>
             These features include unlimited PDF generation and the ability to save work to your account. Because these are instantly accessible digital features, the service is considered delivered immediately.
@@ -69,12 +69,12 @@ export default function RefundPage() {
 
           <h2>5. Payment Failures</h2>
           <p>
-            If a payment fails or is marked as pending by Razorpay, the Pro entitlement will not be granted until the transaction is successfully verified. If money is deducted from your account but the order remains in a failed or pending state, the funds are typically auto-refunded by your bank or Razorpay within 5-7 business days.
+            If a payment fails or is marked as pending by Cashfree, the Pro entitlement will not be granted until the transaction is successfully verified. If money is deducted from your account but the order remains in a failed or pending state, the funds are typically auto-refunded by your bank or Cashfree within 5-7 business days.
           </p>
 
           <h2>6. How to Contact Us</h2>
           <p>
-            If you experience a severe billing issue or believe you qualify for an exceptional refund based on the criteria above, please reach out to us via our <Link href="/contact">Contact page</Link>. When contacting us, please include your registered email address and any relevant transaction or order IDs provided by Razorpay to help us locate your payment.
+            If you experience a severe billing issue or believe you qualify for an exceptional refund based on the criteria above, please reach out to us via our <Link href="/contact">Contact page</Link>. When contacting us, please include your registered email address and any relevant transaction or order IDs provided by Cashfree to help us locate your payment.
           </p>
         </div>
       </div>

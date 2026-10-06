@@ -77,7 +77,7 @@ export default function TermsPage() {
 
           <h2>6. Payments and Processing</h2>
           <p>
-            All payments are processed securely through our authorized third-party payment provider, <strong>Razorpay</strong>. By submitting payment information, you authorize Razorpay to charge the specified amount. Tralance does not store your full credit card number or financial credentials. We reserve the right to change our pricing at any time, but price changes will not affect active, previously purchased entitlement periods.
+            All payments are processed securely through our authorized third-party payment provider, <strong>Cashfree</strong>. By submitting payment information, you authorize Cashfree to charge the specified amount. Tralance does not store your full credit card number or financial credentials. We reserve the right to change our pricing at any time, but price changes will not affect active, previously purchased entitlement periods.
           </p>
 
           <h2>7. Cancellation and Refunds</h2>
@@ -128,7 +128,7 @@ export default function TermsPage() {
 
           <h2>15. Third-Party Services</h2>
           <p>
-            Our Services may contain links to or integrate with third-party websites or services (e.g., Google Analytics, AdSense, Razorpay). We assume no responsibility for the content, privacy policies, or practices of any third-party services.
+            Our Services may contain links to or integrate with third-party websites or services (e.g., Google Analytics, AdSense, Cashfree). We assume no responsibility for the content, privacy policies, or practices of any third-party services.
           </p>
 
           <h2>16. Termination</h2>

@@ -15,7 +15,7 @@ const PRICING_FAQS = [
   },
   {
     q: "Is payment handled securely?",
-    a: "Payments are processed securely through Razorpay, a trusted and official payment gateway.",
+    a: "Payments are processed securely through Cashfree, a trusted and official payment gateway.",
   },
 ];
 

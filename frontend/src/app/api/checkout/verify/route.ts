@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
 import { prisma } from '@/lib/db/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -11,14 +10,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
+    const { order_id } = await req.json();
 
-    if (!process.env.RAZORPAY_KEY_SECRET) {
+    if (!process.env.CASHFREE_APP_ID || !process.env.CASHFREE_SECRET_KEY) {
       return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
     }
 
     const order = await prisma.order.findUnique({
-      where: { razorpayOrderId: razorpay_order_id }
+      where: { id: order_id }
     });
 
     if (!order) {
@@ -26,72 +25,93 @@ export async function POST(req: Request) {
     }
 
     if (order.userId !== session.user.id) {
-      return NextResponse.json({ success: false, error: 'User mismatch' }, { status: 403 });
+      return NextResponse.json({ error: 'User mismatch' }, { status: 403 });
     }
 
     if (order.status === 'SUCCESS') {
-      return NextResponse.json({ success: true, alreadyVerified: true });
+      return NextResponse.json({ status: 'SUCCESS' });
     }
 
-    const text = `${razorpay_order_id}|${razorpay_payment_id}`;
-    const generated_signature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
-      .update(text)
-      .digest('hex');
+    const env = process.env.CASHFREE_ENVIRONMENT || 'PRODUCTION';
+    const baseUrl = env === 'SANDBOX' 
+      ? `https://sandbox.cashfree.com/pg/orders/${order_id}`
+      : `https://api.cashfree.com/pg/orders/${order_id}`;
 
-    if (generated_signature !== razorpay_signature) {
-      await prisma.order.update({
-        where: { id: order.id },
-        data: { status: 'FAILED' }
-      });
-      return NextResponse.json({ success: false, error: 'Invalid signature' }, { status: 400 });
-    }
-
-    await prisma.order.update({
-      where: { id: order.id },
-      data: { 
-        status: 'SUCCESS',
-        razorpayPaymentId: razorpay_payment_id,
-        razorpaySignature: razorpay_signature
+    const cfRes = await fetch(baseUrl, {
+      method: 'GET',
+      headers: {
+        'x-api-version': process.env.CASHFREE_API_VERSION || '2025-01-01',
+        'x-client-id': process.env.CASHFREE_APP_ID,
+        'x-client-secret': process.env.CASHFREE_SECRET_KEY,
       }
     });
 
+    const cfData = await cfRes.json();
 
-    const expiresAt = new Date();
-    if (order.planId === 'monthly') {
-      expiresAt.setMonth(expiresAt.getMonth() + 1);
-    } else if (order.planId === 'yearly') {
-      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+    if (!cfRes.ok || !cfData.order_status) {
+       return NextResponse.json({ error: 'Failed to verify payment with provider' }, { status: 500 });
     }
 
-
-    const existing = await prisma.entitlement.findFirst({
-      where: {
-        userId: order.userId,
-        planId: order.planId,
-        toolId: order.toolId,
-      }
-    });
-
-    if (existing) {
-      await prisma.entitlement.update({
-        where: { id: existing.id },
-        data: { expiresAt }
+    const orderStatus = cfData.order_status;
+    
+    if (orderStatus === 'PAID') {
+      const updateResult = await prisma.order.updateMany({
+        where: { id: order.id, status: 'PENDING' },
+        data: { status: 'SUCCESS' }
       });
-    } else {
-      await prisma.entitlement.create({
-        data: {
+
+      if (updateResult.count === 0) {
+        // If it wasn't PENDING, it was already processed
+        return NextResponse.json({ status: 'SUCCESS' });
+      }
+
+      const expiresAt = new Date();
+      if (order.planId === 'monthly') {
+        expiresAt.setMonth(expiresAt.getMonth() + 1);
+      } else if (order.planId === 'yearly') {
+        expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+      }
+
+      const existing = await prisma.entitlement.findFirst({
+        where: {
           userId: order.userId,
-          planId: order.planId,
+          planId: { in: ['monthly', 'yearly'] },
           toolId: order.toolId,
-          expiresAt
         }
       });
+
+      if (existing) {
+        const newExpiry = existing.expiresAt && existing.expiresAt > new Date() 
+          ? new Date(existing.expiresAt.getTime() + (expiresAt.getTime() - new Date().getTime()))
+          : expiresAt;
+          
+        await prisma.entitlement.update({
+          where: { id: existing.id },
+          data: { 
+            expiresAt: newExpiry,
+            planId: order.planId // Upgrade/change to the new plan ID if it was different
+          }
+        });
+      } else {
+        await prisma.entitlement.create({
+          data: {
+            userId: order.userId,
+            planId: order.planId,
+            toolId: order.toolId,
+            expiresAt
+          }
+        });
+      }
+      return NextResponse.json({ status: 'SUCCESS' });
     }
 
-    return NextResponse.json({ success: true });
+    if (orderStatus === 'ACTIVE') {
+      return NextResponse.json({ status: 'PENDING' });
+    }
+
+    return NextResponse.json({ status: 'FAILED' });
+
   } catch (error) {
-    console.error('Verification error:', error);
     return NextResponse.json({ error: 'Failed to verify payment' }, { status: 500 });
   }
 }

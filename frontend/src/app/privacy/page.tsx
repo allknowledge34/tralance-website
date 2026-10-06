@@ -71,11 +71,11 @@ export default function PrivacyPage() {
 
           <h2>5. Payments</h2>
           <p>
-            When you purchase a paid plan, your payment is processed securely by our third-party payment provider, <strong>Razorpay</strong>.
+            When you purchase a paid plan, your payment is processed securely by our third-party payment provider, <strong>Cashfree</strong>.
           </p>
           <ul>
-            <li><strong>Payment Processor:</strong> Razorpay handles and stores your full payment credentials (such as credit card numbers or UPI details) subject to their own privacy policy and security standards. Tralance does not collect, process, or store your full financial credentials.</li>
-            <li><strong>Tralance Records:</strong> We receive and retain payment confirmation information from Razorpay, including transaction IDs, order amounts, currency, and the specific plan purchased, in order to grant you the correct account entitlements and maintain accurate billing records.</li>
+            <li><strong>Payment Processor:</strong> Cashfree handles and stores your full payment credentials (such as credit card numbers or UPI details) subject to their own privacy policy and security standards. Tralance does not collect, process, or store your full financial credentials.</li>
+            <li><strong>Tralance Records:</strong> We receive and retain payment confirmation information from Cashfree, including transaction IDs, order amounts, currency, and the specific plan purchased, in order to grant you the correct account entitlements and maintain accurate billing records.</li>
           </ul>
 
           <h2>6. Analytics and Advertising</h2>
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
 
           <h2>10. Third-Party Services</h2>
           <p>
-            We employ third-party companies to facilitate our Services. These include hosting/infrastructure providers, authentication providers (Google), payment processors (Razorpay), and analytics/advertising networks. These third parties have access to your data only to perform specific tasks on our behalf and are obligated not to disclose or use it for other purposes.
+            We employ third-party companies to facilitate our Services. These include hosting/infrastructure providers, authentication providers (Google), payment processors (Cashfree), and analytics/advertising networks. These third parties have access to your data only to perform specific tasks on our behalf and are obligated not to disclose or use it for other purposes.
           </p>
 
           <h2>11. Your Rights</h2>
