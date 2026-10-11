@@ -53,5 +53,17 @@ export async function savePromoSettings(data: any) {
       icon: data.icon,
     }
   });
+
+  const { logAdminActivity } = await import("@/lib/audit");
+  await logAdminActivity({
+    action: "PROMO_BAR_UPDATE",
+    entityType: "PROMO",
+    entityId: "global",
+    details: `Promo bar ${data.isActive ? "enabled" : "disabled"}: "${data.text}"`,
+  });
+
+  const { revalidatePath } = await import("next/cache");
+  revalidatePath("/promo");
+
   return promo;
 }

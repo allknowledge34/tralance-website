@@ -1,182 +1,262 @@
 import Link from "next/link";
-import { Plus, ArrowRight, Trash2, Globe, FileEdit, EyeOff, LayoutGrid } from "lucide-react";
-import { deleteBlog, publishBlog, unpublishBlog, getBlogsByStatus } from "@/lib/actions/blog";
+import {
+  Plus,
+  Trash2,
+  Globe,
+  FileEdit,
+  EyeOff,
+  ExternalLink,
+  BookOpen,
+} from "lucide-react";
+import {
+  deleteBlog,
+  publishBlog,
+  unpublishBlog,
+  getBlogsByStatus,
+} from "@/lib/actions/blog";
 import { SearchInput } from "@/components/ui/search-input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 
 export default async function BlogsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const params = await searchParams;
-  const q = typeof params.q === 'string' ? params.q : undefined;
-  
-  // Fetch from Neon DB, optimized by indexes, using reusable function
-  const draftsRes = await getBlogsByStatus("DRAFT", q);
-  const publishedRes = await getBlogsByStatus("PUBLISHED", q);
-  
-  const drafts = (draftsRes.success && draftsRes.data) ? draftsRes.data : [];
-  const published = (publishedRes.success && publishedRes.data) ? publishedRes.data : [];
+  const q = typeof params.q === "string" ? params.q : undefined;
+
+  const [draftsRes, publishedRes] = await Promise.all([
+    getBlogsByStatus("DRAFT", q),
+    getBlogsByStatus("PUBLISHED", q),
+  ]);
+
+  const drafts = draftsRes.success && draftsRes.data ? draftsRes.data : [];
+  const published = publishedRes.success && publishedRes.data ? publishedRes.data : [];
+  const allArticles = [...published, ...drafts];
 
   const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', { 
-      month: 'short', day: 'numeric', year: 'numeric' 
-    }).format(date);
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(new Date(date));
   };
 
-  // Form action wrappers to satisfy Promise<void> type requirement
-  const onPublish = async (id: string, formData: FormData) => {
+  // Form actions
+  const onPublish = async (id: string) => {
     "use server";
     await publishBlog(id);
   };
-  
-  const onUnpublish = async (id: string, formData: FormData) => {
+
+  const onUnpublish = async (id: string) => {
     "use server";
     await unpublishBlog(id);
   };
-  
-  const onDelete = async (id: string, formData: FormData) => {
+
+  const onDelete = async (id: string) => {
     "use server";
     await deleteBlog(id);
   };
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
-      
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-        <h1 className="editorial-title text-4xl text-foreground">Articles</h1>
-        
-        <div className="flex items-center gap-4 w-full sm:w-auto">
-          {/* Instant Client Search */}
-          <div className="w-full sm:w-64">
-            <SearchInput placeholder="Search articles..." />
-          </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-neutral-800">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Articles & Blog Management
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">
+            Create, edit, and publish editorial articles for the public Tralance knowledgebase.
+          </p>
+        </div>
 
-          <Link href="/blogs/create" className="shrink-0">
-            <button className="material-layer-elevated shadow-lg px-5 py-2.5 flex items-center gap-2 hover:opacity-90 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 transition-colors rounded-full">
-              <Plus className="w-4 h-4 stroke-[2]" />
-              <span className="text-sm font-medium">New</span>
-            </button>
-          </Link>
+        <Link href="/blogs/create">
+          <Button size="sm" className="gap-2 shadow-xs">
+            <Plus className="w-3.5 h-3.5" />
+            <span>Create Article</span>
+          </Button>
+        </Link>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-4 rounded-xl border border-slate-200/80 dark:border-neutral-800 bg-white dark:bg-[#161618]">
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            Total Articles
+          </span>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+            {allArticles.length}
+          </p>
+        </div>
+        <div className="p-4 rounded-xl border border-slate-200/80 dark:border-neutral-800 bg-white dark:bg-[#161618]">
+          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+            Published Live
+          </span>
+          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+            {published.length}
+          </p>
+        </div>
+        <div className="p-4 rounded-xl border border-slate-200/80 dark:border-neutral-800 bg-white dark:bg-[#161618]">
+          <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+            Drafts in Progress
+          </span>
+          <p className="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">
+            {drafts.length}
+          </p>
         </div>
       </div>
 
-      <div className="space-y-12">
-        
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm tracking-widest uppercase font-medium text-subtle">Drafts</h2>
-            <span className="text-xs text-subtle bg-[var(--layer-1)] px-2 py-1 rounded-full">{drafts.length}</span>
-          </div>
-          
-          {drafts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 px-4 material-layer rounded-3xl border border-[var(--border-subtle)] border-dashed">
-              <LayoutGrid className="w-12 h-12 text-subtle mb-4 stroke-[1]" />
-              <h3 className="text-lg font-medium text-foreground mb-2">No drafts found</h3>
-              <p className="text-sm text-subtle text-center max-w-sm mb-6">
-                {q ? `No drafts matched your search for "${q}".` : "You don't have any drafts yet. Start writing your next masterpiece."}
-              </p>
-              {!q && (
-                <Link href="/blogs/create">
-                  <button className="px-6 py-2.5 bg-[var(--layer-2)] hover:bg-[var(--layer-3)] text-foreground transition-colors rounded-full font-medium text-sm">
-                    Create Draft
-                  </button>
-                </Link>
-              )}
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {drafts.map(draft => (
-                <article key={draft.id} className="p-4 -mx-4 rounded-2xl transition-all hover:bg-[var(--layer-1)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Link href={`/blogs/${draft.id}/edit`}>
-                        <h3 className="text-xl font-medium text-foreground/90 hover:text-foreground transition-colors cursor-pointer">{draft.title || "Untitled Draft"}</h3>
-                      </Link>
-                      <ArrowRight className="w-4 h-4 text-subtle opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all pointer-events-none hidden sm:block" />
-                    </div>
-                    <p className="text-sm text-subtle">Last updated {formatDate(draft.updatedAt)}</p>
-                  </div>
-                  
-                  {/* Actions */}
-                  <div className="flex items-center gap-1 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Link href={`/blogs/${draft.id}/edit`}>
-                      <button className="p-2 text-subtle hover:text-foreground hover:bg-[var(--layer-2)] rounded-full transition-colors" title="Edit">
-                        <FileEdit className="w-4 h-4" />
-                      </button>
-                    </Link>
-                    <form action={onPublish.bind(null, draft.id)}>
-                      <button type="submit" className="p-2 text-subtle hover:text-green-500 hover:bg-green-500/10 rounded-full transition-colors" title="Publish">
-                        <Globe className="w-4 h-4" />
-                      </button>
-                    </form>
-                    <form action={onDelete.bind(null, draft.id)}>
-                      <button type="submit" className="p-2 text-subtle hover:text-red-500 hover:bg-red-500/10 rounded-full transition-colors" title="Delete">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </form>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm tracking-widest uppercase font-medium text-subtle">Published</h2>
-            <span className="text-xs text-subtle bg-[var(--layer-1)] px-2 py-1 rounded-full">{published.length}</span>
-          </div>
-          
-          {published.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 px-4 material-layer rounded-3xl border border-[var(--border-subtle)] border-dashed">
-              <Globe className="w-12 h-12 text-subtle mb-4 stroke-[1]" />
-              <h3 className="text-lg font-medium text-foreground mb-2">No published articles</h3>
-              <p className="text-sm text-subtle text-center max-w-sm mb-6">
-                {q ? `No published articles matched your search for "${q}".` : "Publish a draft to see it appear here and on your live site."}
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {published.map(post => (
-                <article key={post.id} className="p-4 -mx-4 rounded-2xl transition-all hover:bg-[var(--layer-1)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Link href={`/blogs/${post.id}/edit`}>
-                        <h3 className="text-xl font-medium text-foreground/90 hover:text-foreground transition-colors cursor-pointer">{post.title || "Untitled Post"}</h3>
-                      </Link>
-                      <ArrowRight className="w-4 h-4 text-subtle opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all pointer-events-none hidden sm:block" />
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-subtle">
-                      <span>Published {post.publishedAt ? formatDate(post.publishedAt) : "Unknown"}</span>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex gap-1 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Link href={`/blogs/${post.id}/edit`}>
-                      <button className="p-2 text-subtle hover:text-foreground hover:bg-[var(--layer-2)] rounded-full transition-colors" title="Edit">
-                        <FileEdit className="w-4 h-4" />
-                      </button>
-                    </Link>
-                    <form action={onUnpublish.bind(null, post.id)}>
-                      <button type="submit" className="p-2 text-subtle hover:text-amber-500 hover:bg-amber-500/10 rounded-full transition-colors" title="Unpublish to Drafts">
-                        <EyeOff className="w-4 h-4" />
-                      </button>
-                    </form>
-                    <form action={onDelete.bind(null, post.id)}>
-                      <button type="submit" className="p-2 text-subtle hover:text-red-500 hover:bg-red-500/10 rounded-full transition-colors" title="Delete">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </form>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
-
+      {/* Search Bar */}
+      <div className="w-full sm:w-80">
+        <SearchInput placeholder="Search articles by title or slug..." />
       </div>
+
+      {/* Main Articles Table */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base">All Articles ({allArticles.length})</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          {allArticles.length === 0 ? (
+            <div className="py-16 text-center text-xs text-slate-400">
+              <BookOpen className="w-8 h-8 mx-auto mb-2 text-slate-300 dark:text-neutral-700" />
+              {q ? `No articles matched "${q}".` : "No articles found in database."}
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Article Title & Slug</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Cover Image</TableHead>
+                  <TableHead>Updated</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {allArticles.map((post) => {
+                  const isPublished = post.status === "PUBLISHED";
+                  return (
+                    <TableRow key={post.id}>
+                      {/* Title & Slug */}
+                      <TableCell>
+                        <div className="max-w-xs sm:max-w-md truncate">
+                          <Link
+                            href={`/blogs/${post.id}/edit`}
+                            className="font-semibold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block truncate"
+                          >
+                            {post.title || "Untitled Article"}
+                          </Link>
+                          <span className="text-[11px] font-mono text-slate-400 block truncate mt-0.5">
+                            /{post.slug}
+                          </span>
+                        </div>
+                      </TableCell>
+
+                      {/* Status Badge */}
+                      <TableCell>
+                        {isPublished ? (
+                          <Badge variant="success">PUBLISHED</Badge>
+                        ) : (
+                          <Badge variant="default">DRAFT</Badge>
+                        )}
+                      </TableCell>
+
+                      {/* Cover Image */}
+                      <TableCell>
+                        {post.coverImage ? (
+                          <div className="w-12 h-8 rounded-md overflow-hidden bg-slate-100 border border-slate-200/60 shrink-0">
+                            <img
+                              src={post.coverImage}
+                              alt="Cover"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <span className="text-xs text-slate-400 italic">None</span>
+                        )}
+                      </TableCell>
+
+                      {/* Date */}
+                      <TableCell className="text-xs text-slate-500 whitespace-nowrap">
+                        {formatDate(post.updatedAt)}
+                      </TableCell>
+
+                      {/* Row Actions */}
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          {isPublished && (
+                            <a
+                              href={`https://www.tralance.pro/blog/${post.slug}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-neutral-200 rounded-lg transition-colors"
+                              title="View Live on tralance.pro"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          )}
+
+                          <Link
+                            href={`/blogs/${post.id}/edit`}
+                            className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-neutral-200 rounded-lg transition-colors"
+                            title="Edit Article"
+                          >
+                            <FileEdit className="w-4 h-4" />
+                          </Link>
+
+                          {isPublished ? (
+                            <form action={onUnpublish.bind(null, post.id)}>
+                              <button
+                                type="submit"
+                                className="p-1.5 text-slate-400 hover:text-amber-600 rounded-lg transition-colors cursor-pointer"
+                                title="Unpublish to Draft"
+                              >
+                                <EyeOff className="w-4 h-4" />
+                              </button>
+                            </form>
+                          ) : (
+                            <form action={onPublish.bind(null, post.id)}>
+                              <button
+                                type="submit"
+                                className="p-1.5 text-slate-400 hover:text-emerald-600 rounded-lg transition-colors cursor-pointer"
+                                title="Publish Live"
+                              >
+                                <Globe className="w-4 h-4" />
+                              </button>
+                            </form>
+                          )}
+
+                          <form action={onDelete.bind(null, post.id)}>
+                            <button
+                              type="submit"
+                              className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg transition-colors cursor-pointer"
+                              title="Delete Article"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </form>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

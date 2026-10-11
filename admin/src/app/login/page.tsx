@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Image from "next/image";
 import { ArrowRight, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
 import { login } from "@/app/actions/auth";
 
@@ -12,8 +13,16 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-[var(--background)] p-4 font-sans text-[var(--foreground)]">
       <div className="w-full max-w-sm material-layer-elevated p-8 relative z-10">
         <div className="text-center mb-10">
-          <div className="w-12 h-12 bg-[var(--layer-1)] border border-[var(--border-strong)] rounded-xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-            <span className="font-sans font-bold text-xl text-foreground">W</span>
+          <div className="w-14 h-14 bg-white dark:bg-neutral-800 border border-slate-200 dark:border-neutral-700 rounded-2xl p-2 flex items-center justify-center mx-auto mb-6 shadow-sm">
+            <Image
+              src="/app-icon.png"
+              alt="Tralance App Icon"
+              width={48}
+              height={48}
+              className="w-full h-full object-contain"
+              priority
+              unoptimized
+            />
           </div>
           <h1 className="editorial-title text-2xl text-foreground mb-2">Welcome Back</h1>
           <p className="text-subtle text-sm">Sign in to your workspace</p>

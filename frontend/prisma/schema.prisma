@@ -39,17 +39,22 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  accounts      Account[]
-  sessions      Session[]
-  orders        Order[]
-  entitlements  Entitlement[]
-  toolData      ToolData[]
+  id                String             @id @default(cuid())
+  name              String?
+  email             String?            @unique
+  emailVerified     DateTime?
+  image             String?
+  password          String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now()) @updatedAt
+  accounts          Account[]
+  sessions          Session[]
+  orders            Order[]
+  entitlements      Entitlement[]
+  toolData          ToolData[]
+  userNotifications UserNotification[]
+
+  @@index([createdAt])
 }
 
 model VerificationToken {
@@ -61,18 +66,21 @@ model VerificationToken {
 }
 
 // ==========================================
-// E-commerce & Entitlements
+// E-commerce & Entitlements (Cashfree)
 // ==========================================
 
 model Order {
   id                String   @id @default(cuid())
   userId            String
-  planId            String   // 'single_tool' | 'pro'
-  toolId            String?  // The ID of the tool if single_tool (e.g., 'freelancer-invoice-generator')
+  planId            String   // 'monthly' | 'yearly' | 'single_tool' | 'pro'
+  toolId            String?
   amount            Int
   currency          String   @default("INR")
   cashfreePaymentId String?  @unique
   cashfreeSignature String?
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpaySignature String?
   status            String   @default("PENDING") // PENDING, SUCCESS, FAILED
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -80,25 +88,25 @@ model Order {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([status])
+  @@index([createdAt])
 }
 
 model Entitlement {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   userId    String
-  planId    String   // 'single_tool' | 'pro'
-  toolId    String?  // null if planId is 'pro'
-  createdAt DateTime @default(now())
-  
+  planId    String    // 'monthly' | 'yearly' | 'pro'
+  toolId    String?
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    expiresAt DateTime?
-
-  // Note: Keeping unique constraint for backwards compatibility but we won't use toolId for new plans
-  @@unique([userId, planId, toolId]) // Prevent duplicate entitlements
+  @@unique([userId, planId, toolId])
+  @@index([expiresAt])
 }
 
 // ==========================================
-// Tool Data Storage (Pro Feature)
+// Tool Data & Usage Storage
 // ==========================================
 
 model ToolData {
@@ -109,13 +117,11 @@ model ToolData {
   data      Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
-// ==========================================
-// PDF Usage Limits
-// ==========================================
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([toolId])
+}
 
 model PdfUsage {
   id           String   @id @default(cuid())
@@ -154,11 +160,165 @@ model Blog {
 }
 
 model PromoBarSettings {
-  id           String   @id @default("global")
-  isActive     Boolean  @default(false)
-  text         String   @default("Try YTVoidMode — a cleaner YouTube experience for Chrome")
-  btnText      String   @default("Try YTVoidMode")
-  btnUrl       String   @default("https://chromewebstore.google.com/")
-  icon         String   @default("sparkles")
-  updatedAt    DateTime @updatedAt
+  id        String   @id @default("global")
+  isActive  Boolean  @default(false)
+  text      String   @default("Try YTVoidMode — a cleaner YouTube experience for Chrome")
+  btnText   String   @default("Try YTVoidMode")
+  btnUrl    String   @default("https://chromewebstore.google.com/")
+  icon      String   @default("sparkles")
+  updatedAt DateTime @updatedAt
+}
+
+// ==========================================
+// Notifications Center
+// ==========================================
+
+enum NotificationAudience {
+  ALL
+  PRO
+  FREE
+}
+
+enum NotificationStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+  CANCELLED
+}
+
+enum NotificationType {
+  INFO
+  ANNOUNCEMENT
+  SUCCESS
+  WARNING
+}
+
+model AdminNotification {
+  id             String               @id @default(cuid())
+  title          String
+  message        String               @db.Text
+  actionUrl      String?
+  targetAudience NotificationAudience @default(ALL)
+  type           NotificationType     @default(INFO)
+  status         NotificationStatus   @default(DRAFT)
+  scheduledAt    DateTime?
+  sentAt         DateTime?
+  recipientCount Int                  @default(0)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  userNotifications UserNotification[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model UserNotification {
+  id             String            @id @default(cuid())
+  userId         String
+  notificationId String
+  title          String
+  message        String            @db.Text
+  actionUrl      String?
+  type           NotificationType  @default(INFO)
+  isRead         Boolean           @default(false)
+  readAt         DateTime?
+  createdAt      DateTime          @default(now())
+
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification AdminNotification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+}
+
+// ==========================================
+// Email Broadcast System
+// ==========================================
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  FAILED
+  CANCELLED
+}
+
+model EmailCampaign {
+  id              String               @id @default(cuid())
+  name            String
+  subject         String
+  senderName      String               @default("Tralance Team")
+  senderEmail     String               @default("noreply@tralance.pro")
+  previewText     String?
+  htmlContent     String               @db.Text
+  targetAudience  NotificationAudience @default(ALL)
+  status          CampaignStatus       @default(DRAFT)
+  scheduledAt     DateTime?
+  sentAt          DateTime?
+  totalRecipients Int                  @default(0)
+  sentCount       Int                  @default(0)
+  failedCount     Int                  @default(0)
+  errorDetails    String?              @db.Text
+  isTest          Boolean              @default(false)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  recipientLogs   EmailRecipientLog[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model EmailRecipientLog {
+  id          String   @id @default(cuid())
+  campaignId  String
+  email       String
+  messageId   String?  // Resend ID e.g. "re_123"
+  status      String   @default("QUEUED") // QUEUED, SENT, DELIVERED, BOUNCED, FAILED
+  error       String?  @db.Text
+  sentAt      DateTime?
+  deliveredAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@index([email])
+  @@index([status])
+}
+
+model EmailSuppression {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String   @default("UNSUBSCRIBE")
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+// ==========================================
+// System Audit Logs & Settings
+// ==========================================
+
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String?
+  details    String?  @db.Text
+  adminEmail String
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([action])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model SystemSetting {
+  key       String   @id
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
 }

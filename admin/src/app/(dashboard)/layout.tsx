@@ -1,13 +1,13 @@
-import { Dock } from "@/components/ui/dock";
+import { verifySession } from "@/lib/session";
+import { AdminLayoutClient } from "@/components/layout/AdminLayoutClient";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const session = await verifySession();
+  const adminEmail = (session as { email?: string } | null)?.email || process.env.ADMIN_EMAIL || "admin@tralance.pro";
+
   return (
-    <div className="relative min-h-screen bg-background text-foreground selection:bg-foreground/20 font-sans overflow-x-hidden">
-      <Dock />
-      
-      <main className="relative z-10 flex flex-col min-h-screen pb-32 pt-16 px-6 md:px-12 max-w-3xl mx-auto w-full">
-        {children}
-      </main>
-    </div>
+    <AdminLayoutClient adminEmail={adminEmail}>
+      {children}
+    </AdminLayoutClient>
   );
 }

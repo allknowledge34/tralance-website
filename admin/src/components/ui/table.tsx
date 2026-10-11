@@ -1,36 +1,66 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
-    <table ref={ref} className={cn("w-full caption-bottom text-sm border-separate border-spacing-y-3", className)} {...props} />
-  </div>
-))
+const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
+  ({ className, ...props }, ref) => (
+    <div className="relative w-full overflow-x-auto rounded-xl border border-slate-200/90 dark:border-neutral-800 bg-white dark:bg-[#161618] shadow-sm">
+      <table ref={ref} className={cn("w-full caption-bottom text-sm text-left border-collapse", className)} {...props} />
+    </div>
+  )
+)
 Table.displayName = "Table"
 
-const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("", className)} {...props} />
-))
+const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
+  ({ className, ...props }, ref) => (
+    <thead ref={ref} className={cn("bg-slate-50/80 dark:bg-neutral-900/60 border-b border-slate-200 dark:border-neutral-800", className)} {...props} />
+  )
+)
 TableHeader.displayName = "TableHeader"
 
-const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn("", className)} {...props} />
-))
+const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
+  ({ className, ...props }, ref) => (
+    <tbody ref={ref} className={cn("divide-y divide-slate-100 dark:divide-neutral-800/60", className)} {...props} />
+  )
+)
 TableBody.displayName = "TableBody"
 
-const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(({ className, ...props }, ref) => (
-  <tr ref={ref} className={cn("group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.8)] rounded-2xl", className)} {...props} />
-))
+const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
+  ({ className, ...props }, ref) => (
+    <tr
+      ref={ref}
+      className={cn(
+        "transition-colors hover:bg-slate-50/70 dark:hover:bg-neutral-800/40 data-[state=selected]:bg-slate-100 dark:data-[state=selected]:bg-neutral-800",
+        className
+      )}
+      {...props}
+    />
+  )
+)
 TableRow.displayName = "TableRow"
 
-const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => (
-  <th ref={ref} className={cn("h-12 px-6 text-left align-middle font-medium text-white/50 tracking-wider text-xs uppercase", className)} {...props} />
-))
+const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(
+  ({ className, ...props }, ref) => (
+    <th
+      ref={ref}
+      className={cn(
+        "h-11 px-4 text-left align-middle font-semibold text-xs tracking-wider text-slate-500 dark:text-neutral-400 uppercase",
+        className
+      )}
+      {...props}
+    />
+  )
+)
 TableHead.displayName = "TableHead"
 
-const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => (
-  <td ref={ref} className={cn("p-6 align-middle first:rounded-l-2xl last:rounded-r-2xl bg-white/[0.03] border-y border-white/[0.08] first:border-l last:border-r group-hover:bg-white/[0.08] group-hover:border-white/[0.15] backdrop-blur-xl transition-all duration-300", className)} {...props} />
-))
+const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
+  ({ className, ...props }, ref) => (
+    <td
+      ref={ref}
+      className={cn("p-4 align-middle text-slate-700 dark:text-neutral-200 text-sm", className)}
+      {...props}
+    />
+  )
+)
 TableCell.displayName = "TableCell"
 
 export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell }

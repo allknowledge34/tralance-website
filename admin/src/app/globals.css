@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --font-inter: 'Inter', sans-serif;
@@ -13,23 +14,23 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #121212;
-  --layer-1: #f9f9f9;
-  --layer-2: #f2f2f2;
-  --border-subtle: #eaeaea;
-  --border-strong: #d4d4d4;
-  --text-muted: #8e8e93;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --layer-1: #ffffff;
+  --layer-2: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text-muted: #64748b;
 }
 
 .dark {
-  --background: #121212;
-  --foreground: #f2f2f2;
-  --layer-1: #1a1a1a;
-  --layer-2: #242424;
-  --border-subtle: #2d2d2d;
-  --border-strong: #3d3d3d;
-  --text-muted: #8e8e93;
+  --background: #09090b;
+  --foreground: #f8fafc;
+  --layer-1: #121215;
+  --layer-2: #18181b;
+  --border-subtle: #27272a;
+  --border-strong: #3f3f46;
+  --text-muted: #94a3b8;
 }
 
 body {
