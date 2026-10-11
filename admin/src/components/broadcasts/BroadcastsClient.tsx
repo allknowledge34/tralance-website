@@ -37,10 +37,12 @@ import {
   getEmailSuppressions,
   addEmailSuppression,
   removeEmailSuppression,
-  parseAndValidateCustomEmails,
   getRegisteredUsersForSelection,
-  type BroadcastRecipientType,
 } from "@/lib/actions/broadcasts";
+import {
+  parseAndValidateCustomEmails,
+  type BroadcastRecipientType,
+} from "@/lib/utils/email-validation";
 import { NotificationAudience } from "@prisma/client";
 
 const defaultTemplate = `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #1e293b; background-color: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0;">
