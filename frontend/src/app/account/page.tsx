@@ -3,7 +3,8 @@
 import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { User, Loader2, AlertCircle } from 'lucide-react';
+import { User, Loader2, AlertCircle, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/components/layout/ThemeContext';
 
 interface Entitlement {
   id?: string;
@@ -13,6 +14,7 @@ interface Entitlement {
 }
 
 export default function AccountPage() {
+  const { theme, toggleTheme } = useTheme();
   const { data: session, status } = useSession({ required: true });
   const [entitlements, setEntitlements] = useState<Entitlement[]>([]);
   const [isLoadingEntitlements, setIsLoadingEntitlements] = useState(true);
@@ -165,6 +167,68 @@ export default function AccountPage() {
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Appearance & Theme Settings */}
+      <div className="bg-white dark:bg-[#12182B] p-6 sm:p-8 rounded-2xl border border-slate-200/50 dark:border-white/5 shadow-sm mb-8">
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Appearance</h2>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
+          Customize how Tralance looks on your device. Choose your preferred theme.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              if (theme !== "light") toggleTheme();
+            }}
+            className={`p-4 rounded-xl border flex items-center gap-3 transition-all cursor-pointer text-left ${
+              theme === "light"
+                ? "border-primary bg-primary/5 text-slate-900 ring-2 ring-primary/20 dark:text-white"
+                : "border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 text-slate-600 dark:text-slate-300"
+            }`}
+            aria-pressed={theme === "light"}
+          >
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+              theme === "light" ? "bg-amber-100 text-amber-600" : "bg-slate-100 dark:bg-white/5 text-slate-500"
+            }`}>
+              <Sun className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="font-bold text-sm text-slate-900 dark:text-white">Light mode</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Clean, bright interface</p>
+            </div>
+            {theme === "light" && (
+              <span className="ml-auto w-2 h-2 rounded-full bg-primary" />
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (theme !== "dark") toggleTheme();
+            }}
+            className={`p-4 rounded-xl border flex items-center gap-3 transition-all cursor-pointer text-left ${
+              theme === "dark"
+                ? "border-primary bg-primary/5 text-slate-900 ring-2 ring-primary/20 dark:text-white"
+                : "border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 text-slate-600 dark:text-slate-300"
+            }`}
+            aria-pressed={theme === "dark"}
+          >
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+              theme === "dark" ? "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400" : "bg-slate-100 dark:bg-white/5 text-slate-500"
+            }`}>
+              <Moon className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="font-bold text-sm text-slate-900 dark:text-white">Dark mode</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Easy on the eyes in low light</p>
+            </div>
+            {theme === "dark" && (
+              <span className="ml-auto w-2 h-2 rounded-full bg-primary" />
+            )}
+          </button>
         </div>
       </div>
 
