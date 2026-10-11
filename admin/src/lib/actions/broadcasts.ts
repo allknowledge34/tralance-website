@@ -35,10 +35,7 @@ export async function getCampaigns() {
 import {
   parseAndValidateCustomEmails,
   type BroadcastRecipientType,
-  type EmailValidationResult,
 } from "@/lib/utils/email-validation";
-
-export type { BroadcastRecipientType, EmailValidationResult };
 
 export async function getRegisteredUsersForSelection(search?: string) {
   const session = await verifySession();
@@ -83,7 +80,7 @@ export async function getRegisteredUsersForSelection(search?: string) {
   }));
 }
 
-export interface RecipientCountOptions {
+interface RecipientCountOptions {
   recipientType?: BroadcastRecipientType;
   targetAudience?: NotificationAudience;
   selectedUserIds?: string[];

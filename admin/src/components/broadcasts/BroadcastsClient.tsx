@@ -5,17 +5,12 @@ import {
   Mail,
   Plus,
   Send,
-  Eye,
-  Smartphone,
-  Monitor,
   AlertTriangle,
   CheckCircle2,
   Users,
-  Shield,
   Loader2,
   Trash2,
   Info,
-  Clock,
   Sparkles,
   Ban,
   Check,
@@ -63,9 +58,14 @@ const defaultTemplate = `<div style="font-family: -apple-system, BlinkMacSystemF
   </div>
 </div>`;
 
+type CampaignItem = Awaited<ReturnType<typeof getCampaigns>>["campaigns"][number];
+type ProviderStatusType = Awaited<ReturnType<typeof getCampaigns>>["providerStatus"];
+type RegisteredUserItem = Awaited<ReturnType<typeof getRegisteredUsersForSelection>>[number];
+type SuppressionItem = Awaited<ReturnType<typeof getEmailSuppressions>>[number];
+
 export function BroadcastsClient() {
-  const [campaigns, setCampaigns] = React.useState<any[]>([]);
-  const [providerStatus, setProviderStatus] = React.useState<any>(null);
+  const [campaigns, setCampaigns] = React.useState<CampaignItem[]>([]);
+  const [providerStatus, setProviderStatus] = React.useState<ProviderStatusType | null>(null);
   const [suppressionsCount, setSuppressionsCount] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
 
@@ -77,40 +77,38 @@ export function BroadcastsClient() {
   const [senderEmail, setSenderEmail] = React.useState("noreply@tralance.pro");
   const [previewText, setPreviewText] = React.useState("");
   const [htmlContent, setHtmlContent] = React.useState(defaultTemplate);
-  const [targetAudience, setTargetAudience] = React.useState<NotificationAudience>(NotificationAudience.ALL);
   const [recipientType, setRecipientType] = React.useState<BroadcastRecipientType>("ALL_REGISTERED");
   const [customEmailsInput, setCustomEmailsInput] = React.useState("");
-  const [registeredUsers, setRegisteredUsers] = React.useState<any[]>([]);
+  const [registeredUsers, setRegisteredUsers] = React.useState<RegisteredUserItem[]>([]);
   const [userSearchQuery, setUserSearchQuery] = React.useState("");
   const [selectedUserIds, setSelectedUserIds] = React.useState<string[]>([]);
   const [loadingUsers, setLoadingUsers] = React.useState(false);
+  const [registeredAudienceCount, setRegisteredAudienceCount] = React.useState(0);
   const [formError, setFormError] = React.useState<string | null>(null);
-  const [estimatedRecipients, setEstimatedRecipients] = React.useState(0);
   const [submitting, setSubmitting] = React.useState(false);
 
   // Unsaved changes confirm
   const [showDiscardConfirm, setShowDiscardConfirm] = React.useState(false);
 
   // Test email modal
-  const [testModalCampaign, setTestModalCampaign] = React.useState<any | null>(null);
+  const [testModalCampaign, setTestModalCampaign] = React.useState<CampaignItem | null>(null);
   const [testEmailAddress, setTestEmailAddress] = React.useState("");
   const [sendingTest, setSendingTest] = React.useState(false);
   const [testResult, setTestResult] = React.useState<string | null>(null);
 
   // Live broadcast confirmation modal
-  const [liveConfirmCampaign, setLiveConfirmCampaign] = React.useState<any | null>(null);
+  const [liveConfirmCampaign, setLiveConfirmCampaign] = React.useState<CampaignItem | null>(null);
   const [sendingLive, setSendingLive] = React.useState(false);
 
   // Suppressions modal
   const [isSuppressionsOpen, setIsSuppressionsOpen] = React.useState(false);
-  const [suppressionsList, setSuppressionsList] = React.useState<any[]>([]);
+  const [suppressionsList, setSuppressionsList] = React.useState<SuppressionItem[]>([]);
   const [newSuppressionEmail, setNewSuppressionEmail] = React.useState("");
 
   // Setup guide modal
   const [isSetupGuideOpen, setIsSetupGuideOpen] = React.useState(false);
 
-  const loadData = React.useCallback(async () => {
-    setLoading(true);
+  const refreshData = React.useCallback(async () => {
     try {
       const res = await getCampaigns();
       setCampaigns(res.campaigns);
@@ -118,14 +116,30 @@ export function BroadcastsClient() {
       setSuppressionsCount(res.suppressionsCount);
     } catch (err) {
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   }, []);
 
   React.useEffect(() => {
-    loadData();
-  }, [loadData]);
+    let ignore = false;
+    getCampaigns()
+      .then((res) => {
+        if (!ignore) {
+          setCampaigns(res.campaigns);
+          setProviderStatus(res.providerStatus);
+          setSuppressionsCount(res.suppressionsCount);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (!ignore) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   // Real-time custom emails validation
   const customValidation = React.useMemo(() => {
@@ -137,13 +151,26 @@ export function BroadcastsClient() {
 
   // Lazy fetch registered users when "Selected Registered Users" is chosen
   React.useEffect(() => {
-    if (isCreateOpen && recipientType === "SELECTED_USERS" && registeredUsers.length === 0) {
-      setLoadingUsers(true);
-      getRegisteredUsersForSelection()
-        .then((users) => setRegisteredUsers(users))
-        .catch((err) => console.error("Failed to load registered users:", err))
-        .finally(() => setLoadingUsers(false));
-    }
+    if (!isCreateOpen || recipientType !== "SELECTED_USERS" || registeredUsers.length > 0) return;
+
+    let ignore = false;
+    getRegisteredUsersForSelection()
+      .then((users) => {
+        if (!ignore) {
+          setRegisteredUsers(users);
+          setLoadingUsers(false);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load registered users:", err);
+        if (!ignore) {
+          setLoadingUsers(false);
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
   }, [isCreateOpen, recipientType, registeredUsers.length]);
 
   const filteredRegisteredUsers = React.useMemo(() => {
@@ -154,23 +181,35 @@ export function BroadcastsClient() {
     );
   }, [registeredUsers, userSearchQuery]);
 
-  // Update estimated recipients dynamically
+  // Dynamically derived estimated recipients
+  const estimatedRecipients = React.useMemo(() => {
+    if (recipientType === "CUSTOM") return customValidation.validEmails.length;
+    if (recipientType === "SELECTED_USERS") return selectedUserIds.length;
+    return registeredAudienceCount;
+  }, [recipientType, customValidation.validEmails.length, selectedUserIds.length, registeredAudienceCount]);
+
+  // Query eligible recipient count for registered audience tiers
   React.useEffect(() => {
     if (!isCreateOpen) return;
+    if (recipientType === "CUSTOM" || recipientType === "SELECTED_USERS") return;
 
-    if (recipientType === "CUSTOM") {
-      setEstimatedRecipients(customValidation.validEmails.length);
-    } else if (recipientType === "SELECTED_USERS") {
-      setEstimatedRecipients(selectedUserIds.length);
-    } else {
-      let aud: NotificationAudience = NotificationAudience.ALL;
-      if (recipientType === "PRO_REGISTERED") aud = NotificationAudience.PRO;
-      else if (recipientType === "FREE_REGISTERED") aud = NotificationAudience.FREE;
-      getEligibleRecipientCount(aud)
-        .then((count) => setEstimatedRecipients(count))
-        .catch(() => setEstimatedRecipients(0));
-    }
-  }, [isCreateOpen, recipientType, customValidation.validEmails.length, selectedUserIds.length]);
+    let aud: NotificationAudience = NotificationAudience.ALL;
+    if (recipientType === "PRO_REGISTERED") aud = NotificationAudience.PRO;
+    else if (recipientType === "FREE_REGISTERED") aud = NotificationAudience.FREE;
+
+    let ignore = false;
+    getEligibleRecipientCount(aud)
+      .then((count) => {
+        if (!ignore) setRegisteredAudienceCount(count);
+      })
+      .catch(() => {
+        if (!ignore) setRegisteredAudienceCount(0);
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [isCreateOpen, recipientType]);
 
   const handleModalClose = () => {
     if (
@@ -199,7 +238,6 @@ export function BroadcastsClient() {
     setSenderName("Tralance Team");
     setSenderEmail("noreply@tralance.pro");
     setHtmlContent(defaultTemplate);
-    setTargetAudience(NotificationAudience.ALL);
     setRecipientType("ALL_REGISTERED");
     setCustomEmailsInput("");
     setSelectedUserIds([]);
@@ -241,7 +279,7 @@ export function BroadcastsClient() {
       });
       setIsCreateOpen(false);
       resetForm();
-      loadData();
+      refreshData();
     } catch (err: unknown) {
       console.error(err);
       const msg = err instanceof Error ? err.message : "Failed to create campaign draft";
@@ -269,8 +307,9 @@ export function BroadcastsClient() {
       } else {
         setTestResult(`Failed: ${res.error}`);
       }
-    } catch (err: any) {
-      setTestResult(`Error: ${err.message}`);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setTestResult(`Error: ${msg}`);
     } finally {
       setSendingTest(false);
     }
@@ -283,8 +322,8 @@ export function BroadcastsClient() {
     try {
       await sendLiveBroadcast(liveConfirmCampaign.id);
       setLiveConfirmCampaign(null);
-      loadData();
-    } catch (err) {
+      refreshData();
+    } catch (err: unknown) {
       console.error(err);
     } finally {
       setSendingLive(false);
@@ -579,8 +618,12 @@ export function BroadcastsClient() {
               <select
                 value={recipientType}
                 onChange={(e) => {
-                  setRecipientType(e.target.value as BroadcastRecipientType);
+                  const nextType = e.target.value as BroadcastRecipientType;
+                  setRecipientType(nextType);
                   setFormError(null);
+                  if (nextType === "SELECTED_USERS" && registeredUsers.length === 0) {
+                    setLoadingUsers(true);
+                  }
                 }}
                 className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700"
               >

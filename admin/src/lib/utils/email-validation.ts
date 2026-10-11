@@ -1,9 +1,13 @@
+export const BroadcastRecipientType = {
+  ALL_REGISTERED: "ALL_REGISTERED",
+  PRO_REGISTERED: "PRO_REGISTERED",
+  FREE_REGISTERED: "FREE_REGISTERED",
+  SELECTED_USERS: "SELECTED_USERS",
+  CUSTOM: "CUSTOM",
+} as const;
+
 export type BroadcastRecipientType =
-  | "ALL_REGISTERED"
-  | "PRO_REGISTERED"
-  | "FREE_REGISTERED"
-  | "SELECTED_USERS"
-  | "CUSTOM";
+  (typeof BroadcastRecipientType)[keyof typeof BroadcastRecipientType];
 
 export interface EmailValidationResult {
   validEmails: string[];
