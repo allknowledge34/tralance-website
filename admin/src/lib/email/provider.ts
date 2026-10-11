@@ -80,7 +80,7 @@ function appendEmailFooter(html: string, recipientEmail: string): string {
     <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
       <p style="margin: 0 0 6px 0;">© 2026 Tralance • Operated by DmilX • Private, offline-first tools for freelancers</p>
       <p style="margin: 0;">
-        You received this email because you have a registered account on Tralance.
+        You received this update from Tralance.
         <br />
         <a href="${unsubUrl}" style="color: #64748b; text-decoration: underline; margin-top: 4px; display: inline-block;">Unsubscribe from broadcast updates</a>
       </p>
@@ -92,6 +92,29 @@ function appendEmailFooter(html: string, recipientEmail: string): string {
     return html.replace("</body>", `${footerHtml}</body>`);
   }
   return `${html}${footerHtml}`;
+}
+
+export function htmlToPlainText(html: string): string {
+  return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<a\s+[^>]*href=["']([^"']*)["'][^>]*>(.*?)<\/a>/gi, "$2 ($1)")
+    .replace(/<br\s*[\/]?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<\/h[1-6]>/gi, "\n\n")
+    .replace(/<\/div>/gi, "\n")
+    .replace(/<li>/gi, "• ")
+    .replace(/<\/li>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\n\s+\n/g, "\n\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 /**
@@ -124,6 +147,7 @@ export async function sendEmail(options: EmailSendOptions): Promise<{
 
   const recipient = eligibleRecipients[0];
   const finalHtml = options.isTest ? options.html : appendEmailFooter(options.html, recipient);
+  const plainText = options.text || htmlToPlainText(finalHtml);
   const rawFrom = options.senderEmail || provider.senderEmail;
   const fromHeader = rawFrom.includes("<")
     ? rawFrom
@@ -143,7 +167,7 @@ export async function sendEmail(options: EmailSendOptions): Promise<{
           to: [recipient],
           subject: options.subject,
           html: finalHtml,
-          text: options.text,
+          text: plainText,
           headers: {
             "X-Entity-Ref-ID": options.campaignId || `tralance_${Date.now()}`,
           },
@@ -186,7 +210,10 @@ export async function sendEmail(options: EmailSendOptions): Promise<{
             name: options.senderName || provider.senderName,
           },
           subject: options.subject,
-          content: [{ type: "text/html", value: finalHtml }],
+          content: [
+            { type: "text/plain", value: plainText },
+            { type: "text/html", value: finalHtml },
+          ],
         }),
       });
 

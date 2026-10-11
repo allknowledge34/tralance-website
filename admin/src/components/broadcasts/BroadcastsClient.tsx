@@ -19,6 +19,7 @@ import {
   Sparkles,
   Ban,
   Check,
+  Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -36,6 +37,9 @@ import {
   getEmailSuppressions,
   addEmailSuppression,
   removeEmailSuppression,
+  parseAndValidateCustomEmails,
+  getRegisteredUsersForSelection,
+  type BroadcastRecipientType,
 } from "@/lib/actions/broadcasts";
 import { NotificationAudience } from "@prisma/client";
 
@@ -72,6 +76,13 @@ export function BroadcastsClient() {
   const [previewText, setPreviewText] = React.useState("");
   const [htmlContent, setHtmlContent] = React.useState(defaultTemplate);
   const [targetAudience, setTargetAudience] = React.useState<NotificationAudience>(NotificationAudience.ALL);
+  const [recipientType, setRecipientType] = React.useState<BroadcastRecipientType>("ALL_REGISTERED");
+  const [customEmailsInput, setCustomEmailsInput] = React.useState("");
+  const [registeredUsers, setRegisteredUsers] = React.useState<any[]>([]);
+  const [userSearchQuery, setUserSearchQuery] = React.useState("");
+  const [selectedUserIds, setSelectedUserIds] = React.useState<string[]>([]);
+  const [loadingUsers, setLoadingUsers] = React.useState(false);
+  const [formError, setFormError] = React.useState<string | null>(null);
   const [estimatedRecipients, setEstimatedRecipients] = React.useState(0);
   const [submitting, setSubmitting] = React.useState(false);
 
@@ -114,17 +125,59 @@ export function BroadcastsClient() {
     loadData();
   }, [loadData]);
 
-  // Update estimated recipients when audience changes
+  // Real-time custom emails validation
+  const customValidation = React.useMemo(() => {
+    if (recipientType !== "CUSTOM") {
+      return { validEmails: [], invalidEmails: [], duplicateCount: 0, totalParsed: 0 };
+    }
+    return parseAndValidateCustomEmails(customEmailsInput);
+  }, [recipientType, customEmailsInput]);
+
+  // Lazy fetch registered users when "Selected Registered Users" is chosen
   React.useEffect(() => {
-    if (isCreateOpen) {
-      getEligibleRecipientCount(targetAudience)
+    if (isCreateOpen && recipientType === "SELECTED_USERS" && registeredUsers.length === 0) {
+      setLoadingUsers(true);
+      getRegisteredUsersForSelection()
+        .then((users) => setRegisteredUsers(users))
+        .catch((err) => console.error("Failed to load registered users:", err))
+        .finally(() => setLoadingUsers(false));
+    }
+  }, [isCreateOpen, recipientType, registeredUsers.length]);
+
+  const filteredRegisteredUsers = React.useMemo(() => {
+    if (!userSearchQuery.trim()) return registeredUsers;
+    const q = userSearchQuery.toLowerCase();
+    return registeredUsers.filter(
+      (u) => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)
+    );
+  }, [registeredUsers, userSearchQuery]);
+
+  // Update estimated recipients dynamically
+  React.useEffect(() => {
+    if (!isCreateOpen) return;
+
+    if (recipientType === "CUSTOM") {
+      setEstimatedRecipients(customValidation.validEmails.length);
+    } else if (recipientType === "SELECTED_USERS") {
+      setEstimatedRecipients(selectedUserIds.length);
+    } else {
+      let aud: NotificationAudience = NotificationAudience.ALL;
+      if (recipientType === "PRO_REGISTERED") aud = NotificationAudience.PRO;
+      else if (recipientType === "FREE_REGISTERED") aud = NotificationAudience.FREE;
+      getEligibleRecipientCount(aud)
         .then((count) => setEstimatedRecipients(count))
         .catch(() => setEstimatedRecipients(0));
     }
-  }, [targetAudience, isCreateOpen]);
+  }, [isCreateOpen, recipientType, customValidation.validEmails.length, selectedUserIds.length]);
 
   const handleModalClose = () => {
-    if (name.trim() || subject.trim() || htmlContent !== defaultTemplate) {
+    if (
+      name.trim() ||
+      subject.trim() ||
+      htmlContent !== defaultTemplate ||
+      customEmailsInput.trim() ||
+      selectedUserIds.length > 0
+    ) {
       setShowDiscardConfirm(true);
     } else {
       setIsCreateOpen(false);
@@ -145,14 +198,33 @@ export function BroadcastsClient() {
     setSenderEmail("noreply@tralance.pro");
     setHtmlContent(defaultTemplate);
     setTargetAudience(NotificationAudience.ALL);
+    setRecipientType("ALL_REGISTERED");
+    setCustomEmailsInput("");
+    setSelectedUserIds([]);
+    setUserSearchQuery("");
+    setFormError(null);
   };
+
+  const isSubmitDisabled =
+    submitting ||
+    !name.trim() ||
+    !subject.trim() ||
+    !htmlContent.trim() ||
+    (recipientType === "CUSTOM" &&
+      (customValidation.validEmails.length === 0 || customValidation.invalidEmails.length > 0)) ||
+    (recipientType === "SELECTED_USERS" && selectedUserIds.length === 0);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !subject.trim() || !htmlContent.trim()) return;
+    if (isSubmitDisabled) return;
 
     setSubmitting(true);
+    setFormError(null);
     try {
+      let aud: NotificationAudience = NotificationAudience.ALL;
+      if (recipientType === "PRO_REGISTERED") aud = NotificationAudience.PRO;
+      else if (recipientType === "FREE_REGISTERED") aud = NotificationAudience.FREE;
+
       await createCampaign({
         name,
         subject,
@@ -160,13 +232,18 @@ export function BroadcastsClient() {
         senderEmail,
         previewText,
         htmlContent,
-        targetAudience,
+        recipientType,
+        targetAudience: aud,
+        customEmailsText: recipientType === "CUSTOM" ? customEmailsInput : undefined,
+        selectedUserIds: recipientType === "SELECTED_USERS" ? selectedUserIds : undefined,
       });
       setIsCreateOpen(false);
       resetForm();
       loadData();
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
+      const msg = err instanceof Error ? err.message : "Failed to create campaign draft";
+      setFormError(msg);
     } finally {
       setSubmitting(false);
     }
@@ -377,9 +454,29 @@ export function BroadcastsClient() {
                     </TableCell>
 
                     <TableCell>
-                      <Badge variant={c.targetAudience === "PRO" ? "pro" : "secondary"}>
-                        {c.targetAudience}
-                      </Badge>
+                      {c.recipientType === "CUSTOM" ? (
+                        <Badge variant="warning" className="text-[11px] font-medium gap-1">
+                          <Mail className="w-3 h-3" /> Custom ({c.totalRecipients})
+                        </Badge>
+                      ) : c.recipientType === "SELECTED_USERS" ? (
+                        <Badge variant="secondary" className="text-[11px] font-medium gap-1">
+                          <Users className="w-3 h-3" /> Selected ({c.totalRecipients})
+                        </Badge>
+                      ) : (
+                        <Badge
+                          variant={
+                            c.targetAudience === "PRO" || c.recipientType === "PRO_REGISTERED"
+                              ? "pro"
+                              : "secondary"
+                          }
+                        >
+                          {c.recipientType === "PRO_REGISTERED" || c.targetAudience === "PRO"
+                            ? "PRO Users"
+                            : c.recipientType === "FREE_REGISTERED"
+                            ? "FREE Users"
+                            : "All Users"}
+                        </Badge>
+                      )}
                     </TableCell>
 
                     <TableCell>
@@ -475,19 +572,214 @@ export function BroadcastsClient() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1">
-                Target Audience
+                Recipient Type <span className="text-red-500">*</span>
               </label>
               <select
-                value={targetAudience}
-                onChange={(e) => setTargetAudience(e.target.value as NotificationAudience)}
+                value={recipientType}
+                onChange={(e) => {
+                  setRecipientType(e.target.value as BroadcastRecipientType);
+                  setFormError(null);
+                }}
                 className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700"
               >
-                <option value={NotificationAudience.ALL}>All Registered Users ({estimatedRecipients} eligible)</option>
-                <option value={NotificationAudience.PRO}>Active Pro Subscribers Only</option>
-                <option value={NotificationAudience.FREE}>Free Tier Users Only</option>
+                <option value="ALL_REGISTERED">
+                  All Registered Users ({recipientType === "ALL_REGISTERED" ? estimatedRecipients : "..."} eligible)
+                </option>
+                <option value="PRO_REGISTERED">Active Pro Subscribers Only</option>
+                <option value="FREE_REGISTERED">Free Tier Users Only</option>
+                <option value="SELECTED_USERS">
+                  Selected Registered Users ({selectedUserIds.length} selected)
+                </option>
+                <option value="CUSTOM">Custom Email Addresses (Manual Entry)</option>
               </select>
             </div>
           </div>
+
+          {/* Form Level Error Alert */}
+          {formError && (
+            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <span>{formError}</span>
+            </div>
+          )}
+
+          {/* Custom Emails Multiline Input & Live Validation */}
+          {recipientType === "CUSTOM" && (
+            <div className="space-y-2 p-4 rounded-xl bg-slate-50 dark:bg-[#1c1c1f] border border-slate-200/80 dark:border-neutral-800 animate-in fade-in duration-150">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <label className="text-xs font-semibold text-slate-800 dark:text-neutral-200 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-slate-500" />
+                  Custom Recipient Email Addresses <span className="text-red-500">*</span>
+                </label>
+                <span className="text-[11px] text-slate-400">
+                  Separated by commas, spaces, or new lines
+                </span>
+              </div>
+
+              <textarea
+                rows={4}
+                required
+                value={customEmailsInput}
+                onChange={(e) => {
+                  setCustomEmailsInput(e.target.value);
+                  setFormError(null);
+                }}
+                placeholder={"client@example.com\npartner@example.org, vendor@company.com"}
+                className="w-full px-3.5 py-2.5 text-xs font-mono bg-white dark:bg-[#121214] border border-slate-200 dark:border-neutral-700 rounded-lg text-slate-900 dark:text-neutral-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-600"
+              />
+
+              {/* Validation & Count Stats */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-medium ${
+                      customValidation.validEmails.length > 0
+                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300"
+                        : "bg-slate-200 text-slate-600 dark:bg-neutral-800 dark:text-neutral-400"
+                    }`}
+                  >
+                    <Check className="w-3 h-3" />
+                    {customValidation.validEmails.length} valid recipient
+                    {customValidation.validEmails.length === 1 ? "" : "s"}
+                  </span>
+
+                  {customValidation.duplicateCount > 0 && (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-medium bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
+                      <Info className="w-3 h-3" />
+                      {customValidation.duplicateCount} duplicate
+                      {customValidation.duplicateCount === 1 ? "" : "s"} merged
+                    </span>
+                  )}
+                </div>
+
+                <span className="text-[11px] text-slate-400">
+                  Max limit: 2,000 recipients
+                </span>
+              </div>
+
+              {/* Invalid Addresses Alert */}
+              {customValidation.invalidEmails.length > 0 && (
+                <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-xs space-y-1">
+                  <div className="flex items-center gap-1.5 font-semibold">
+                    <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+                    Invalid Email Address
+                    {customValidation.invalidEmails.length === 1 ? "" : "es"} Detected (
+                    {customValidation.invalidEmails.length})
+                  </div>
+                  <p className="text-[11px] text-red-600 dark:text-red-400">
+                    The following entries do not match valid email address format and must be corrected before saving:
+                  </p>
+                  <div className="flex flex-wrap gap-1 pt-1 max-h-24 overflow-y-auto">
+                    {customValidation.invalidEmails.map((inv, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-0.5 bg-red-100 dark:bg-red-900/60 text-red-800 dark:text-red-200 rounded font-mono text-[11px]"
+                      >
+                        {inv}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Selected Registered Users Picker */}
+          {recipientType === "SELECTED_USERS" && (
+            <div className="space-y-3 p-4 rounded-xl bg-slate-50 dark:bg-[#1c1c1f] border border-slate-200/80 dark:border-neutral-800 animate-in fade-in duration-150">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <label className="text-xs font-semibold text-slate-800 dark:text-neutral-200 flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-slate-500" />
+                  Select Registered Users ({selectedUserIds.length} selected)
+                </label>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const filteredIds = filteredRegisteredUsers.map((u) => u.id);
+                      setSelectedUserIds(Array.from(new Set([...selectedUserIds, ...filteredIds])));
+                    }}
+                    className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                  >
+                    Select All Filtered
+                  </button>
+                  <span className="text-slate-300 dark:text-neutral-700">•</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedUserIds([])}
+                    className="text-[11px] text-slate-500 dark:text-neutral-400 hover:underline"
+                  >
+                    Clear Selection
+                  </button>
+                </div>
+              </div>
+
+              {/* Search Filter */}
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search registered users by name or email..."
+                  value={userSearchQuery}
+                  onChange={(e) => setUserSearchQuery(e.target.value)}
+                  className="w-full px-3 py-1.5 pl-8 text-xs bg-white dark:bg-[#121214] border border-slate-200 dark:border-neutral-700 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none"
+                />
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+              </div>
+
+              {/* Users List Box */}
+              <div className="max-h-48 overflow-y-auto divide-y divide-slate-100 dark:divide-neutral-800 border border-slate-200 dark:border-neutral-700/60 rounded-lg bg-white dark:bg-[#141416]">
+                {loadingUsers ? (
+                  <div className="py-6 flex items-center justify-center text-xs text-slate-400 gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" /> Loading registered users...
+                  </div>
+                ) : filteredRegisteredUsers.length === 0 ? (
+                  <div className="py-6 text-center text-xs text-slate-400">
+                    No registered users found matching &quot;{userSearchQuery}&quot;
+                  </div>
+                ) : (
+                  filteredRegisteredUsers.map((u) => {
+                    const isSelected = selectedUserIds.includes(u.id);
+                    return (
+                      <label
+                        key={u.id}
+                        className={`flex items-center justify-between px-3 py-2 cursor-pointer transition-colors ${
+                          isSelected
+                            ? "bg-slate-50 dark:bg-neutral-800/50"
+                            : "hover:bg-slate-50/60 dark:hover:bg-neutral-900"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedUserIds((prev) => [...prev, u.id]);
+                              } else {
+                                setSelectedUserIds((prev) => prev.filter((id) => id !== u.id));
+                              }
+                            }}
+                            className="rounded border-slate-300 text-slate-900 focus:ring-0"
+                          />
+                          <div className="text-xs">
+                            <span className="font-medium text-slate-900 dark:text-white">
+                              {u.name}
+                            </span>
+                            <span className="text-slate-400 ml-2 font-mono text-[11px]">
+                              {u.email}
+                            </span>
+                          </div>
+                        </div>
+                        <Badge variant={u.isPro ? "pro" : "secondary"} className="text-[10px] px-1.5 py-0">
+                          {u.plan}
+                        </Badge>
+                      </label>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Subject Line with Emoji Picker */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -569,7 +861,7 @@ export function BroadcastsClient() {
               <Button type="button" variant="outline" onClick={handleModalClose}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button type="submit" disabled={isSubmitDisabled}>
                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Campaign Draft"}
               </Button>
             </div>
@@ -669,10 +961,78 @@ export function BroadcastsClient() {
         <div className="space-y-4 text-sm">
           <div className="p-4 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200/90 dark:border-amber-900/40 flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-900 dark:text-amber-200">
-              <p className="font-semibold">Safety Verification Required</p>
-              <p className="mt-1">
-                Campaign <strong>&quot;{liveConfirmCampaign?.name}&quot;</strong> will be delivered to target group <strong>{liveConfirmCampaign?.targetAudience}</strong>.
+            <div className="text-xs text-amber-900 dark:text-amber-200 space-y-2 w-full">
+              <p className="font-semibold text-sm">Safety Verification Required</p>
+              <p>
+                You are about to launch a real email broadcast for campaign:
+                <br />
+                <strong className="text-amber-950 dark:text-amber-100 text-xs">
+                  &quot;{liveConfirmCampaign?.name}&quot;
+                </strong>
+              </p>
+
+              <div className="p-3 bg-white/80 dark:bg-neutral-900/80 rounded-lg border border-amber-200/80 dark:border-amber-900/60 space-y-1.5 text-[11px] font-sans">
+                <div>
+                  <span className="text-slate-500 dark:text-neutral-400">Subject:</span>{" "}
+                  <strong className="text-slate-800 dark:text-neutral-200">
+                    {liveConfirmCampaign?.subject}
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-slate-500 dark:text-neutral-400">From:</span>{" "}
+                  <span className="font-mono text-slate-700 dark:text-neutral-300">
+                    {liveConfirmCampaign?.senderName} &lt;{liveConfirmCampaign?.senderEmail}&gt;
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 dark:text-neutral-400">Target Group:</span>{" "}
+                  <strong className="text-slate-800 dark:text-neutral-200">
+                    {liveConfirmCampaign?.recipientType === "CUSTOM"
+                      ? "Custom Email Addresses (Manual Entry)"
+                      : liveConfirmCampaign?.recipientType === "SELECTED_USERS"
+                      ? "Selected Registered Users"
+                      : `All Registered Users (${liveConfirmCampaign?.targetAudience || "ALL"})`}
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-slate-500 dark:text-neutral-400">Total Recipients:</span>{" "}
+                  <strong className="text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+                    {liveConfirmCampaign?.totalRecipients} recipients
+                  </strong>
+                </div>
+
+                {/* Show custom recipient preview if applicable */}
+                {liveConfirmCampaign?.customEmails && (() => {
+                  try {
+                    const emails = JSON.parse(liveConfirmCampaign.customEmails) as string[];
+                    return (
+                      <div className="pt-1 border-t border-slate-100 dark:border-neutral-800">
+                        <span className="text-slate-400 block mb-1">Recipient Preview:</span>
+                        <div className="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
+                          {emails.slice(0, 5).map((em, i) => (
+                            <span
+                              key={i}
+                              className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-neutral-800 text-slate-700 dark:text-neutral-300 font-mono text-[10px]"
+                            >
+                              {em}
+                            </span>
+                          ))}
+                          {emails.length > 5 && (
+                            <span className="text-[10px] text-slate-400 self-center">
+                              +{emails.length - 5} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  } catch {
+                    return null;
+                  }
+                })()}
+              </div>
+
+              <p className="text-[11px] text-amber-700 dark:text-amber-300 font-medium">
+                Live delivery sends real emails through Resend API. This action cannot be undone.
               </p>
             </div>
           </div>

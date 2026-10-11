@@ -32,10 +32,159 @@ export async function getCampaigns() {
   };
 }
 
-export async function getEligibleRecipientCount(audience: NotificationAudience) {
+export type BroadcastRecipientType =
+  | "ALL_REGISTERED"
+  | "PRO_REGISTERED"
+  | "FREE_REGISTERED"
+  | "SELECTED_USERS"
+  | "CUSTOM";
+
+export interface EmailValidationResult {
+  validEmails: string[];
+  invalidEmails: string[];
+  duplicateCount: number;
+  totalParsed: number;
+}
+
+export function parseAndValidateCustomEmails(rawInput: string): EmailValidationResult {
+  if (!rawInput || typeof rawInput !== "string") {
+    return { validEmails: [], invalidEmails: [], duplicateCount: 0, totalParsed: 0 };
+  }
+
+  const tokens = rawInput
+    .split(/[\r\n,;\s]+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0);
+
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+
+  const validSet = new Set<string>();
+  const invalidSet = new Set<string>();
+  let duplicateCount = 0;
+
+  for (const token of tokens) {
+    const normalized = token.toLowerCase();
+    if (emailRegex.test(normalized)) {
+      if (validSet.has(normalized)) {
+        duplicateCount++;
+      } else {
+        validSet.add(normalized);
+      }
+    } else {
+      invalidSet.add(token);
+    }
+  }
+
+  return {
+    validEmails: Array.from(validSet),
+    invalidEmails: Array.from(invalidSet),
+    duplicateCount,
+    totalParsed: tokens.length,
+  };
+}
+
+export async function getRegisteredUsersForSelection(search?: string) {
   const session = await verifySession();
   if (!session) throw new Error("Unauthorized");
 
+  const where: import("@prisma/client").Prisma.UserWhereInput = {
+    email: { not: null },
+  };
+
+  if (search && search.trim()) {
+    where.OR = [
+      { name: { contains: search.trim(), mode: "insensitive" } },
+      { email: { contains: search.trim(), mode: "insensitive" } },
+    ];
+  }
+
+  const users = await prisma.user.findMany({
+    where,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      image: true,
+      createdAt: true,
+      entitlements: {
+        where: { expiresAt: { gt: new Date() } },
+        select: { id: true, planId: true },
+        take: 1,
+      },
+    },
+    orderBy: { createdAt: "desc" },
+    take: 100,
+  });
+
+  return users.map((u) => ({
+    id: u.id,
+    name: u.name || "Anonymous User",
+    email: u.email!,
+    image: u.image,
+    isPro: u.entitlements.length > 0,
+    plan: u.entitlements[0]?.planId ? u.entitlements[0].planId.toUpperCase() : "FREE",
+  }));
+}
+
+export interface RecipientCountOptions {
+  recipientType?: BroadcastRecipientType;
+  targetAudience?: NotificationAudience;
+  selectedUserIds?: string[];
+  customEmailsText?: string;
+}
+
+export async function getEligibleRecipientCount(
+  audienceOrOptions: NotificationAudience | RecipientCountOptions
+): Promise<number> {
+  const session = await verifySession();
+  if (!session) throw new Error("Unauthorized");
+
+  if (typeof audienceOrOptions === "string") {
+    return getRegisteredAudienceCount(audienceOrOptions);
+  }
+
+  const { recipientType = "ALL_REGISTERED", targetAudience, selectedUserIds, customEmailsText } = audienceOrOptions;
+
+  if (recipientType === "CUSTOM") {
+    const { validEmails } = parseAndValidateCustomEmails(customEmailsText || "");
+    if (validEmails.length === 0) return 0;
+
+    const suppressions = await prisma.emailSuppression.findMany({
+      where: { email: { in: validEmails } },
+      select: { email: true },
+    });
+    const suppressedSet = new Set(suppressions.map((s) => s.email.toLowerCase()));
+    return validEmails.filter((e) => !suppressedSet.has(e)).length;
+  }
+
+  if (recipientType === "SELECTED_USERS") {
+    if (!selectedUserIds || selectedUserIds.length === 0) return 0;
+    const users = await prisma.user.findMany({
+      where: { id: { in: selectedUserIds }, email: { not: null } },
+      select: { email: true },
+    });
+    const emails = users.map((u) => u.email!.toLowerCase());
+    const suppressions = await prisma.emailSuppression.findMany({
+      where: { email: { in: emails } },
+      select: { email: true },
+    });
+    const suppressedSet = new Set(suppressions.map((s) => s.email.toLowerCase()));
+    return emails.filter((e) => !suppressedSet.has(e)).length;
+  }
+
+  if (recipientType === "PRO_REGISTERED") {
+    return getRegisteredAudienceCount(NotificationAudience.PRO);
+  }
+
+  if (recipientType === "FREE_REGISTERED") {
+    return getRegisteredAudienceCount(NotificationAudience.FREE);
+  }
+
+  return getRegisteredAudienceCount(targetAudience || NotificationAudience.ALL);
+}
+
+async function getRegisteredAudienceCount(audience: NotificationAudience = NotificationAudience.ALL): Promise<number> {
   const now = new Date();
   const where: import("@prisma/client").Prisma.UserWhereInput = {
     email: { not: null },
@@ -62,9 +211,7 @@ export async function getEligibleRecipientCount(audience: NotificationAudience) 
   ]);
 
   const suppressedSet = new Set(suppressions.map((s) => s.email.toLowerCase()));
-  const eligibleCount = totalUsers.filter((u) => u.email && !suppressedSet.has(u.email.toLowerCase())).length;
-
-  return eligibleCount;
+  return totalUsers.filter((u) => u.email && !suppressedSet.has(u.email.toLowerCase())).length;
 }
 
 export async function createCampaign(data: {
@@ -74,13 +221,74 @@ export async function createCampaign(data: {
   senderEmail: string;
   previewText?: string;
   htmlContent: string;
-  targetAudience: NotificationAudience;
+  recipientType?: BroadcastRecipientType;
+  targetAudience?: NotificationAudience;
+  selectedUserIds?: string[];
+  customEmailsText?: string;
   scheduledAt?: string;
 }) {
   const session = await verifySession();
   if (!session) throw new Error("Unauthorized");
 
-  const recipientCount = await getEligibleRecipientCount(data.targetAudience);
+  const recipientType = data.recipientType || "ALL_REGISTERED";
+  let targetAudience = data.targetAudience || NotificationAudience.ALL;
+  let customEmails: string[] | null = null;
+  let recipientCount = 0;
+
+  if (recipientType === "CUSTOM") {
+    const parsed = parseAndValidateCustomEmails(data.customEmailsText || "");
+    if (parsed.invalidEmails.length > 0) {
+      throw new Error(
+        `Invalid email address format: ${parsed.invalidEmails.slice(0, 3).join(", ")}${
+          parsed.invalidEmails.length > 3 ? ` and ${parsed.invalidEmails.length - 3} more` : ""
+        }. Please correct or remove invalid addresses.`
+      );
+    }
+    if (parsed.validEmails.length === 0) {
+      throw new Error("Please provide at least one valid recipient email address.");
+    }
+    if (parsed.validEmails.length > 2000) {
+      throw new Error("Maximum limit of 2,000 custom recipient addresses per broadcast exceeded.");
+    }
+
+    const suppressions = await prisma.emailSuppression.findMany({
+      where: { email: { in: parsed.validEmails } },
+      select: { email: true },
+    });
+    const suppressedSet = new Set(suppressions.map((s) => s.email.toLowerCase()));
+    const eligible = parsed.validEmails.filter((e) => !suppressedSet.has(e));
+
+    recipientCount = eligible.length;
+    customEmails = parsed.validEmails;
+  } else if (recipientType === "SELECTED_USERS") {
+    if (!data.selectedUserIds || data.selectedUserIds.length === 0) {
+      throw new Error("Please select at least one registered user for this campaign.");
+    }
+    const selectedUsers = await prisma.user.findMany({
+      where: { id: { in: data.selectedUserIds }, email: { not: null } },
+      select: { email: true },
+    });
+    const userEmails = Array.from(new Set(selectedUsers.map((u) => u.email!.toLowerCase())));
+    const suppressions = await prisma.emailSuppression.findMany({
+      where: { email: { in: userEmails } },
+      select: { email: true },
+    });
+    const suppressedSet = new Set(suppressions.map((s) => s.email.toLowerCase()));
+    const eligible = userEmails.filter((e) => !suppressedSet.has(e));
+
+    recipientCount = eligible.length;
+    customEmails = userEmails;
+  } else {
+    if (recipientType === "PRO_REGISTERED") {
+      targetAudience = NotificationAudience.PRO;
+    } else if (recipientType === "FREE_REGISTERED") {
+      targetAudience = NotificationAudience.FREE;
+    } else {
+      targetAudience = NotificationAudience.ALL;
+    }
+    recipientCount = await getRegisteredAudienceCount(targetAudience);
+  }
+
   const scheduledDate = data.scheduledAt ? new Date(data.scheduledAt) : null;
   const status = scheduledDate && scheduledDate > new Date() ? CampaignStatus.SCHEDULED : CampaignStatus.DRAFT;
 
@@ -92,7 +300,9 @@ export async function createCampaign(data: {
       senderEmail: data.senderEmail,
       previewText: data.previewText || null,
       htmlContent: data.htmlContent,
-      targetAudience: data.targetAudience,
+      targetAudience,
+      recipientType,
+      customEmails: customEmails ? JSON.stringify(customEmails) : null,
       status,
       scheduledAt: scheduledDate,
       totalRecipients: recipientCount,
@@ -103,7 +313,7 @@ export async function createCampaign(data: {
     action: "CAMPAIGN_CREATE",
     entityType: "CAMPAIGN",
     entityId: campaign.id,
-    details: `Created email campaign "${data.name}" (${status}) with ${recipientCount} targeted recipients`,
+    details: `Created email campaign "${data.name}" (${recipientType}, ${status}) with ${recipientCount} targeted recipients`,
   });
 
   return campaign;
@@ -182,27 +392,43 @@ export async function sendLiveBroadcast(campaignId: string) {
 
   if (!campaign) throw new Error("Campaign not found");
 
-  const now = new Date();
-  const where: import("@prisma/client").Prisma.UserWhereInput = {
-    email: { not: null },
-  };
+  let emails: string[] = [];
 
-  if (campaign.targetAudience === NotificationAudience.PRO) {
-    where.entitlements = {
-      some: { expiresAt: { gt: now } },
+  if (
+    (campaign.recipientType === "CUSTOM" || campaign.recipientType === "SELECTED_USERS") &&
+    campaign.customEmails
+  ) {
+    try {
+      emails = JSON.parse(campaign.customEmails) as string[];
+    } catch {
+      emails = campaign.customEmails
+        .split(/[\r\n,;\s]+/)
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean);
+    }
+  } else {
+    const now = new Date();
+    const where: import("@prisma/client").Prisma.UserWhereInput = {
+      email: { not: null },
     };
-  } else if (campaign.targetAudience === NotificationAudience.FREE) {
-    where.entitlements = {
-      none: { expiresAt: { gt: now } },
-    };
+
+    if (campaign.targetAudience === NotificationAudience.PRO) {
+      where.entitlements = {
+        some: { expiresAt: { gt: now } },
+      };
+    } else if (campaign.targetAudience === NotificationAudience.FREE) {
+      where.entitlements = {
+        none: { expiresAt: { gt: now } },
+      };
+    }
+
+    const users = await prisma.user.findMany({
+      where,
+      select: { email: true },
+    });
+
+    emails = users.map((u) => u.email!).filter(Boolean);
   }
-
-  const users = await prisma.user.findMany({
-    where,
-    select: { email: true },
-  });
-
-  const emails = users.map((u) => u.email!).filter(Boolean);
 
   // Send batch through robust delivery controller
   const batchResult = await sendCampaignBatch({
@@ -221,7 +447,7 @@ export async function sendLiveBroadcast(campaignId: string) {
     where: { id: campaignId },
     data: {
       status: finalStatus,
-      sentAt: now,
+      sentAt: new Date(),
       totalRecipients: batchResult.total,
       sentCount: batchResult.sent,
       failedCount: batchResult.failed,
@@ -233,7 +459,7 @@ export async function sendLiveBroadcast(campaignId: string) {
     action: "CAMPAIGN_LIVE_BROADCAST",
     entityType: "CAMPAIGN",
     entityId: campaign.id,
-    details: `Live broadcast "${campaign.name}" sent to ${batchResult.sent}/${batchResult.total} recipients (Failed: ${batchResult.failed})`,
+    details: `Live broadcast "${campaign.name}" (${campaign.recipientType}) sent to ${batchResult.sent}/${batchResult.total} recipients (Failed: ${batchResult.failed})`,
   });
 
   return { success: true, sentCount: batchResult.sent, failedCount: batchResult.failed };

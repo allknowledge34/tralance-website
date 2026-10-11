@@ -254,6 +254,8 @@ model EmailCampaign {
   previewText     String?
   htmlContent     String               @db.Text
   targetAudience  NotificationAudience @default(ALL)
+  recipientType   String               @default("ALL_REGISTERED") // "ALL_REGISTERED", "PRO_REGISTERED", "FREE_REGISTERED", "SELECTED_USERS", "CUSTOM"
+  customEmails    String?              @db.Text                   // JSON array of normalized email strings
   status          CampaignStatus       @default(DRAFT)
   scheduledAt     DateTime?
   sentAt          DateTime?
