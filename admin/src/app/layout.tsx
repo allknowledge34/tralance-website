@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-// Removed next/font/google due to Turbopack build issues
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 

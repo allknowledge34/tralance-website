@@ -53,40 +53,38 @@ export function Modal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
-      {/* Backdrop */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-150">
       <div
-        className="fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-[#171717]/60 dark:bg-black/80 transition-opacity"
         onClick={onClose}
       />
 
-      {/* Dialog Window */}
       <div
         className={cn(
-          "relative w-full rounded-2xl bg-white dark:bg-[#18181b] p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-neutral-800 z-10 my-4 max-h-[92vh] flex flex-col animate-in zoom-in-95 duration-200",
+          "relative w-full rounded-lg bg-[#FFFDF5] dark:bg-[#18181B] p-5 sm:p-6 shadow-[8px_8px_0px_0px_#171717] dark:shadow-[8px_8px_0px_0px_#000000] border-2 border-[#171717] dark:border-[#383838] z-10 my-4 max-h-[92vh] flex flex-col",
           maxWidthClasses[maxWidth],
           className
         )}
       >
-        <div className="flex items-start justify-between gap-4 mb-4 pb-2 border-b border-slate-100 dark:border-neutral-800/80 shrink-0">
+        <div className="flex items-start justify-between gap-4 mb-4 pb-3 border-b-2 border-[#171717] dark:border-[#383838] shrink-0">
           <div>
             {title && (
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+              <h2 className="text-xl font-extrabold tracking-tight text-[#171717] dark:text-white">
                 {title}
               </h2>
             )}
             {description && (
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-neutral-400 mt-0.5">
+              <p className="text-xs sm:text-sm font-medium text-[#525252] dark:text-[#A3A3A3] mt-1">
                 {description}
               </p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-neutral-200 hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors shrink-0 cursor-pointer"
+            className="rounded-md p-1.5 border-2 border-[#171717] dark:border-[#383838] bg-[#FFE52E] text-[#171717] hover:bg-[#FFD900] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer shrink-0"
             aria-label="Close dialog"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 stroke-[2.5]" />
           </button>
         </div>
 

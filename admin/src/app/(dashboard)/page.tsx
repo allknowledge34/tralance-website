@@ -20,46 +20,43 @@ export const dynamic = "force-dynamic";
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
-      {/* 1. Header & Actions Bar — Renders Immediately (0ms) */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-neutral-800">
+    <div className="space-y-8 animate-in fade-in duration-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-3 border-b-2 border-[#171717] dark:border-[#383838]">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#171717] dark:text-white">
             Operations Overview
           </h1>
-          <p className="text-sm text-slate-500 dark:text-neutral-400 mt-1">
+          <p className="text-sm font-medium text-[#525252] dark:text-[#A3A3A3] mt-1">
             Real-time platform metrics, user growth, verified Cashfree payments, and content status.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <Link href="/blogs/create">
-            <Button size="sm" className="gap-1.5 shadow-xs">
-              <Plus className="w-3.5 h-3.5" />
+            <Button size="sm" className="gap-1.5">
+              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>New Article</span>
             </Button>
           </Link>
           <Link href="/broadcasts">
             <Button size="sm" variant="outline" className="gap-1.5">
-              <Mail className="w-3.5 h-3.5" />
+              <Mail className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Broadcast</span>
             </Button>
           </Link>
           <Link href="/promo">
             <Button size="sm" variant="outline" className="gap-1.5">
-              <Megaphone className="w-3.5 h-3.5" />
+              <Megaphone className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Promo Bar</span>
             </Button>
           </Link>
         </div>
       </div>
 
-      {/* 2. Primary KPI Stats Cards — Streams in separately */}
       <Suspense fallback={<KpisSkeleton />}>
         <DashboardKpisWidget />
       </Suspense>
 
-      {/* 3. Visual Analytics & Health Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Suspense fallback={<HealthSkeleton />}>
           <DashboardHealthWidget />
@@ -70,7 +67,6 @@ export default function DashboardPage() {
         </Suspense>
       </div>
 
-      {/* 4. Two-Column Tables Section: Recent Registrations & Recent Orders */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Suspense fallback={<RecentUsersSkeleton />}>
           <RecentUsersWidget />

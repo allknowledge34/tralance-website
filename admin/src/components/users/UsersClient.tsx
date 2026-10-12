@@ -5,20 +5,13 @@ import {
   Search,
   Download,
   Eye,
-  Crown,
-  Calendar,
-  CreditCard,
-  Shield,
-  Layers,
   ChevronLeft,
   ChevronRight,
-  ExternalLink,
   Loader2,
   X,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 import { Modal } from "@/components/ui/modal";
 import { getUsers, getUserDetails, exportUsersCSV } from "@/lib/actions/users";
@@ -40,7 +33,6 @@ export function UsersClient() {
     currentPage: 1,
   });
 
-  // User details modal state
   const [selectedUserId, setSelectedUserId] = React.useState<string | null>(null);
   const [userDetails, setUserDetails] = React.useState<any | null>(null);
   const [loadingDetails, setLoadingDetails] = React.useState(false);
@@ -106,13 +98,12 @@ export function UsersClient() {
 
   return (
     <div className="space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-neutral-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-3 border-b-2 border-[#171717] dark:border-[#383838]">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#171717] dark:text-white">
             User Management
           </h1>
-          <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">
+          <p className="text-sm font-medium text-[#525252] dark:text-[#A3A3A3] mt-1">
             View registered user profiles, entitlement subscriptions, payment history, and tool saves.
           </p>
         </div>
@@ -122,18 +113,16 @@ export function UsersClient() {
           disabled={exporting}
           variant="outline"
           size="sm"
-          className="gap-2 shrink-0 shadow-xs"
+          className="gap-2 shrink-0"
         >
-          {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
+          {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5 stroke-[2.5]" />}
           <span>Export CSV</span>
         </Button>
       </div>
 
-      {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Search Input */}
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#171717] dark:text-[#A3A3A3] stroke-[2.5]" />
           <input
             type="text"
             value={search}
@@ -142,46 +131,45 @@ export function UsersClient() {
               setPage(1);
             }}
             placeholder="Search by name or email..."
-            className="w-full pl-10 pr-4 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700 shadow-xs"
+            className="w-full pl-10 pr-8 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white placeholder:text-[#A3A3A3] focus:outline-none focus:ring-2 focus:ring-[#FFE52E] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
           />
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#171717] dark:text-[#A3A3A3] p-1 cursor-pointer"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           )}
         </div>
 
-        {/* Plan Filter Pills */}
-        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-neutral-800/80 p-1 rounded-xl text-xs font-medium w-full sm:w-auto justify-center sm:justify-start">
+        <div className="flex items-center gap-1.5 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] p-1 rounded-md shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] text-xs font-bold w-full sm:w-auto justify-center sm:justify-start">
           <button
             onClick={() => { setPlanFilter("all"); setPage(1); }}
-            className={`px-3 py-1.5 rounded-lg transition-all ${
+            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
               planFilter === "all"
-                ? "bg-white dark:bg-[#161618] text-slate-900 dark:text-white shadow-xs font-semibold"
-                : "text-slate-500 hover:text-slate-800 dark:hover:text-neutral-200"
+                ? "bg-[#FFE52E] text-[#171717] border-2 border-[#171717] shadow-[1px_1px_0px_0px_#171717] font-black"
+                : "text-[#525252] hover:text-[#171717] dark:text-[#A3A3A3] dark:hover:text-white border-2 border-transparent"
             }`}
           >
             All Users ({data.totalCount})
           </button>
           <button
             onClick={() => { setPlanFilter("pro"); setPage(1); }}
-            className={`px-3 py-1.5 rounded-lg transition-all ${
+            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
               planFilter === "pro"
-                ? "bg-white dark:bg-[#161618] text-blue-600 dark:text-blue-400 shadow-xs font-semibold"
-                : "text-slate-500 hover:text-slate-800 dark:hover:text-neutral-200"
+                ? "bg-[#35B9F5] text-[#171717] border-2 border-[#171717] shadow-[1px_1px_0px_0px_#171717] font-black"
+                : "text-[#525252] hover:text-[#171717] dark:text-[#A3A3A3] dark:hover:text-white border-2 border-transparent"
             }`}
           >
             Pro Active
           </button>
           <button
             onClick={() => { setPlanFilter("free"); setPage(1); }}
-            className={`px-3 py-1.5 rounded-lg transition-all ${
+            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
               planFilter === "free"
-                ? "bg-white dark:bg-[#161618] text-slate-900 dark:text-white shadow-xs font-semibold"
-                : "text-slate-500 hover:text-slate-800 dark:hover:text-neutral-200"
+                ? "bg-[#E5E7EB] text-[#171717] border-2 border-[#171717] shadow-[1px_1px_0px_0px_#171717] font-black"
+                : "text-[#525252] hover:text-[#171717] dark:text-[#A3A3A3] dark:hover:text-white border-2 border-transparent"
             }`}
           >
             Free Tier
@@ -189,11 +177,10 @@ export function UsersClient() {
         </div>
       </div>
 
-      {/* Users Table */}
       <div className="relative">
         {loading && (
-          <div className="absolute inset-0 bg-white/50 dark:bg-[#121214]/50 backdrop-blur-xs flex items-center justify-center z-10 rounded-xl">
-            <Loader2 className="w-6 h-6 animate-spin text-slate-600 dark:text-neutral-300" />
+          <div className="absolute inset-0 bg-[#FFFDF5]/70 dark:bg-[#121214]/70 backdrop-blur-xs flex items-center justify-center z-10 rounded-lg">
+            <Loader2 className="w-6 h-6 animate-spin text-[#171717] dark:text-white" />
           </div>
         )}
 
@@ -211,7 +198,7 @@ export function UsersClient() {
           <TableBody>
             {data.users.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-12 text-slate-400">
+                <TableCell colSpan={6} className="text-center py-12 text-[#525252] dark:text-[#A3A3A3] font-medium">
                   {search ? `No users match "${search}".` : "No registered users found."}
                 </TableCell>
               </TableRow>
@@ -226,10 +213,9 @@ export function UsersClient() {
 
                 return (
                   <TableRow key={user.id}>
-                    {/* User profile */}
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-neutral-800 overflow-hidden shrink-0 flex items-center justify-center font-bold text-xs text-slate-600 dark:text-neutral-300 border border-slate-200/60 dark:border-neutral-700">
+                        <div className="w-9 h-9 rounded-md border-2 border-[#171717] dark:border-[#383838] bg-[#35B9F5] shadow-[1.5px_1.5px_0px_0px_#171717] overflow-hidden shrink-0 flex items-center justify-center font-black text-xs text-[#171717]">
                           {user.image ? (
                             <img src={user.image} alt="Avatar" className="w-full h-full object-cover" />
                           ) : (
@@ -238,28 +224,27 @@ export function UsersClient() {
                         </div>
                         <div className="truncate max-w-[200px]">
                           <div className="flex items-center gap-1.5">
-                            <span className="font-semibold text-slate-900 dark:text-white truncate">
+                            <span className="font-bold text-[#171717] dark:text-white truncate">
                               {user.name || "Anonymous User"}
                             </span>
                             {hasGoogle && (
-                              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-sm bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 border border-blue-200/50">
+                              <span className="text-[10px] font-black px-1.5 py-0.2 rounded border border-[#171717] bg-[#35B9F5] text-[#171717] shadow-[1px_1px_0px_0px_#171717]">
                                 G
                               </span>
                             )}
                           </div>
-                          <span className="text-xs text-slate-400 dark:text-neutral-500 block truncate">
+                          <span className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3] block truncate">
                             {user.email || "No email"}
                           </span>
                         </div>
                       </div>
                     </TableCell>
 
-                    {/* Subscription */}
                     <TableCell>
                       {activePro ? (
                         <div className="space-y-0.5">
                           <Badge variant="pro">PRO {activePro.planId?.toUpperCase()}</Badge>
-                          <span className="text-[11px] text-slate-400 dark:text-neutral-500 block">
+                          <span className="text-[11px] font-medium text-[#525252] dark:text-[#A3A3A3] block">
                             Expires {new Date(activePro.expiresAt).toLocaleDateString()}
                           </span>
                         </div>
@@ -268,25 +253,22 @@ export function UsersClient() {
                       )}
                     </TableCell>
 
-                    {/* Orders / Spend */}
                     <TableCell>
-                      <span className="font-mono font-semibold text-slate-800 dark:text-neutral-200">
+                      <span className="font-mono font-bold text-[#171717] dark:text-white">
                         ₹{totalSpent}
                       </span>
-                      <span className="text-xs text-slate-400 dark:text-neutral-500 block">
+                      <span className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3] block">
                         {user.orders.length} order{user.orders.length === 1 ? "" : "s"}
                       </span>
                     </TableCell>
 
-                    {/* Cloud Saves */}
                     <TableCell>
-                      <span className="text-slate-700 dark:text-neutral-300 font-medium">
+                      <span className="text-[#171717] dark:text-[#E5E5E5] font-bold">
                         {user._count?.toolData || 0}
                       </span>
                     </TableCell>
 
-                    {/* Registered Date */}
-                    <TableCell className="text-xs text-slate-500 dark:text-neutral-400 whitespace-nowrap">
+                    <TableCell className="text-xs font-semibold text-[#525252] dark:text-[#A3A3A3] whitespace-nowrap">
                       {new Date(user.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -294,7 +276,6 @@ export function UsersClient() {
                       })}
                     </TableCell>
 
-                    {/* Actions */}
                     <TableCell className="text-right">
                       <Button
                         size="sm"
@@ -302,7 +283,7 @@ export function UsersClient() {
                         onClick={() => handleOpenDetails(user.id)}
                         className="gap-1.5 text-xs h-8"
                       >
-                        <Eye className="w-3.5 h-3.5" />
+                        <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
                         <span>Inspect</span>
                       </Button>
                     </TableCell>
@@ -314,9 +295,8 @@ export function UsersClient() {
         </Table>
       </div>
 
-      {/* Pagination Footer */}
       {data.totalPages > 1 && (
-        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-neutral-400 pt-2">
+        <div className="flex items-center justify-between text-xs font-bold text-[#525252] dark:text-[#A3A3A3] pt-2">
           <span>
             Page {data.currentPage} of {data.totalPages} ({data.totalCount} total users)
           </span>
@@ -328,7 +308,7 @@ export function UsersClient() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               className="gap-1 h-8"
             >
-              <ChevronLeft className="w-3.5 h-3.5" />
+              <ChevronLeft className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Previous</span>
             </Button>
             <Button
@@ -339,13 +319,12 @@ export function UsersClient() {
               className="gap-1 h-8"
             >
               <span>Next</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </Button>
           </div>
         </div>
       )}
 
-      {/* User Details Modal */}
       <Modal
         isOpen={!!selectedUserId}
         onClose={() => {
@@ -358,14 +337,13 @@ export function UsersClient() {
       >
         {loadingDetails ? (
           <div className="py-16 flex flex-col items-center justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-slate-400 mb-2" />
-            <p className="text-xs text-slate-500">Loading user history...</p>
+            <Loader2 className="w-8 h-8 animate-spin text-[#171717] dark:text-white mb-2" />
+            <p className="text-xs font-bold text-[#525252] dark:text-[#A3A3A3]">Loading user history...</p>
           </div>
         ) : userDetails ? (
           <div className="space-y-6 text-sm">
-            {/* Header Profile Info */}
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-neutral-900 border border-slate-200/80 dark:border-neutral-800">
-              <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-neutral-800 flex items-center justify-center font-bold text-base text-slate-700 dark:text-neutral-200 overflow-hidden shrink-0">
+            <div className="flex items-center gap-4 p-4 rounded-md bg-[#FFF9D2] dark:bg-[#202024] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] dark:shadow-[3px_3px_0px_0px_#000000]">
+              <div className="w-12 h-12 rounded-md border-2 border-[#171717] bg-[#35B9F5] shadow-[2px_2px_0px_0px_#171717] flex items-center justify-center font-black text-base text-[#171717] overflow-hidden shrink-0">
                 {userDetails.image ? (
                   <img src={userDetails.image} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
@@ -374,7 +352,7 @@ export function UsersClient() {
               </div>
               <div className="truncate">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white truncate">
+                  <h3 className="font-extrabold text-base text-[#171717] dark:text-white truncate">
                     {userDetails.name || "Anonymous User"}
                   </h3>
                   {userDetails.entitlements.some((e: any) => e.expiresAt && new Date(e.expiresAt) > now) ? (
@@ -383,20 +361,19 @@ export function UsersClient() {
                     <Badge variant="free">FREE</Badge>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 dark:text-neutral-400">{userDetails.email}</p>
-                <p className="text-[11px] text-slate-400 mt-1">
+                <p className="text-xs font-semibold text-[#525252] dark:text-[#A3A3A3]">{userDetails.email}</p>
+                <p className="text-[11px] font-bold text-[#525252] dark:text-[#A3A3A3] mt-1">
                   User ID: <span className="font-mono">{userDetails.id}</span>
                 </p>
               </div>
             </div>
 
-            {/* Active Entitlements */}
             <div>
-              <h4 className="text-xs font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider mb-2">
+              <h4 className="text-xs font-black text-[#171717] dark:text-white uppercase tracking-wider mb-2">
                 Entitlements & Plans
               </h4>
               {userDetails.entitlements.length === 0 ? (
-                <p className="text-xs text-slate-400 italic">No entitlement records found.</p>
+                <p className="text-xs text-[#525252] dark:text-[#A3A3A3] italic">No entitlement records found.</p>
               ) : (
                 <div className="space-y-2">
                   {userDetails.entitlements.map((ent: any) => {
@@ -404,13 +381,13 @@ export function UsersClient() {
                     return (
                       <div
                         key={ent.id}
-                        className="flex items-center justify-between p-3 rounded-xl border border-slate-200/80 dark:border-neutral-800 bg-white dark:bg-[#161618]"
+                        className="flex items-center justify-between p-3 rounded-md border-2 border-[#171717] dark:border-[#383838] bg-[#FFFDF5] dark:bg-[#18181B] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
                       >
                         <div>
-                          <span className="font-semibold text-slate-800 dark:text-neutral-200">
+                          <span className="font-bold text-[#171717] dark:text-white">
                             Plan: {ent.planId?.toUpperCase()}
                           </span>
-                          <span className="text-xs text-slate-400 block">
+                          <span className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3] block">
                             Expires: {ent.expiresAt ? new Date(ent.expiresAt).toLocaleDateString() : "Never"}
                           </span>
                         </div>
@@ -426,22 +403,21 @@ export function UsersClient() {
               )}
             </div>
 
-            {/* Orders History */}
             <div>
-              <h4 className="text-xs font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider mb-2">
+              <h4 className="text-xs font-black text-[#171717] dark:text-white uppercase tracking-wider mb-2">
                 Cashfree Order History
               </h4>
               {userDetails.orders.length === 0 ? (
-                <p className="text-xs text-slate-400 italic">No checkout orders placed yet.</p>
+                <p className="text-xs text-[#525252] dark:text-[#A3A3A3] italic">No checkout orders placed yet.</p>
               ) : (
-                <div className="max-h-44 overflow-y-auto divide-y divide-slate-100 dark:divide-neutral-800 rounded-xl border border-slate-200/80 dark:border-neutral-800 bg-white dark:bg-[#161618]">
+                <div className="max-h-44 overflow-y-auto divide-y-2 divide-[#171717]/10 dark:divide-[#383838] rounded-md border-2 border-[#171717] dark:border-[#383838] bg-[#FFFDF5] dark:bg-[#18181B] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]">
                   {userDetails.orders.map((order: any) => (
                     <div key={order.id} className="p-3 flex items-center justify-between text-xs">
                       <div>
-                        <span className="font-mono font-semibold text-slate-800 dark:text-neutral-200">
+                        <span className="font-mono font-bold text-[#171717] dark:text-white">
                           ₹{order.amount} ({order.planId})
                         </span>
-                        <span className="text-[11px] text-slate-400 block font-mono">
+                        <span className="text-[11px] font-semibold text-[#525252] dark:text-[#A3A3A3] block font-mono">
                           {order.id}
                         </span>
                       </div>
@@ -449,7 +425,7 @@ export function UsersClient() {
                         {order.status === "SUCCESS" && <Badge variant="success">PAID</Badge>}
                         {order.status === "PENDING" && <Badge variant="warning">PENDING</Badge>}
                         {order.status === "FAILED" && <Badge variant="danger">FAILED</Badge>}
-                        <span className="text-[11px] text-slate-400">
+                        <span className="text-[11px] font-semibold text-[#525252] dark:text-[#A3A3A3]">
                           {new Date(order.createdAt).toLocaleDateString()}
                         </span>
                       </div>
@@ -459,24 +435,23 @@ export function UsersClient() {
               )}
             </div>
 
-            {/* Saved Tool Records */}
             <div>
-              <h4 className="text-xs font-bold text-slate-400 dark:text-neutral-500 uppercase tracking-wider mb-2">
+              <h4 className="text-xs font-black text-[#171717] dark:text-white uppercase tracking-wider mb-2">
                 Cloud Saved Items ({userDetails.toolData?.length || 0})
               </h4>
               {userDetails.toolData?.length === 0 ? (
-                <p className="text-xs text-slate-400 italic">No cloud saved documents.</p>
+                <p className="text-xs text-[#525252] dark:text-[#A3A3A3] italic">No cloud saved documents.</p>
               ) : (
-                <div className="max-h-36 overflow-y-auto space-y-1.5">
+                <div className="max-h-36 overflow-y-auto space-y-2">
                   {userDetails.toolData.map((td: any) => (
                     <div
                       key={td.id}
-                      className="p-2.5 rounded-lg bg-slate-50 dark:bg-neutral-900 border border-slate-200/60 dark:border-neutral-800 flex items-center justify-between text-xs"
+                      className="p-2.5 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[1.5px_1.5px_0px_0px_#171717] dark:shadow-[1.5px_1.5px_0px_0px_#000000] flex items-center justify-between text-xs"
                     >
-                      <span className="font-medium text-slate-800 dark:text-neutral-200 truncate max-w-xs">
+                      <span className="font-bold text-[#171717] dark:text-white truncate max-w-xs">
                         {td.name}
                       </span>
-                      <span className="text-[11px] text-slate-400 font-mono">
+                      <span className="text-[11px] font-bold text-[#525252] dark:text-[#A3A3A3] font-mono">
                         {td.toolId}
                       </span>
                     </div>

@@ -12,7 +12,7 @@ import TaskItem from '@tiptap/extension-task-item';
 import { SlashCommand, getSuggestionItems } from './slash-command';
 import { 
   Bold, Italic, Underline as UnderlineIcon, Strikethrough, Code, Link2, Eraser,
-  Heading1, Heading2, Heading3, List, ListOrdered, CheckSquare, Quote, CodeSquare, Minus,
+  Heading1, Heading2, List, ListOrdered, CheckSquare, Quote, CodeSquare, Minus,
   Undo, Redo
 } from 'lucide-react';
 import { useEffect } from 'react';
@@ -38,9 +38,6 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
       SlashCommand.configure({
         suggestion: {
           items: getSuggestionItems,
-          // Re-importing renderItems locally if needed or import from slash-command
-          // We must import renderItems if we export it, wait, we didn't export it.
-          // Let's rely on the plugin itself to use it.
         }
       })
     ],
@@ -70,53 +67,53 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
       {editor && (
         <BubbleMenu 
           editor={editor} 
-          className="flex items-center gap-1 material-layer-elevated px-2 py-1 shadow-2xl rounded-full"
+          className="flex items-center gap-1 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] px-2 py-1.5 shadow-[4px_4px_0px_0px_#171717] dark:shadow-[4px_4px_0px_0px_#000000] z-50"
         >
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('heading', { level: 1 }) ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('heading', { level: 1 }) ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Heading1 className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('heading', { level: 2 }) ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('heading', { level: 2 }) ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Heading2 className="w-4 h-4" />
           </button>
-          <div className="w-px h-4 bg-[var(--border-strong)] mx-1" />
+          <div className="w-px h-5 bg-[#171717] dark:bg-[#383838] mx-1" />
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('bold') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('bold') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Bold className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('italic') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('italic') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Italic className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleUnderline().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('underline') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('underline') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <UnderlineIcon className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('strike') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('strike') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Strikethrough className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleCode().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('code') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('code') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Code className="w-4 h-4" />
           </button>
           
-          <div className="w-px h-4 bg-[var(--border-strong)] mx-1" />
+          <div className="w-px h-5 bg-[#171717] dark:bg-[#383838] mx-1" />
           
           <button
             onClick={() => {
@@ -129,13 +126,13 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
               }
               editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
             }}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('link') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('link') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Link2 className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
-            className="p-1.5 rounded-full transition-colors text-subtle hover:text-red-500 hover:bg-red-500/10"
+            className="p-1.5 transition-colors border-2 border-transparent text-subtle hover:text-[#FF6B6B] hover:bg-[#FF6B6B]/15"
           >
             <Eraser className="w-4 h-4" />
           </button>
@@ -145,53 +142,53 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
       {editor && (
         <FloatingMenu 
           editor={editor} 
-          className="flex items-center gap-1 material-layer-elevated px-2 py-1 shadow-2xl rounded-full ml-8"
+          className="flex items-center gap-1 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] px-2 py-1.5 shadow-[4px_4px_0px_0px_#171717] dark:shadow-[4px_4px_0px_0px_#000000] ml-8 z-50"
         >
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('heading', { level: 1 }) ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('heading', { level: 1 }) ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Heading1 className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('heading', { level: 2 }) ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('heading', { level: 2 }) ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Heading2 className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('bulletList') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('bulletList') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <List className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('orderedList') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('orderedList') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <ListOrdered className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleTaskList().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('taskList') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('taskList') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <CheckSquare className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('blockquote') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('blockquote') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <Quote className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-            className={`p-1.5 rounded-full transition-colors ${editor.isActive('codeBlock') ? 'bg-[var(--foreground)] text-[var(--background)]' : 'text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]'}`}
+            className={`p-1.5 transition-colors border-2 ${editor.isActive('codeBlock') ? 'bg-[#FFE52E] text-[#171717] border-[#171717]' : 'border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30'}`}
           >
             <CodeSquare className="w-4 h-4" />
           </button>
           <button
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
-            className="p-1.5 rounded-full transition-colors text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)]"
+            className="p-1.5 transition-colors border-2 border-transparent text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E]/30"
           >
             <Minus className="w-4 h-4" />
           </button>
@@ -203,7 +200,7 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
           <button 
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
-            className="w-10 h-10 flex items-center justify-center rounded-full material-layer shadow-sm text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="w-9 h-9 flex items-center justify-center bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             title="Undo"
           >
             <Undo className="w-4 h-4" />
@@ -211,7 +208,7 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
           <button 
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
-            className="w-10 h-10 flex items-center justify-center rounded-full material-layer shadow-sm text-subtle hover:text-[var(--foreground)] hover:bg-[var(--layer-2)] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="w-9 h-9 flex items-center justify-center bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] text-subtle hover:text-[#171717] dark:hover:text-[#FFFDF5] hover:bg-[#FFE52E] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             title="Redo"
           >
             <Redo className="w-4 h-4" />

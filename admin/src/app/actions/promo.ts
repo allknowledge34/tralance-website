@@ -26,11 +26,10 @@ export async function savePromoSettings(data: any) {
     throw new Error("Unauthorized: Only admins can update promo settings.");
   }
 
-  // URL Validation
   if (data.btnUrl) {
     try {
       new URL(data.btnUrl);
-    } catch (_) {
+    } catch {
       throw new Error("Invalid URL format.");
     }
   }

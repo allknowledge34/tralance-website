@@ -22,20 +22,20 @@ export function SearchInput({ placeholder = "Search..." }: { placeholder?: strin
         }
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       });
-    }, 300); // 300ms debounce
+    }, 300);
 
     return () => clearTimeout(timeoutId);
   }, [query, pathname, router, searchParams]);
 
   return (
-    <div className="relative w-full material-layer rounded-2xl md:rounded-full overflow-hidden focus-within:ring-1 focus-within:ring-white/20 transition-all">
-      <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-subtle stroke-[1.5] transition-opacity ${isPending ? 'opacity-50' : 'opacity-100'}`} />
+    <div className="relative w-full rounded-md border-2 border-[#171717] dark:border-[#383838] bg-[#FFFDF5] dark:bg-[#18181B] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] focus-within:ring-2 focus-within:ring-[#FFE52E] transition-all overflow-hidden">
+      <Search className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#171717] dark:text-[#A3A3A3] stroke-[2.5] transition-opacity ${isPending ? 'opacity-50' : 'opacity-100'}`} />
       <input 
         type="text" 
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-transparent border-none py-3 md:py-2.5 pl-11 pr-4 text-sm text-foreground placeholder:text-subtle focus:outline-none focus:ring-0"
+        className="w-full bg-transparent border-none py-2.5 pl-10 pr-4 text-sm font-medium text-[#171717] dark:text-[#FFFFFF] placeholder:text-[#A3A3A3] dark:placeholder:text-[#737373] focus:outline-none"
       />
     </div>
   );

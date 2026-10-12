@@ -69,7 +69,6 @@ export function BroadcastsClient() {
   const [suppressionsCount, setSuppressionsCount] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
 
-  // Creation modal state
   const [isCreateOpen, setIsCreateOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [subject, setSubject] = React.useState("");
@@ -87,25 +86,20 @@ export function BroadcastsClient() {
   const [formError, setFormError] = React.useState<string | null>(null);
   const [submitting, setSubmitting] = React.useState(false);
 
-  // Unsaved changes confirm
   const [showDiscardConfirm, setShowDiscardConfirm] = React.useState(false);
 
-  // Test email modal
   const [testModalCampaign, setTestModalCampaign] = React.useState<CampaignItem | null>(null);
   const [testEmailAddress, setTestEmailAddress] = React.useState("");
   const [sendingTest, setSendingTest] = React.useState(false);
   const [testResult, setTestResult] = React.useState<string | null>(null);
 
-  // Live broadcast confirmation modal
   const [liveConfirmCampaign, setLiveConfirmCampaign] = React.useState<CampaignItem | null>(null);
   const [sendingLive, setSendingLive] = React.useState(false);
 
-  // Suppressions modal
   const [isSuppressionsOpen, setIsSuppressionsOpen] = React.useState(false);
   const [suppressionsList, setSuppressionsList] = React.useState<SuppressionItem[]>([]);
   const [newSuppressionEmail, setNewSuppressionEmail] = React.useState("");
 
-  // Setup guide modal
   const [isSetupGuideOpen, setIsSetupGuideOpen] = React.useState(false);
 
   const refreshData = React.useCallback(async () => {
@@ -141,7 +135,6 @@ export function BroadcastsClient() {
     };
   }, []);
 
-  // Real-time custom emails validation
   const customValidation = React.useMemo(() => {
     if (recipientType !== "CUSTOM") {
       return { validEmails: [], invalidEmails: [], duplicateCount: 0, totalParsed: 0 };
@@ -149,7 +142,6 @@ export function BroadcastsClient() {
     return parseAndValidateCustomEmails(customEmailsInput);
   }, [recipientType, customEmailsInput]);
 
-  // Lazy fetch registered users when "Selected Registered Users" is chosen
   React.useEffect(() => {
     if (!isCreateOpen || recipientType !== "SELECTED_USERS" || registeredUsers.length > 0) return;
 
@@ -181,14 +173,12 @@ export function BroadcastsClient() {
     );
   }, [registeredUsers, userSearchQuery]);
 
-  // Dynamically derived estimated recipients
   const estimatedRecipients = React.useMemo(() => {
     if (recipientType === "CUSTOM") return customValidation.validEmails.length;
     if (recipientType === "SELECTED_USERS") return selectedUserIds.length;
     return registeredAudienceCount;
   }, [recipientType, customValidation.validEmails.length, selectedUserIds.length, registeredAudienceCount]);
 
-  // Query eligible recipient count for registered audience tiers
   React.useEffect(() => {
     if (!isCreateOpen) return;
     if (recipientType === "CUSTOM" || recipientType === "SELECTED_USERS") return;
@@ -354,71 +344,69 @@ export function BroadcastsClient() {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-neutral-800">
+    <div className="space-y-6 animate-in fade-in duration-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-3 border-b-2 border-[#171717] dark:border-[#383838]">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#171717] dark:text-white">
             Email Broadcasts
           </h1>
-          <p className="text-sm text-slate-500 dark:text-neutral-400 mt-1">
+          <p className="text-sm font-medium text-[#525252] dark:text-[#A3A3A3] mt-1">
             Deliver announcement campaigns to registered users with live preview, emoji & image support, and safety suppression lists.
           </p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <Button variant="outline" size="sm" onClick={openSuppressionsModal} className="gap-1.5 shadow-xs">
-            <Ban className="w-3.5 h-3.5 text-slate-500" />
+          <Button variant="outline" size="sm" onClick={openSuppressionsModal} className="gap-1.5">
+            <Ban className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Suppression List ({suppressionsCount})</span>
           </Button>
-          <Button onClick={() => setIsCreateOpen(true)} size="sm" className="gap-2 shadow-xs">
-            <Plus className="w-3.5 h-3.5" />
+          <Button onClick={() => setIsCreateOpen(true)} size="sm" className="gap-2">
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Create Campaign</span>
           </Button>
         </div>
       </div>
 
-      {/* Provider Status Alert — Unmistakably clear simulated mode */}
       {providerStatus && (
-        <div className={`p-4 rounded-2xl border shadow-xs transition-all ${
+        <div className={`p-4 rounded-md border-2 border-[#171717] dark:border-[#383838] shadow-[4px_4px_0px_0px_#171717] dark:shadow-[4px_4px_0px_0px_#000000] transition-all ${
           providerStatus.configured
-            ? "border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/40 dark:bg-emerald-950/20"
-            : "border-amber-200/90 dark:border-amber-900/50 bg-amber-50/40 dark:bg-amber-950/20"
+            ? "bg-[#6EE7B7] text-[#171717]"
+            : "bg-[#FFF9D2] dark:bg-[#1C1C20] text-[#171717] dark:text-[#E5E5E5]"
         }`}>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+              <div className={`w-10 h-10 rounded-md border-2 border-[#171717] flex items-center justify-center shrink-0 shadow-[2px_2px_0px_0px_#171717] ${
                 providerStatus.configured
-                  ? "bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400"
-                  : "bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400"
+                  ? "bg-[#6EE7B7] text-[#171717]"
+                  : "bg-[#FFE52E] text-[#171717]"
               }`}>
-                {providerStatus.configured ? <CheckCircle2 className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
+                {providerStatus.configured ? <CheckCircle2 className="w-5 h-5 stroke-[2.5]" /> : <AlertTriangle className="w-5 h-5 stroke-[2.5]" />}
               </div>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-bold text-sm text-slate-900 dark:text-white">
+                  <span className="font-extrabold text-sm text-[#171717] dark:text-white">
                     Delivery Gateway: {providerStatus.provider.toUpperCase()}
                   </span>
                   <Badge variant={providerStatus.configured ? "success" : "warning"}>
                     {providerStatus.configured ? "Production Connected" : "SIMULATED MODE (TESTING ONLY)"}
                   </Badge>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-neutral-400 mt-1">
+                <p className="text-xs font-medium text-[#171717] dark:text-[#A3A3A3] mt-1">
                   {providerStatus.configured
                     ? `${providerStatus.description} • Verified sender: ${providerStatus.senderEmail}`
                     : "No external email API key configured in .env. Dispatches are safely logged to the database and audit trail without dispatching real emails to customer inboxes."}
                 </p>
 
                 {providerStatus.missingRequirements && providerStatus.missingRequirements.length > 0 && (
-                  <div className="mt-2.5 pt-2.5 border-t border-amber-200/80 dark:border-amber-900/60 text-xs text-amber-900 dark:text-amber-200 space-y-1">
-                    <p className="font-semibold flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  <div className="mt-2.5 pt-2.5 border-t-2 border-[#171717]/20 dark:border-[#383838] text-xs space-y-1">
+                    <p className="font-bold flex items-center gap-1.5 text-[#171717] dark:text-[#FFE52E]">
+                      <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
                       Required setup to activate live sending:
                     </p>
-                    <ul className="list-disc list-inside space-y-1 text-[11px] text-amber-800 dark:text-amber-300">
+                    <ul className="list-disc list-inside space-y-1 text-[11px] font-semibold text-[#171717] dark:text-[#E5E5E5]">
                       {providerStatus.missingRequirements.map((req: string, idx: number) => (
                         <li key={idx}>
-                          <code className="bg-amber-100/80 dark:bg-amber-900/50 px-1 py-0.5 rounded font-mono">
+                          <code className="bg-[#FFE52E] dark:bg-[#27272A] border border-[#171717] px-1 py-0.5 rounded font-mono text-[#171717] dark:text-white">
                             {req}
                           </code>
                         </li>
@@ -433,21 +421,20 @@ export function BroadcastsClient() {
               variant="outline"
               size="sm"
               onClick={() => setIsSetupGuideOpen(true)}
-              className="text-xs gap-1.5 shrink-0 bg-white dark:bg-neutral-900 border-amber-300 dark:border-amber-800 hover:bg-amber-50"
+              className="text-xs gap-1.5 shrink-0"
             >
-              <Info className="w-3.5 h-3.5 text-amber-600" />
+              <Info className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>DNS & API Setup Guide</span>
             </Button>
           </div>
         </div>
       )}
 
-      {/* Campaigns History Card */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-3">
           <div>
             <CardTitle className="text-base">Campaign History</CardTitle>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">
+            <p className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3] mt-0.5">
               Drafts, test dispatches, and sent campaign records
             </p>
           </div>
@@ -455,11 +442,11 @@ export function BroadcastsClient() {
         <CardContent className="p-0">
           {loading ? (
             <div className="py-16 flex items-center justify-center">
-              <Loader2 className="w-6 h-6 animate-spin text-slate-400" />
+              <Loader2 className="w-6 h-6 animate-spin text-[#171717] dark:text-white" />
             </div>
           ) : campaigns.length === 0 ? (
-            <div className="py-16 text-center text-xs text-slate-400 space-y-2">
-              <Mail className="w-8 h-8 mx-auto text-slate-300 dark:text-neutral-700" />
+            <div className="py-16 text-center text-xs font-medium text-[#525252] dark:text-[#A3A3A3] space-y-2">
+              <Mail className="w-8 h-8 mx-auto text-[#525252] dark:text-[#A3A3A3]" />
               <p>No email campaigns created yet.</p>
               <Button size="sm" variant="outline" onClick={() => setIsCreateOpen(true)}>
                 Create your first campaign
@@ -482,13 +469,13 @@ export function BroadcastsClient() {
                   <TableRow key={c.id}>
                     <TableCell>
                       <div className="max-w-xs sm:max-w-md truncate">
-                        <p className="font-semibold text-slate-900 dark:text-white truncate">
+                        <p className="font-bold text-[#171717] dark:text-white truncate">
                           {c.name}
                         </p>
-                        <p className="text-xs text-slate-500 dark:text-neutral-400 truncate mt-0.5">
+                        <p className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3] truncate mt-0.5">
                           Subject: {c.subject}
                         </p>
-                        <span className="text-[11px] text-slate-400 block mt-0.5">
+                        <span className="text-[11px] font-semibold text-[#525252] dark:text-[#A3A3A3] block mt-0.5">
                           From: {c.senderName} ({c.senderEmail})
                         </span>
                       </div>
@@ -496,12 +483,12 @@ export function BroadcastsClient() {
 
                     <TableCell>
                       {c.recipientType === "CUSTOM" ? (
-                        <Badge variant="warning" className="text-[11px] font-medium gap-1">
-                          <Mail className="w-3 h-3" /> Custom ({c.totalRecipients})
+                        <Badge variant="warning" className="text-[11px] gap-1">
+                          <Mail className="w-3 h-3 stroke-[2.5]" /> Custom ({c.totalRecipients})
                         </Badge>
                       ) : c.recipientType === "SELECTED_USERS" ? (
-                        <Badge variant="secondary" className="text-[11px] font-medium gap-1">
-                          <Users className="w-3 h-3" /> Selected ({c.totalRecipients})
+                        <Badge variant="secondary" className="text-[11px] gap-1">
+                          <Users className="w-3 h-3 stroke-[2.5]" /> Selected ({c.totalRecipients})
                         </Badge>
                       ) : (
                         <Badge
@@ -529,20 +516,20 @@ export function BroadcastsClient() {
                     </TableCell>
 
                     <TableCell>
-                      <div className="text-xs">
-                        <span className="font-semibold text-slate-900 dark:text-white">
+                      <div className="text-xs font-bold font-mono">
+                        <span className="text-[#171717] dark:text-white">
                           {c.sentCount}
                         </span>
-                        <span className="text-slate-400"> / {c.totalRecipients}</span>
+                        <span className="text-[#525252] dark:text-[#A3A3A3]"> / {c.totalRecipients}</span>
                         {c.failedCount > 0 && (
-                          <span className="text-red-500 block text-[11px]">
+                          <span className="text-[#FF6B6B] block text-[11px]">
                             {c.failedCount} failed
                           </span>
                         )}
                       </div>
                     </TableCell>
 
-                    <TableCell className="text-xs text-slate-400 whitespace-nowrap">
+                    <TableCell className="text-xs font-semibold text-[#525252] dark:text-[#A3A3A3] whitespace-nowrap">
                       {new Date(c.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -562,7 +549,7 @@ export function BroadcastsClient() {
                           className="h-8 text-xs gap-1"
                           title="Send test email to verify layout"
                         >
-                          <Send className="w-3 h-3" />
+                          <Send className="w-3 h-3 stroke-[2.5]" />
                           <span>Test</span>
                         </Button>
 
@@ -586,7 +573,6 @@ export function BroadcastsClient() {
         </CardContent>
       </Card>
 
-      {/* Create Campaign Modal */}
       <Modal
         isOpen={isCreateOpen}
         onClose={handleModalClose}
@@ -595,10 +581,9 @@ export function BroadcastsClient() {
         maxWidth="5xl"
       >
         <form onSubmit={handleCreate} className="space-y-4 text-sm">
-          {/* Top metadata grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                 Campaign Internal Name
               </label>
               <input
@@ -607,13 +592,13 @@ export function BroadcastsClient() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. October Feature Update"
-                className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700"
+                className="w-full px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white placeholder:text-[#A3A3A3] focus:outline-none focus:ring-2 focus:ring-[#FFE52E] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1">
-                Recipient Type <span className="text-red-500">*</span>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
+                Recipient Type <span className="text-[#FF6B6B]">*</span>
               </label>
               <select
                 value={recipientType}
@@ -625,7 +610,7 @@ export function BroadcastsClient() {
                     setLoadingUsers(true);
                   }
                 }}
-                className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700"
+                className="w-full px-3.5 py-2 text-sm font-bold bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               >
                 <option value="ALL_REGISTERED">
                   All Registered Users ({recipientType === "ALL_REGISTERED" ? estimatedRecipients : "..."} eligible)
@@ -640,23 +625,21 @@ export function BroadcastsClient() {
             </div>
           </div>
 
-          {/* Form Level Error Alert */}
           {formError && (
-            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
+            <div className="p-3 rounded-md bg-[#FF6B6B] border-2 border-[#171717] text-[#171717] text-xs font-bold shadow-[2px_2px_0px_0px_#171717] flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0 stroke-[2.5]" />
               <span>{formError}</span>
             </div>
           )}
 
-          {/* Custom Emails Multiline Input & Live Validation */}
           {recipientType === "CUSTOM" && (
-            <div className="space-y-2 p-4 rounded-xl bg-slate-50 dark:bg-[#1c1c1f] border border-slate-200/80 dark:border-neutral-800 animate-in fade-in duration-150">
+            <div className="space-y-2 p-4 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] dark:shadow-[3px_3px_0px_0px_#000000] animate-in fade-in duration-150">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <label className="text-xs font-semibold text-slate-800 dark:text-neutral-200 flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-slate-500" />
-                  Custom Recipient Email Addresses <span className="text-red-500">*</span>
+                <label className="text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 stroke-[2.5]" />
+                  Custom Recipient Email Addresses <span className="text-[#FF6B6B]">*</span>
                 </label>
-                <span className="text-[11px] text-slate-400">
+                <span className="text-[11px] font-bold text-[#525252] dark:text-[#A3A3A3]">
                   Separated by commas, spaces, or new lines
                 </span>
               </div>
@@ -670,55 +653,53 @@ export function BroadcastsClient() {
                   setFormError(null);
                 }}
                 placeholder={"client@example.com\npartner@example.org, vendor@company.com"}
-                className="w-full px-3.5 py-2.5 text-xs font-mono bg-white dark:bg-[#121214] border border-slate-200 dark:border-neutral-700 rounded-lg text-slate-900 dark:text-neutral-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-600"
+                className="w-full px-3.5 py-2.5 text-xs font-mono font-medium bg-[#FFFDF5] dark:bg-[#121214] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-neutral-100 placeholder:text-[#A3A3A3] focus:outline-none focus:ring-2 focus:ring-[#FFE52E] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               />
 
-              {/* Validation & Count Stats */}
               <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-medium ${
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded border-2 border-[#171717] font-bold text-[11px] shadow-[1px_1px_0px_0px_#171717] ${
                       customValidation.validEmails.length > 0
-                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300"
-                        : "bg-slate-200 text-slate-600 dark:bg-neutral-800 dark:text-neutral-400"
+                        ? "bg-[#6EE7B7] text-[#171717]"
+                        : "bg-[#E5E7EB] text-[#525252]"
                     }`}
                   >
-                    <Check className="w-3 h-3" />
+                    <Check className="w-3 h-3 stroke-[2.5]" />
                     {customValidation.validEmails.length} valid recipient
                     {customValidation.validEmails.length === 1 ? "" : "s"}
                   </span>
 
                   {customValidation.duplicateCount > 0 && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-medium bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
-                      <Info className="w-3 h-3" />
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded border-2 border-[#171717] font-bold text-[11px] shadow-[1px_1px_0px_0px_#171717] bg-[#FFE52E] text-[#171717]">
+                      <Info className="w-3 h-3 stroke-[2.5]" />
                       {customValidation.duplicateCount} duplicate
                       {customValidation.duplicateCount === 1 ? "" : "s"} merged
                     </span>
                   )}
                 </div>
 
-                <span className="text-[11px] text-slate-400">
+                <span className="text-[11px] font-bold text-[#525252] dark:text-[#A3A3A3]">
                   Max limit: 2,000 recipients
                 </span>
               </div>
 
-              {/* Invalid Addresses Alert */}
               {customValidation.invalidEmails.length > 0 && (
-                <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-xs space-y-1">
-                  <div className="flex items-center gap-1.5 font-semibold">
-                    <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+                <div className="p-3 rounded-md bg-[#FF6B6B] border-2 border-[#171717] text-[#171717] text-xs space-y-1 shadow-[2px_2px_0px_0px_#171717]">
+                  <div className="flex items-center gap-1.5 font-black">
+                    <AlertTriangle className="w-4 h-4 shrink-0 stroke-[2.5]" />
                     Invalid Email Address
                     {customValidation.invalidEmails.length === 1 ? "" : "es"} Detected (
                     {customValidation.invalidEmails.length})
                   </div>
-                  <p className="text-[11px] text-red-600 dark:text-red-400">
+                  <p className="text-[11px] font-bold">
                     The following entries do not match valid email address format and must be corrected before saving:
                   </p>
                   <div className="flex flex-wrap gap-1 pt-1 max-h-24 overflow-y-auto">
                     {customValidation.invalidEmails.map((inv, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 bg-red-100 dark:bg-red-900/60 text-red-800 dark:text-red-200 rounded font-mono text-[11px]"
+                        className="px-2 py-0.5 bg-white text-[#171717] border border-[#171717] rounded font-mono text-[11px] font-bold shadow-[1px_1px_0px_0px_#171717]"
                       >
                         {inv}
                       </span>
@@ -729,12 +710,11 @@ export function BroadcastsClient() {
             </div>
           )}
 
-          {/* Selected Registered Users Picker */}
           {recipientType === "SELECTED_USERS" && (
-            <div className="space-y-3 p-4 rounded-xl bg-slate-50 dark:bg-[#1c1c1f] border border-slate-200/80 dark:border-neutral-800 animate-in fade-in duration-150">
+            <div className="space-y-3 p-4 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] dark:shadow-[3px_3px_0px_0px_#000000] animate-in fade-in duration-150">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                <label className="text-xs font-semibold text-slate-800 dark:text-neutral-200 flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-slate-500" />
+                <label className="text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 stroke-[2.5]" />
                   Select Registered Users ({selectedUserIds.length} selected)
                 </label>
                 <div className="flex items-center gap-2">
@@ -744,41 +724,39 @@ export function BroadcastsClient() {
                       const filteredIds = filteredRegisteredUsers.map((u) => u.id);
                       setSelectedUserIds(Array.from(new Set([...selectedUserIds, ...filteredIds])));
                     }}
-                    className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                    className="text-[11px] font-bold text-[#171717] dark:text-[#35B9F5] hover:underline cursor-pointer"
                   >
                     Select All Filtered
                   </button>
-                  <span className="text-slate-300 dark:text-neutral-700">•</span>
+                  <span className="text-[#171717] dark:text-[#383838]">•</span>
                   <button
                     type="button"
                     onClick={() => setSelectedUserIds([])}
-                    className="text-[11px] text-slate-500 dark:text-neutral-400 hover:underline"
+                    className="text-[11px] font-bold text-[#525252] dark:text-[#A3A3A3] hover:underline cursor-pointer"
                   >
                     Clear Selection
                   </button>
                 </div>
               </div>
 
-              {/* Search Filter */}
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search registered users by name or email..."
                   value={userSearchQuery}
                   onChange={(e) => setUserSearchQuery(e.target.value)}
-                  className="w-full px-3 py-1.5 pl-8 text-xs bg-white dark:bg-[#121214] border border-slate-200 dark:border-neutral-700 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none"
+                  className="w-full px-3 py-1.5 pl-8 text-xs font-medium bg-[#FFFDF5] dark:bg-[#121214] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white placeholder:text-[#A3A3A3] focus:outline-none shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
                 />
-                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+                <Search className="w-3.5 h-3.5 text-[#171717] dark:text-[#A3A3A3] absolute left-2.5 top-2.5 stroke-[2.5]" />
               </div>
 
-              {/* Users List Box */}
-              <div className="max-h-48 overflow-y-auto divide-y divide-slate-100 dark:divide-neutral-800 border border-slate-200 dark:border-neutral-700/60 rounded-lg bg-white dark:bg-[#141416]">
+              <div className="max-h-48 overflow-y-auto divide-y-2 divide-[#171717]/10 dark:divide-[#383838] border-2 border-[#171717] dark:border-[#383838] rounded-md bg-[#FFFDF5] dark:bg-[#141416]">
                 {loadingUsers ? (
-                  <div className="py-6 flex items-center justify-center text-xs text-slate-400 gap-2">
+                  <div className="py-6 flex items-center justify-center text-xs font-bold text-[#525252] dark:text-[#A3A3A3] gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" /> Loading registered users...
                   </div>
                 ) : filteredRegisteredUsers.length === 0 ? (
-                  <div className="py-6 text-center text-xs text-slate-400">
+                  <div className="py-6 text-center text-xs font-bold text-[#525252] dark:text-[#A3A3A3]">
                     No registered users found matching &quot;{userSearchQuery}&quot;
                   </div>
                 ) : (
@@ -789,8 +767,8 @@ export function BroadcastsClient() {
                         key={u.id}
                         className={`flex items-center justify-between px-3 py-2 cursor-pointer transition-colors ${
                           isSelected
-                            ? "bg-slate-50 dark:bg-neutral-800/50"
-                            : "hover:bg-slate-50/60 dark:hover:bg-neutral-900"
+                            ? "bg-[#FFE52E]/30 dark:bg-[#28282E]"
+                            : "hover:bg-[#FFE52E]/10 dark:hover:bg-[#1C1C20]"
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
@@ -804,13 +782,13 @@ export function BroadcastsClient() {
                                 setSelectedUserIds((prev) => prev.filter((id) => id !== u.id));
                               }
                             }}
-                            className="rounded border-slate-300 text-slate-900 focus:ring-0"
+                            className="rounded border-2 border-[#171717] text-[#171717] focus:ring-0 cursor-pointer"
                           />
                           <div className="text-xs">
-                            <span className="font-medium text-slate-900 dark:text-white">
+                            <span className="font-bold text-[#171717] dark:text-white">
                               {u.name}
                             </span>
-                            <span className="text-slate-400 ml-2 font-mono text-[11px]">
+                            <span className="text-[#525252] dark:text-[#A3A3A3] ml-2 font-mono text-[11px]">
                               {u.email}
                             </span>
                           </div>
@@ -826,11 +804,10 @@ export function BroadcastsClient() {
             </div>
           )}
 
-          {/* Subject Line with Emoji Picker */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-semibold text-slate-700 dark:text-neutral-300">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5]">
                   Email Subject Line
                 </label>
                 <EmojiPicker onSelect={(emoji) => setSubject((prev) => prev + ` ${emoji} `)} />
@@ -841,13 +818,13 @@ export function BroadcastsClient() {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="e.g. 🚀 Introducing Unlimited Freelance Contracts on Tralance"
-                className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700"
+                className="w-full px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FFE52E] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-semibold text-slate-700 dark:text-neutral-300">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5]">
                   Preheader / Preview Text
                 </label>
                 <EmojiPicker onSelect={(emoji) => setPreviewText((prev) => prev + ` ${emoji} `)} />
@@ -857,14 +834,14 @@ export function BroadcastsClient() {
                 value={previewText}
                 onChange={(e) => setPreviewText(e.target.value)}
                 placeholder="Short summary displayed in the email inbox list..."
-                className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700"
+                className="w-full px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FFE52E] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                 Sender Name
               </label>
               <input
@@ -872,12 +849,12 @@ export function BroadcastsClient() {
                 required
                 value={senderName}
                 onChange={(e) => setSenderName(e.target.value)}
-                className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none"
+                className="w-full px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                 Sender Address
               </label>
               <input
@@ -885,22 +862,20 @@ export function BroadcastsClient() {
                 required
                 value={senderEmail}
                 onChange={(e) => setSenderEmail(e.target.value)}
-                className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none"
+                className="w-full px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
               />
             </div>
           </div>
 
-          {/* Dedicated Rich Composer with Image, Emoji & Live Preview */}
           <EmailComposer
             initialHtml={htmlContent}
             onChange={setHtmlContent}
             defaultTemplate={defaultTemplate}
           />
 
-          {/* Sticky Modal Action Footer */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-neutral-800">
-            <span className="text-xs text-slate-500 dark:text-neutral-400">
-              Audience Estimate: <strong className="text-slate-900 dark:text-white">{estimatedRecipients} recipients</strong>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t-2 border-[#171717] dark:border-[#383838]">
+            <span className="text-xs font-bold text-[#525252] dark:text-[#A3A3A3]">
+              Audience Estimate: <strong className="text-[#171717] dark:text-white">{estimatedRecipients} recipients</strong>
             </span>
             <div className="flex gap-2 w-full sm:w-auto justify-end">
               <Button type="button" variant="outline" onClick={handleModalClose}>
@@ -914,17 +889,16 @@ export function BroadcastsClient() {
         </form>
       </Modal>
 
-      {/* Discard Confirmation Dialog */}
       {showDiscardConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-[#18181b] rounded-2xl p-6 max-w-sm w-full border border-slate-200 dark:border-neutral-800 shadow-2xl space-y-3 text-sm">
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#171717]/60 dark:bg-black/80 animate-in fade-in duration-150">
+          <div className="bg-[#FFFDF5] dark:bg-[#18181B] rounded-lg p-6 max-w-sm w-full border-2 border-[#171717] dark:border-[#383838] shadow-[8px_8px_0px_0px_#171717] dark:shadow-[8px_8px_0px_0px_#000000] space-y-3 text-sm">
+            <h3 className="text-base font-extrabold text-[#171717] dark:text-white">
               Discard Unsaved Changes?
             </h3>
-            <p className="text-xs text-slate-500 dark:text-neutral-400">
+            <p className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3]">
               You have unsaved changes in this campaign draft. If you close now, your progress will be discarded.
             </p>
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-neutral-800">
+            <div className="flex justify-end gap-2 pt-3 border-t-2 border-[#171717] dark:border-[#383838]">
               <Button
                 type="button"
                 variant="outline"
@@ -946,7 +920,6 @@ export function BroadcastsClient() {
         </div>
       )}
 
-      {/* Test Email Dispatch Modal */}
       <Modal
         isOpen={!!testModalCampaign}
         onClose={() => setTestModalCampaign(null)}
@@ -956,7 +929,7 @@ export function BroadcastsClient() {
       >
         <form onSubmit={handleSendTest} className="space-y-4 text-sm">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
               Test Recipient Email Address
             </label>
             <input
@@ -965,22 +938,22 @@ export function BroadcastsClient() {
               value={testEmailAddress}
               onChange={(e) => setTestEmailAddress(e.target.value)}
               placeholder="yourname@gmail.com"
-              className="w-full px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none"
+              className="w-full px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none shadow-[2px_2px_0px_0px_#171717]"
             />
           </div>
 
           {testResult && (
-            <div className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
+            <div className={`p-3 rounded-md text-xs font-bold border-2 border-[#171717] shadow-[2px_2px_0px_0px_#171717] flex items-center gap-2 ${
               testResult.includes("success")
-                ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
-                : "bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800"
+                ? "bg-[#6EE7B7] text-[#171717]"
+                : "bg-[#FF6B6B] text-[#171717]"
             }`}>
-              <Info className="w-4 h-4 shrink-0" />
+              <Info className="w-4 h-4 shrink-0 stroke-[2.5]" />
               <span>{testResult}</span>
             </div>
           )}
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-neutral-800">
+          <div className="flex justify-end gap-2 pt-4 border-t-2 border-[#171717] dark:border-[#383838]">
             <Button
               type="button"
               variant="outline"
@@ -995,7 +968,6 @@ export function BroadcastsClient() {
         </form>
       </Modal>
 
-      {/* Final Live Broadcast Confirmation Modal */}
       <Modal
         isOpen={!!liveConfirmCampaign}
         onClose={() => setLiveConfirmCampaign(null)}
@@ -1003,35 +975,35 @@ export function BroadcastsClient() {
         description="Verify audience parameters before triggering real delivery."
         maxWidth="md"
       >
-        <div className="space-y-4 text-sm">
-          <div className="p-4 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200/90 dark:border-amber-900/40 flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-900 dark:text-amber-200 space-y-2 w-full">
-              <p className="font-semibold text-sm">Safety Verification Required</p>
+        <div className="space-y-4 text-sm font-medium">
+          <div className="p-4 rounded-md bg-[#FFF9D2] dark:bg-[#202024] border-2 border-[#171717] dark:border-[#383838] shadow-[4px_4px_0px_0px_#171717] dark:shadow-[4px_4px_0px_0px_#000000] flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-[#171717] dark:text-[#FFE52E] shrink-0 mt-0.5 stroke-[2.5]" />
+            <div className="text-xs text-[#171717] dark:text-[#E5E5E5] space-y-2 w-full">
+              <p className="font-extrabold text-sm">Safety Verification Required</p>
               <p>
                 You are about to launch a real email broadcast for campaign:
                 <br />
-                <strong className="text-amber-950 dark:text-amber-100 text-xs">
+                <strong className="text-[#171717] dark:text-white text-xs">
                   &quot;{liveConfirmCampaign?.name}&quot;
                 </strong>
               </p>
 
-              <div className="p-3 bg-white/80 dark:bg-neutral-900/80 rounded-lg border border-amber-200/80 dark:border-amber-900/60 space-y-1.5 text-[11px] font-sans">
+              <div className="p-3 bg-[#FFFDF5] dark:bg-[#18181B] rounded border-2 border-[#171717] dark:border-[#383838] shadow-[2px_2px_0px_0px_#171717] space-y-1.5 text-[11px] font-sans">
                 <div>
-                  <span className="text-slate-500 dark:text-neutral-400">Subject:</span>{" "}
-                  <strong className="text-slate-800 dark:text-neutral-200">
+                  <span className="text-[#525252] dark:text-[#A3A3A3] font-bold">Subject:</span>{" "}
+                  <strong className="text-[#171717] dark:text-white font-extrabold">
                     {liveConfirmCampaign?.subject}
                   </strong>
                 </div>
                 <div>
-                  <span className="text-slate-500 dark:text-neutral-400">From:</span>{" "}
-                  <span className="font-mono text-slate-700 dark:text-neutral-300">
+                  <span className="text-[#525252] dark:text-[#A3A3A3] font-bold">From:</span>{" "}
+                  <span className="font-mono font-bold text-[#171717] dark:text-white">
                     {liveConfirmCampaign?.senderName} &lt;{liveConfirmCampaign?.senderEmail}&gt;
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-500 dark:text-neutral-400">Target Group:</span>{" "}
-                  <strong className="text-slate-800 dark:text-neutral-200">
+                  <span className="text-[#525252] dark:text-[#A3A3A3] font-bold">Target Group:</span>{" "}
+                  <strong className="text-[#171717] dark:text-white">
                     {liveConfirmCampaign?.recipientType === "CUSTOM"
                       ? "Custom Email Addresses (Manual Entry)"
                       : liveConfirmCampaign?.recipientType === "SELECTED_USERS"
@@ -1040,30 +1012,29 @@ export function BroadcastsClient() {
                   </strong>
                 </div>
                 <div>
-                  <span className="text-slate-500 dark:text-neutral-400">Total Recipients:</span>{" "}
-                  <strong className="text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+                  <span className="text-[#525252] dark:text-[#A3A3A3] font-bold">Total Recipients:</span>{" "}
+                  <strong className="text-[#171717] dark:text-[#6EE7B7] text-xs font-black">
                     {liveConfirmCampaign?.totalRecipients} recipients
                   </strong>
                 </div>
 
-                {/* Show custom recipient preview if applicable */}
                 {liveConfirmCampaign?.customEmails && (() => {
                   try {
                     const emails = JSON.parse(liveConfirmCampaign.customEmails) as string[];
                     return (
-                      <div className="pt-1 border-t border-slate-100 dark:border-neutral-800">
-                        <span className="text-slate-400 block mb-1">Recipient Preview:</span>
+                      <div className="pt-1 border-t-2 border-[#171717]/10 dark:border-[#383838]">
+                        <span className="text-[#525252] dark:text-[#A3A3A3] font-bold block mb-1">Recipient Preview:</span>
                         <div className="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
                           {emails.slice(0, 5).map((em, i) => (
                             <span
                               key={i}
-                              className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-neutral-800 text-slate-700 dark:text-neutral-300 font-mono text-[10px]"
+                              className="px-1.5 py-0.5 rounded border border-[#171717] bg-[#FFE52E] text-[#171717] font-mono font-bold text-[10px]"
                             >
                               {em}
                             </span>
                           ))}
                           {emails.length > 5 && (
-                            <span className="text-[10px] text-slate-400 self-center">
+                            <span className="text-[10px] font-bold text-[#525252] dark:text-[#A3A3A3] self-center">
                               +{emails.length - 5} more
                             </span>
                           )}
@@ -1076,13 +1047,13 @@ export function BroadcastsClient() {
                 })()}
               </div>
 
-              <p className="text-[11px] text-amber-700 dark:text-amber-300 font-medium">
+              <p className="text-[11px] font-black text-[#171717] dark:text-[#FFE52E]">
                 Live delivery sends real emails through Resend API. This action cannot be undone.
               </p>
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-neutral-800">
+          <div className="flex justify-end gap-2 pt-4 border-t-2 border-[#171717] dark:border-[#383838]">
             <Button
               variant="outline"
               onClick={() => setLiveConfirmCampaign(null)}
@@ -1093,7 +1064,7 @@ export function BroadcastsClient() {
               variant="default"
               disabled={sendingLive}
               onClick={handleSendLive}
-              className="bg-amber-600 hover:bg-amber-700 text-white"
+              className="bg-[#FFE52E] text-[#171717]"
             >
               {sendingLive ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm & Send"}
             </Button>
@@ -1101,7 +1072,6 @@ export function BroadcastsClient() {
         </div>
       </Modal>
 
-      {/* Suppressions Management Modal */}
       <Modal
         isOpen={isSuppressionsOpen}
         onClose={() => setIsSuppressionsOpen(false)}
@@ -1117,16 +1087,16 @@ export function BroadcastsClient() {
               value={newSuppressionEmail}
               onChange={(e) => setNewSuppressionEmail(e.target.value)}
               placeholder="user@example.com"
-              className="flex-1 px-3.5 py-2 text-sm bg-white dark:bg-[#161618] border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white focus:outline-none"
+              className="flex-1 px-3.5 py-2 text-sm font-medium bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white focus:outline-none shadow-[2px_2px_0px_0px_#171717]"
             />
             <Button type="submit" size="sm">
               Add Email
             </Button>
           </form>
 
-          <div className="max-h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-neutral-800 border border-slate-200 dark:border-neutral-800 rounded-xl">
+          <div className="max-h-60 overflow-y-auto divide-y-2 divide-[#171717]/10 dark:divide-[#383838] border-2 border-[#171717] dark:border-[#383838] rounded-md bg-[#FFFDF5] dark:bg-[#18181B]">
             {suppressionsList.length === 0 ? (
-              <p className="p-4 text-center text-xs text-slate-400">
+              <p className="p-4 text-center text-xs font-semibold text-[#525252] dark:text-[#A3A3A3]">
                 No suppressed email addresses.
               </p>
             ) : (
@@ -1136,19 +1106,19 @@ export function BroadcastsClient() {
                   className="flex items-center justify-between p-3 text-xs"
                 >
                   <div>
-                    <span className="font-semibold text-slate-900 dark:text-white">
+                    <span className="font-bold text-[#171717] dark:text-white">
                       {s.email}
                     </span>
-                    <span className="text-slate-400 block text-[11px]">
+                    <span className="text-[#525252] dark:text-[#A3A3A3] block text-[11px] font-medium">
                       Reason: {s.reason}
                     </span>
                   </div>
                   <button
                     onClick={() => handleRemoveSuppression(s.email)}
-                    className="text-slate-400 hover:text-red-500 p-1"
+                    className="text-[#525252] hover:text-[#FF6B6B] p-1 cursor-pointer"
                     title="Remove from suppression list"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-4 h-4 stroke-[2.5]" />
                   </button>
                 </div>
               ))
@@ -1157,7 +1127,6 @@ export function BroadcastsClient() {
         </div>
       </Modal>
 
-      {/* DNS & API Setup Guide Modal */}
       <Modal
         isOpen={isSetupGuideOpen}
         onClose={() => setIsSetupGuideOpen(false)}
@@ -1165,56 +1134,56 @@ export function BroadcastsClient() {
         description="Follow these steps to activate production transactional email broadcasts for Tralance."
         maxWidth="2xl"
       >
-        <div className="space-y-4 text-xs text-slate-700 dark:text-neutral-300">
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 space-y-2">
-            <h4 className="font-semibold text-slate-900 dark:text-white text-sm">
+        <div className="space-y-4 text-xs font-medium text-[#171717] dark:text-[#E5E5E5]">
+          <div className="p-3 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] space-y-2">
+            <h4 className="font-black text-[#171717] dark:text-white text-sm">
               1. Add Server Environment Variables
             </h4>
-            <p className="text-slate-500 dark:text-neutral-400">
-              In your server environment (<code className="font-mono text-[11px] bg-slate-200 dark:bg-neutral-800 px-1 py-0.5 rounded">.env</code> on host or Vercel Environment Variables):
+            <p className="text-[#525252] dark:text-[#A3A3A3]">
+              In your server environment (<code className="font-mono text-[11px] bg-[#FFE52E] dark:bg-[#27272A] border border-[#171717] px-1 py-0.5 rounded text-[#171717] dark:text-white">.env</code> on host or Vercel Environment Variables):
             </p>
-            <pre className="p-2.5 rounded-lg bg-slate-950 text-slate-100 font-mono text-[11px] overflow-x-auto">
+            <pre className="p-2.5 rounded-md bg-[#171717] text-[#FFE52E] border-2 border-[#171717] font-mono text-[11px] overflow-x-auto">
 {`RESEND_API_KEY="re_xxxxxxxxxxxxxxxxxxxx"
 RESEND_FROM_EMAIL="updates@tralance.pro"
 RESEND_FROM_NAME="Tralance Team"
-RESEND_WEBHOOK_SECRET="whsec_xxxxxxxx" # Optional for webhook signature verification`}
+RESEND_WEBHOOK_SECRET="whsec_xxxxxxxx"`}
             </pre>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 space-y-2">
-            <h4 className="font-semibold text-slate-900 dark:text-white text-sm">
+          <div className="p-3 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] space-y-2">
+            <h4 className="font-black text-[#171717] dark:text-white text-sm">
               2. Domain DNS Records (tralance.pro)
             </h4>
-            <p className="text-slate-500 dark:text-neutral-400">
+            <p className="text-[#525252] dark:text-[#A3A3A3]">
               In your domain DNS registrar (Cloudflare / Namecheap / Route 53):
             </p>
             <div className="space-y-1.5 font-mono text-[11px]">
-              <div className="p-2 rounded bg-white dark:bg-neutral-950 border border-slate-200 dark:border-neutral-800">
-                <span className="font-bold text-blue-600 dark:text-blue-400">TXT (SPF): </span>
+              <div className="p-2 rounded border-2 border-[#171717] dark:border-[#383838] bg-[#FFF9D2] dark:bg-[#141416]">
+                <span className="font-bold text-[#171717] dark:text-[#35B9F5]">TXT (SPF): </span>
                 <code>v=spf1 include:resend.com ~all</code>
               </div>
-              <div className="p-2 rounded bg-white dark:bg-neutral-950 border border-slate-200 dark:border-neutral-800">
-                <span className="font-bold text-blue-600 dark:text-blue-400">CNAME (DKIM): </span>
+              <div className="p-2 rounded border-2 border-[#171717] dark:border-[#383838] bg-[#FFF9D2] dark:bg-[#141416]">
+                <span className="font-bold text-[#171717] dark:text-[#35B9F5]">CNAME (DKIM): </span>
                 <code>resend._domainkey.tralance.pro → dkim.resend.com</code>
               </div>
-              <div className="p-2 rounded bg-white dark:bg-neutral-950 border border-slate-200 dark:border-neutral-800">
-                <span className="font-bold text-blue-600 dark:text-blue-400">TXT (DMARC): </span>
+              <div className="p-2 rounded border-2 border-[#171717] dark:border-[#383838] bg-[#FFF9D2] dark:bg-[#141416]">
+                <span className="font-bold text-[#171717] dark:text-[#35B9F5]">TXT (DMARC): </span>
                 <code>_dmarc.tralance.pro → v=DMARC1; p=none;</code>
               </div>
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 space-y-2">
-            <h4 className="font-semibold text-slate-900 dark:text-white text-sm">
+          <div className="p-3 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] space-y-2">
+            <h4 className="font-black text-[#171717] dark:text-white text-sm">
               3. Configure Resend Webhook
             </h4>
-            <p className="text-slate-500 dark:text-neutral-400">
+            <p className="text-[#525252] dark:text-[#A3A3A3]">
               In Resend Dashboard &gt; Webhooks, point to your admin webhook endpoint:
             </p>
-            <code className="block p-2 rounded bg-white dark:bg-neutral-950 border border-slate-200 dark:border-neutral-800 font-mono text-[11px] text-blue-600 dark:text-blue-400">
+            <code className="block p-2 rounded border-2 border-[#171717] dark:border-[#383838] bg-[#FFF9D2] dark:bg-[#141416] font-mono text-[11px] text-[#171717] dark:text-[#35B9F5] font-bold">
               https://tralance-admin-six.vercel.app/api/webhooks/resend
             </code>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-[#525252] dark:text-[#A3A3A3]">
               Events to listen for: <strong>email.delivered, email.bounced, email.complained</strong>. Bounces and spam complaints are automatically added to the suppression list.
             </p>
           </div>

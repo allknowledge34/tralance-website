@@ -9,16 +9,16 @@ export function Badge({ className, variant = "default", ...props }: BadgeProps) 
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide transition-colors",
+        "inline-flex items-center gap-1 rounded-md px-2.5 py-0.5 text-[11px] font-bold tracking-wider uppercase border-2 border-[#171717] dark:border-[#383838] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] select-none",
         {
-          "bg-slate-100 text-slate-800 dark:bg-neutral-800 dark:text-neutral-200": variant === "default",
-          "bg-slate-200/70 text-slate-700 dark:bg-neutral-700 dark:text-neutral-300": variant === "secondary",
-          "bg-emerald-50 text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800": variant === "success",
-          "bg-amber-50 text-amber-700 border border-amber-200/80 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800": variant === "warning",
-          "bg-red-50 text-red-700 border border-red-200/80 dark:bg-red-950/50 dark:text-red-300 dark:border-red-800": variant === "danger",
-          "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm font-bold": variant === "pro",
-          "bg-slate-100 text-slate-600 border border-slate-200 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-700": variant === "free",
-          "border border-slate-200 dark:border-neutral-800 text-slate-700 dark:text-neutral-300": variant === "outline",
+          "bg-[#F3F4F6] text-[#171717] dark:bg-[#27272A] dark:text-[#F5F5F5]": variant === "default",
+          "bg-[#FEF08A] text-[#171717]": variant === "secondary",
+          "bg-[#6EE7B7] text-[#171717]": variant === "success",
+          "bg-[#FDE047] text-[#171717]": variant === "warning",
+          "bg-[#FF6B6B] text-[#171717]": variant === "danger",
+          "bg-[#35B9F5] text-[#171717]": variant === "pro",
+          "bg-[#E5E7EB] text-[#525252] dark:bg-[#1C1C20] dark:text-[#A3A3A3]": variant === "free",
+          "bg-transparent text-[#171717] dark:text-[#F5F5F5]": variant === "outline",
         },
         className
       )}

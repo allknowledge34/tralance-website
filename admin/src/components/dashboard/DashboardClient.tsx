@@ -7,17 +7,12 @@ import {
   CreditCard,
   Crown,
   Wrench,
-  FileText,
   ArrowUpRight,
   Plus,
   Mail,
   Megaphone,
   CheckCircle2,
-  Clock,
-  XCircle,
   Shield,
-  Calendar,
-  Sparkles,
 } from "lucide-react";
 import { StatsCard } from "@/components/ui/stats-card";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -80,7 +75,6 @@ export function DashboardClient({ data }: { data: DashboardData }) {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
-      {/* Welcome & Quick Action Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-neutral-800">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -113,7 +107,6 @@ export function DashboardClient({ data }: { data: DashboardData }) {
         </div>
       </div>
 
-      {/* Primary Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatsCard
           title="Total Registered Users"
@@ -156,9 +149,7 @@ export function DashboardClient({ data }: { data: DashboardData }) {
         />
       </div>
 
-      {/* Visual Analytics & Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Registration & Conversion Card */}
         <Card className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between pb-4">
             <div>
@@ -191,7 +182,6 @@ export function DashboardClient({ data }: { data: DashboardData }) {
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Visual ratio bar */}
             <div>
               <div className="flex justify-between text-xs font-semibold mb-2">
                 <span className="text-slate-700 dark:text-slate-300">
@@ -217,7 +207,6 @@ export function DashboardClient({ data }: { data: DashboardData }) {
               </div>
             </div>
 
-            {/* Quick Metrics Bar */}
             <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100 dark:border-neutral-800/80">
               <div>
                 <p className="text-xs text-slate-400 dark:text-neutral-500">Live Articles</p>
@@ -241,7 +230,6 @@ export function DashboardClient({ data }: { data: DashboardData }) {
           </CardContent>
         </Card>
 
-        {/* System & Audit Quick Widget */}
         <Card>
           <CardHeader>
             <CardTitle className="text-base">System Audit Status</CardTitle>
@@ -285,9 +273,7 @@ export function DashboardClient({ data }: { data: DashboardData }) {
         </Card>
       </div>
 
-      {/* Two-Column Tables Section: Recent Registrations & Recent Orders */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Registrations Table */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
@@ -351,7 +337,6 @@ export function DashboardClient({ data }: { data: DashboardData }) {
           </CardContent>
         </Card>
 
-        {/* Recent Orders Table */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>

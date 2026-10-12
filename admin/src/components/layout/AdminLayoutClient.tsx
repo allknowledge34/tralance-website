@@ -27,11 +27,9 @@ export function AdminLayoutClient({ children, adminEmail }: AdminLayoutClientPro
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen bg-slate-50/60 dark:bg-[#09090b] text-slate-900 dark:text-neutral-100 flex flex-col md:flex-row antialiased selection:bg-slate-900 selection:text-white dark:selection:bg-white dark:selection:text-slate-900">
-        {/* Sidebar */}
+      <div className="min-h-screen bg-[#FFFDF5] dark:bg-[#121214] text-[#171717] dark:text-[#F5F5F5] flex flex-col md:flex-row antialiased selection:bg-[#FFE52E] selection:text-[#171717]">
         <AdminSidebar adminEmail={adminEmail} />
 
-        {/* Main Workspace Column */}
         <div className="flex-1 flex flex-col min-w-0">
           <AdminTopNav
             adminEmail={adminEmail}
@@ -43,7 +41,6 @@ export function AdminLayoutClient({ children, adminEmail }: AdminLayoutClientPro
           </main>
         </div>
 
-        {/* Global ⌘K Command Palette */}
         <AdminCommandDialog
           isOpen={commandOpen}
           onClose={() => setCommandOpen(false)}

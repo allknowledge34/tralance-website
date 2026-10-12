@@ -16,7 +16,6 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsedState] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  // Restore persisted collapse state on client mount
   React.useEffect(() => {
     try {
       const saved = localStorage.getItem("tralance_admin_sidebar_collapsed");
@@ -24,7 +23,6 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
         setCollapsedState(saved === "true");
       }
     } catch {
-      // Ignore localStorage unavailable
     }
   }, []);
 
@@ -33,7 +31,6 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     try {
       localStorage.setItem("tralance_admin_sidebar_collapsed", String(val));
     } catch {
-      // Ignore
     }
   }, []);
 
@@ -43,7 +40,6 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
       try {
         localStorage.setItem("tralance_admin_sidebar_collapsed", String(next));
       } catch {
-        // Ignore
       }
       return next;
     });

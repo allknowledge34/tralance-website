@@ -2,14 +2,7 @@
 
 import * as React from "react";
 import {
-  Search,
-  Globe,
   ExternalLink,
-  CheckCircle2,
-  AlertCircle,
-  FileText,
-  Shield,
-  Layers,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
@@ -117,13 +110,12 @@ const pagesMatrix = [
 export function SeoClient() {
   return (
     <div className="space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-neutral-800">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[4px_4px_0px_0px_#171717] dark:shadow-[4px_4px_0px_0px_#000000]">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-black uppercase tracking-wider text-[#171717] dark:text-[#FFFDF5]">
             Pages & SEO Matrix
           </h1>
-          <p className="text-sm text-slate-500 dark:text-neutral-400 mt-0.5">
+          <p className="text-sm font-medium text-subtle mt-0.5">
             Audit meta titles, descriptions, canonical URLs, and indexing robots across the public website.
           </p>
         </div>
@@ -132,49 +124,50 @@ export function SeoClient() {
           href="https://www.tralance.pro/sitemap.xml"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-neutral-800 text-xs font-medium text-slate-600 dark:text-neutral-300 hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-[#171717] text-xs font-black uppercase tracking-wider text-[#171717] bg-[#FFE52E] shadow-[2.5px_2.5px_0px_0px_#171717] hover:bg-[#FFE52E]/90 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all shrink-0"
         >
           <span>Live Sitemap.xml</span>
           <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
 
-      {/* Pages Matrix Table */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Public Website Pages ({pagesMatrix.length})</CardTitle>
-          <p className="text-xs text-slate-500 dark:text-neutral-400">
+        <CardHeader className="pb-3 border-b-2 border-[#171717] dark:border-[#383838]">
+          <CardTitle className="text-base font-black uppercase tracking-wide">Public Website Pages ({pagesMatrix.length})</CardTitle>
+          <p className="text-xs font-medium text-subtle">
             SEO metadata configuration for production routes on https://www.tralance.pro
           </p>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Route Path</TableHead>
-                <TableHead>Meta Title</TableHead>
-                <TableHead>Meta Description</TableHead>
-                <TableHead>Indexing</TableHead>
-                <TableHead className="text-right">Live Link</TableHead>
+              <TableRow className="bg-[#FFF9D2] dark:bg-[#27272A] border-b-2 border-[#171717] dark:border-[#383838]">
+                <TableHead className="font-black uppercase tracking-wider text-xs text-[#171717] dark:text-[#FFFDF5]">Route Path</TableHead>
+                <TableHead className="font-black uppercase tracking-wider text-xs text-[#171717] dark:text-[#FFFDF5]">Meta Title</TableHead>
+                <TableHead className="font-black uppercase tracking-wider text-xs text-[#171717] dark:text-[#FFFDF5]">Meta Description</TableHead>
+                <TableHead className="font-black uppercase tracking-wider text-xs text-[#171717] dark:text-[#FFFDF5]">Indexing</TableHead>
+                <TableHead className="font-black uppercase tracking-wider text-xs text-[#171717] dark:text-[#FFFDF5] text-right">Live Link</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {pagesMatrix.map((page) => (
-                <TableRow key={page.path}>
-                  <TableCell className="font-mono text-xs font-semibold text-slate-900 dark:text-white">
-                    {page.path}
+                <TableRow key={page.path} className="border-b-2 border-[#171717] dark:border-[#383838] hover:bg-[#FFE52E]/10 transition-colors">
+                  <TableCell className="font-mono text-xs font-bold text-[#171717] dark:text-[#FFFDF5]">
+                    <span className="px-2 py-0.5 bg-white dark:bg-[#27272A] border border-[#171717] dark:border-[#383838] shadow-[1px_1px_0px_0px_#171717]">
+                      {page.path}
+                    </span>
                   </TableCell>
 
-                  <TableCell className="text-xs font-medium text-slate-800 dark:text-neutral-200 max-w-xs truncate">
+                  <TableCell className="text-xs font-bold text-[#171717] dark:text-[#FFFDF5] max-w-xs truncate">
                     {page.title}
                   </TableCell>
 
-                  <TableCell className="text-xs text-slate-500 dark:text-neutral-400 max-w-sm truncate">
+                  <TableCell className="text-xs font-medium text-subtle max-w-sm truncate">
                     {page.description}
                   </TableCell>
 
                   <TableCell>
-                    <Badge variant="success" className="text-[10px]">
+                    <Badge variant="success" className="text-[10px] font-black uppercase">
                       {page.robots}
                     </Badge>
                   </TableCell>
@@ -184,7 +177,7 @@ export function SeoClient() {
                       href={`https://www.tralance.pro${page.path}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 text-slate-400 hover:text-blue-600 inline-flex items-center rounded-lg transition-colors"
+                      className="p-1.5 border-2 border-[#171717] dark:border-[#383838] bg-[#35B9F5] text-[#171717] shadow-[2px_2px_0px_0px_#171717] hover:bg-[#35B9F5]/80 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none inline-flex items-center transition-all"
                       title="Inspect Live Page"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />

@@ -15,8 +15,6 @@ import {
   RotateCcw,
   Monitor,
   Smartphone,
-  ExternalLink,
-  Check,
   AlertCircle,
   Sparkles,
 } from "lucide-react";
@@ -35,7 +33,6 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
   const [activeTab, setActiveTab] = React.useState<"visual" | "html">("visual");
   const [previewMode, setPreviewMode] = React.useState<"desktop" | "mobile">("desktop");
 
-  // Image modal state
   const [isImageModalOpen, setIsImageModalOpen] = React.useState(false);
   const [imageUrl, setImageUrl] = React.useState("");
   const [imageAlt, setImageAlt] = React.useState("");
@@ -43,26 +40,21 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
   const [imageAlign, setImageAlign] = React.useState<"center" | "left" | "right">("center");
   const [imageError, setImageError] = React.useState<string | null>(null);
 
-  // Link modal state
   const [isLinkModalOpen, setIsLinkModalOpen] = React.useState(false);
   const [linkUrl, setLinkUrl] = React.useState("https://www.tralance.pro");
   const [linkText, setLinkText] = React.useState("Learn more");
 
-  // Reset confirm
   const [isResetConfirmOpen, setIsResetConfirmOpen] = React.useState(false);
 
-  // Synchronize internal state with parent
   const handleHtmlChange = (newHtml: string) => {
     setHtmlContent(newHtml);
     onChange(newHtml);
   };
 
-  // Insert HTML snippet into the active editor
   const insertSnippet = (snippet: string) => {
     handleHtmlChange(htmlContent + snippet);
   };
 
-  // Formatting helpers
   const applyHeading = (level: 1 | 2) => {
     const tag = level === 1 ? "h1" : "h2";
     const fontSize = level === 1 ? "24px" : "18px";
@@ -154,75 +146,73 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
 
   return (
     <div className="space-y-4">
-      {/* Top Controls Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-2 rounded-xl bg-slate-100 dark:bg-neutral-800/80 border border-slate-200 dark:border-neutral-700/80">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2 rounded-md bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] dark:shadow-[3px_3px_0px_0px_#000000]">
         <div className="flex items-center gap-1 flex-wrap">
-          <div className="flex bg-white dark:bg-[#161618] rounded-lg p-0.5 border border-slate-200/80 dark:border-neutral-700">
+          <div className="flex bg-[#FFF9D2] dark:bg-[#222226] rounded border-2 border-[#171717] dark:border-[#383838] p-0.5">
             <button
               type="button"
               onClick={() => setActiveTab("visual")}
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded transition-all cursor-pointer ${
                 activeTab === "visual"
-                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs"
-                  : "text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white"
+                  ? "bg-[#FFE52E] text-[#171717] border border-[#171717] shadow-[1px_1px_0px_0px_#171717]"
+                  : "text-[#525252] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white"
               }`}
             >
-              <Eye className="w-3.5 h-3.5" />
+              <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Composer</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab("html")}
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded transition-all cursor-pointer ${
                 activeTab === "html"
-                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs"
-                  : "text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white"
+                  ? "bg-[#FFE52E] text-[#171717] border border-[#171717] shadow-[1px_1px_0px_0px_#171717]"
+                  : "text-[#525252] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white"
               }`}
             >
-              <Code className="w-3.5 h-3.5" />
+              <Code className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>HTML Source</span>
             </button>
           </div>
 
-          <div className="h-4 w-px bg-slate-300 dark:bg-neutral-700 mx-1" />
+          <div className="h-5 w-0.5 bg-[#171717] dark:bg-[#383838] mx-1" />
 
-          {/* Formatting buttons */}
           <button
             type="button"
             onClick={() => insertSnippet(`<strong>Bold text</strong>`)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Bold"
           >
-            <Bold className="w-4 h-4" />
+            <Bold className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => insertSnippet(`<em>Italic text</em>`)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Italic"
           >
-            <Italic className="w-4 h-4" />
+            <Italic className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => applyHeading(1)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Heading 1"
           >
-            <Heading1 className="w-4 h-4" />
+            <Heading1 className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => applyHeading(2)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Heading 2"
           >
-            <Heading2 className="w-4 h-4" />
+            <Heading2 className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => applyParagraph()}
-            className="px-2 py-1 text-xs font-medium text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="px-2 py-1 text-xs font-bold text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Add Paragraph"
           >
             Paragraph
@@ -230,76 +220,72 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
           <button
             type="button"
             onClick={() => applyList(false)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Bullet List"
           >
-            <List className="w-4 h-4" />
+            <List className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => applyList(true)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Numbered List"
           >
-            <ListOrdered className="w-4 h-4" />
+            <ListOrdered className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => setIsLinkModalOpen(true)}
-            className="p-1.5 text-slate-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700 rounded-lg transition-colors"
+            className="p-1.5 text-[#171717] dark:text-[#E5E5E5] hover:bg-[#FFE52E] rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Insert Link"
           >
-            <LinkIcon className="w-4 h-4" />
+            <LinkIcon className="w-4 h-4 stroke-[2.5]" />
           </button>
           <button
             type="button"
             onClick={() => setIsImageModalOpen(true)}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-neutral-200 bg-white dark:bg-[#161618] hover:bg-slate-50 dark:hover:bg-neutral-700 border border-slate-200 dark:border-neutral-700 rounded-lg transition-colors shadow-xs"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-[#171717] dark:text-white bg-[#FFFDF5] dark:bg-[#18181B] hover:bg-[#FFE52E] border-2 border-[#171717] dark:border-[#383838] rounded-md shadow-[1.5px_1.5px_0px_0px_#171717] transition-all cursor-pointer"
             title="Insert Image"
           >
-            <ImageIcon className="w-3.5 h-3.5 text-blue-500" />
+            <ImageIcon className="w-3.5 h-3.5 text-[#35B9F5] stroke-[2.5]" />
             <span>Image</span>
           </button>
           <button
             type="button"
             onClick={() => applyButton()}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-neutral-200 bg-white dark:bg-[#161618] hover:bg-slate-50 dark:hover:bg-neutral-700 border border-slate-200 dark:border-neutral-700 rounded-lg transition-colors shadow-xs"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-[#171717] dark:text-white bg-[#FFFDF5] dark:bg-[#18181B] hover:bg-[#FFE52E] border-2 border-[#171717] dark:border-[#383838] rounded-md shadow-[1.5px_1.5px_0px_0px_#171717] transition-all cursor-pointer"
             title="Add Call to Action Button"
           >
-            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+            <Sparkles className="w-3.5 h-3.5 text-[#FFE52E] stroke-[2.5]" />
             <span>CTA Button</span>
           </button>
 
-          {/* Emoji Picker for email body */}
           <EmojiPicker
             buttonLabel="Emoji"
             onSelect={(emoji) => insertSnippet(` ${emoji} `)}
           />
         </div>
 
-        {/* Reset Template */}
         <div>
           <button
             type="button"
             onClick={() => setIsResetConfirmOpen(true)}
-            className="flex items-center gap-1 text-xs text-slate-500 hover:text-red-600 dark:hover:text-red-400 p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+            className="flex items-center gap-1 text-xs font-bold text-[#171717] dark:text-[#FF6B6B] hover:bg-[#FF6B6B] hover:text-[#171717] p-1.5 rounded border border-transparent hover:border-[#171717] transition-all cursor-pointer"
             title="Reset to Tralance default template"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Reset</span>
           </button>
         </div>
       </div>
 
-      {/* Two Column Layout: Editor & Live Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Left Column: Editor */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-neutral-300">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5]">
               {activeTab === "visual" ? "Email Content Composer" : "Raw HTML Source"}
             </label>
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] font-bold text-[#525252] dark:text-[#A3A3A3]">
               {htmlContent.length} characters
             </span>
           </div>
@@ -310,49 +296,47 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
             value={htmlContent}
             onChange={(e) => handleHtmlChange(e.target.value)}
             placeholder="Type your email content or use the toolbar above..."
-            className="w-full font-mono text-xs p-3.5 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-neutral-700 resize-y leading-relaxed"
+            className="w-full font-mono text-xs p-3.5 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-[#F5F5F5] focus:outline-none focus:ring-2 focus:ring-[#FFE52E] shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000] resize-y leading-relaxed"
           />
         </div>
 
-        {/* Right Column: Live Email Preview (Always Clean White Canvas) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-700 dark:text-neutral-300">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5]">
               Live Recipient Preview
             </span>
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-neutral-800 p-0.5 rounded-lg text-xs">
+            <div className="flex items-center gap-1 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] p-0.5 rounded shadow-[1.5px_1.5px_0px_0px_#171717] text-xs font-bold">
               <button
                 type="button"
                 onClick={() => setPreviewMode("desktop")}
-                className={`flex items-center gap-1 px-2 py-1 rounded transition-colors ${
+                className={`flex items-center gap-1 px-2 py-0.5 rounded transition-all cursor-pointer ${
                   previewMode === "desktop"
-                    ? "bg-white dark:bg-[#161618] text-slate-900 dark:text-white shadow-xs font-semibold"
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-[#FFE52E] text-[#171717] border border-[#171717] font-black"
+                    : "text-[#525252] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white"
                 }`}
               >
-                <Monitor className="w-3.5 h-3.5" />
+                <Monitor className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Desktop</span>
               </button>
               <button
                 type="button"
                 onClick={() => setPreviewMode("mobile")}
-                className={`flex items-center gap-1 px-2 py-1 rounded transition-colors ${
+                className={`flex items-center gap-1 px-2 py-0.5 rounded transition-all cursor-pointer ${
                   previewMode === "mobile"
-                    ? "bg-white dark:bg-[#161618] text-slate-900 dark:text-white shadow-xs font-semibold"
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-[#FFE52E] text-[#171717] border border-[#171717] font-black"
+                    : "text-[#525252] dark:text-[#A3A3A3] hover:text-[#171717] dark:hover:text-white"
                 }`}
               >
-                <Smartphone className="w-3.5 h-3.5" />
+                <Smartphone className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Mobile</span>
               </button>
             </div>
           </div>
 
-          {/* Email Preview Frame — Preserves authentic email background & contrast */}
-          <div className="bg-slate-200/70 dark:bg-neutral-900 p-4 rounded-xl border border-slate-200 dark:border-neutral-800 flex justify-center overflow-x-auto min-h-[360px] max-h-[460px] overflow-y-auto">
+          <div className="bg-[#FFF9D2]/30 dark:bg-[#141416] p-4 rounded-md border-2 border-[#171717] dark:border-[#383838] shadow-[3px_3px_0px_0px_#171717] dark:shadow-[3px_3px_0px_0px_#000000] flex justify-center overflow-x-auto min-h-[360px] max-h-[460px] overflow-y-auto">
             <div
               style={{ backgroundColor: "#ffffff", color: "#1e293b" }}
-              className={`rounded-xl shadow-lg overflow-hidden transition-all text-left border border-slate-200/80 my-auto ${
+              className={`rounded-md shadow-[4px_4px_0px_0px_#171717] overflow-hidden transition-all text-left border-2 border-[#171717] my-auto ${
                 previewMode === "mobile" ? "w-[340px]" : "w-full max-w-[560px]"
               }`}
             >
@@ -365,51 +349,50 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
         </div>
       </div>
 
-      {/* Image Insertion Modal */}
       {isImageModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-[#18181b] rounded-2xl p-6 max-w-md w-full border border-slate-200 dark:border-neutral-800 shadow-2xl space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-neutral-800">
-              <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#171717]/60 dark:bg-black/80 animate-in fade-in duration-150">
+          <div className="bg-[#FFFDF5] dark:bg-[#18181B] rounded-lg p-6 max-w-md w-full border-2 border-[#171717] dark:border-[#383838] shadow-[8px_8px_0px_0px_#171717] dark:shadow-[8px_8px_0px_0px_#000000] space-y-4">
+            <div className="flex justify-between items-center pb-2 border-b-2 border-[#171717] dark:border-[#383838]">
+              <h3 className="text-base font-extrabold text-[#171717] dark:text-white">
                 Insert Image into Email
               </h3>
               <button
                 type="button"
                 onClick={() => setIsImageModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-neutral-200"
+                className="p-1 rounded border border-[#171717] bg-[#FFE52E] text-[#171717] shadow-[1px_1px_0px_0px_#171717] cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             {imageError && (
-              <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 rounded-xl text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
+              <div className="p-3 bg-[#FF6B6B] border-2 border-[#171717] rounded-md text-[#171717] text-xs font-bold shadow-[2px_2px_0px_0px_#171717] flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 stroke-[2.5]" />
                 <span>{imageError}</span>
               </div>
             )}
 
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                   Upload Image File (PNG, JPG, WEBP, GIF &lt; 2MB)
                 </label>
                 <input
                   type="file"
                   accept="image/png,image/jpeg,image/webp,image/gif"
                   onChange={handleImageUpload}
-                  className="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-900 file:text-white dark:file:bg-white dark:file:text-slate-900 cursor-pointer"
+                  className="w-full text-xs font-semibold text-[#171717] dark:text-white file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-2 file:border-[#171717] file:text-xs file:font-black file:bg-[#FFE52E] file:text-[#171717] file:shadow-[1.5px_1.5px_0px_0px_#171717] cursor-pointer"
                 />
               </div>
 
               <div className="relative flex py-1 items-center">
-                <div className="flex-grow border-t border-slate-200 dark:border-neutral-800" />
-                <span className="flex-shrink mx-3 text-slate-400 text-[11px]">OR VIA HTTPS URL</span>
-                <div className="flex-grow border-t border-slate-200 dark:border-neutral-800" />
+                <div className="flex-grow border-t-2 border-[#171717] dark:border-[#383838]" />
+                <span className="flex-shrink mx-3 text-[#525252] dark:text-[#A3A3A3] text-[11px] font-black uppercase tracking-wider">OR VIA HTTPS URL</span>
+                <div className="flex-grow border-t-2 border-[#171717] dark:border-[#383838]" />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                   Hosted Image URL (Must start with https://)
                 </label>
                 <input
@@ -420,12 +403,12 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
                     setImageUrl(e.target.value);
                     setImageError(null);
                   }}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white"
+                  className="w-full px-3 py-2 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white font-medium shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                   Alt Text (for accessibility & email filters)
                 </label>
                 <input
@@ -433,19 +416,19 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
                   placeholder="e.g. October Feature Banner"
                   value={imageAlt}
                   onChange={(e) => setImageAlt(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white"
+                  className="w-full px-3 py-2 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white font-medium shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                  <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                     Image Width
                   </label>
                   <select
                     value={imageWidth}
                     onChange={(e) => setImageWidth(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white"
+                    className="w-full px-3 py-2 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white font-bold shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
                   >
                     <option value="100%">Full Width (100%)</option>
                     <option value="80%">80% Width</option>
@@ -456,13 +439,13 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                  <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                     Alignment
                   </label>
                   <select
                     value={imageAlign}
                     onChange={(e) => setImageAlign(e.target.value as any)}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white"
+                    className="w-full px-3 py-2 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white font-bold shadow-[2px_2px_0px_0px_#171717] dark:shadow-[2px_2px_0px_0px_#000000]"
                   >
                     <option value="center">Centered</option>
                     <option value="left">Left Aligned</option>
@@ -471,9 +454,8 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
                 </div>
               </div>
 
-              {/* Preview uploaded / linked image */}
               {imageUrl && (
-                <div className="p-2 border border-slate-200 dark:border-neutral-800 rounded-xl bg-slate-50 dark:bg-neutral-900 flex justify-center max-h-32 overflow-hidden">
+                <div className="p-2 border-2 border-[#171717] dark:border-[#383838] rounded-md bg-[#FFF9D2] dark:bg-[#202024] flex justify-center max-h-32 overflow-hidden shadow-[2px_2px_0px_0px_#171717]">
                   <img
                     src={imageUrl}
                     alt="Preview"
@@ -483,7 +465,7 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
               )}
             </div>
 
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-neutral-800">
+            <div className="flex justify-end gap-2 pt-3 border-t-2 border-[#171717] dark:border-[#383838]">
               <Button
                 type="button"
                 variant="outline"
@@ -500,16 +482,15 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
         </div>
       )}
 
-      {/* Link Insertion Modal */}
       {isLinkModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-[#18181b] rounded-2xl p-6 max-w-sm w-full border border-slate-200 dark:border-neutral-800 shadow-2xl space-y-4">
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#171717]/60 dark:bg-black/80 animate-in fade-in duration-150">
+          <div className="bg-[#FFFDF5] dark:bg-[#18181B] rounded-lg p-6 max-w-sm w-full border-2 border-[#171717] dark:border-[#383838] shadow-[8px_8px_0px_0px_#171717] dark:shadow-[8px_8px_0px_0px_#000000] space-y-4">
+            <h3 className="text-base font-extrabold text-[#171717] dark:text-white">
               Insert Link
             </h3>
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                   Destination URL
                 </label>
                 <input
@@ -517,11 +498,11 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
                   placeholder="https://www.tralance.pro/pricing"
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white"
+                  className="w-full px-3 py-2 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white font-medium shadow-[2px_2px_0px_0px_#171717]"
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-700 dark:text-neutral-300 mb-1">
+                <label className="block font-bold uppercase tracking-wider text-[#171717] dark:text-[#E5E5E5] mb-1">
                   Link Anchor Text
                 </label>
                 <input
@@ -529,11 +510,11 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
                   value={linkText}
                   onChange={(e) => setLinkText(e.target.value)}
                   placeholder="Learn more"
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-xl text-slate-900 dark:text-white"
+                  className="w-full px-3 py-2 bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] rounded-md text-[#171717] dark:text-white font-medium shadow-[2px_2px_0px_0px_#171717]"
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-neutral-800">
+            <div className="flex justify-end gap-2 pt-3 border-t-2 border-[#171717] dark:border-[#383838]">
               <Button
                 type="button"
                 variant="outline"
@@ -550,17 +531,16 @@ export function EmailComposer({ initialHtml, onChange, defaultTemplate }: EmailC
         </div>
       )}
 
-      {/* Reset Template Confirmation Modal */}
       {isResetConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-white dark:bg-[#18181b] rounded-2xl p-6 max-w-sm w-full border border-slate-200 dark:border-neutral-800 shadow-2xl space-y-3 text-sm">
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#171717]/60 dark:bg-black/80 animate-in fade-in duration-150">
+          <div className="bg-[#FFFDF5] dark:bg-[#18181B] rounded-lg p-6 max-w-sm w-full border-2 border-[#171717] dark:border-[#383838] shadow-[8px_8px_0px_0px_#171717] dark:shadow-[8px_8px_0px_0px_#000000] space-y-3 text-sm">
+            <h3 className="text-base font-extrabold text-[#171717] dark:text-white">
               Reset Template?
             </h3>
-            <p className="text-xs text-slate-500 dark:text-neutral-400">
+            <p className="text-xs font-medium text-[#525252] dark:text-[#A3A3A3]">
               This will overwrite your current draft with the standard Tralance announcement email template.
             </p>
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-neutral-800">
+            <div className="flex justify-end gap-2 pt-3 border-t-2 border-[#171717] dark:border-[#383838]">
               <Button
                 type="button"
                 variant="outline"

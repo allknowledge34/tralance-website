@@ -119,21 +119,23 @@ export const CommandList = forwardRef((props: any, ref) => {
   }
 
   return (
-    <div className="material-layer-elevated p-2 rounded-xl shadow-2xl flex flex-col gap-1 w-64 max-h-[300px] overflow-y-auto z-50">
+    <div className="bg-[#FFFDF5] dark:bg-[#18181B] border-2 border-[#171717] dark:border-[#383838] p-1.5 shadow-[4px_4px_0px_0px_#171717] dark:shadow-[4px_4px_0px_0px_#000000] flex flex-col gap-1 w-64 max-h-[300px] overflow-y-auto z-50">
       {props.items.map((item: any, index: number) => (
         <button
-          className={`flex items-center gap-3 px-3 py-2 text-left rounded-lg transition-colors ${
-            index === selectedIndex ? 'bg-[var(--layer-2)] text-foreground' : 'text-subtle hover:bg-[var(--layer-2)] hover:text-foreground'
+          className={`flex items-center gap-3 px-3 py-2 text-left border-2 transition-colors ${
+            index === selectedIndex
+              ? 'bg-[#FFE52E] text-[#171717] border-[#171717] shadow-[2px_2px_0px_0px_#171717]'
+              : 'border-transparent text-subtle hover:bg-[#FFE52E]/30 hover:text-[#171717] dark:hover:text-[#FFFDF5]'
           }`}
           key={index}
           onClick={() => selectItem(index)}
         >
-          <div className="w-8 h-8 flex items-center justify-center bg-[var(--layer-1)] rounded-md border border-[var(--border-subtle)] shrink-0">
+          <div className="w-8 h-8 flex items-center justify-center bg-white dark:bg-[#27272A] border-2 border-[#171717] dark:border-[#383838] shrink-0 font-bold">
             {item.icon}
           </div>
           <div>
-            <div className="text-sm font-medium">{item.title}</div>
-            <div className="text-xs opacity-70">{item.description}</div>
+            <div className="text-sm font-bold">{item.title}</div>
+            <div className="text-xs opacity-75 font-medium">{item.description}</div>
           </div>
         </button>
       ))}
@@ -197,6 +199,7 @@ export const SlashCommand = Extension.create({
     return {
       suggestion: {
         char: '/',
+        render: renderItems,
         command: ({ editor, range, props }: any) => {
           props.command({ editor, range });
         },
